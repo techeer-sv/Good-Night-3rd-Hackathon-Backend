@@ -113,9 +113,9 @@ Techeer Tree는 테커인들이 자신의 목표나 소원을 작성하고, 이�
 
 # 기여해주신 분
 
-- [김정현](https://github.com/kjeongh)
-- [Ryan Lee](https://github.com/printSANO)
-- [백한결](https://github.com/baekhangyeol)
-- [오현택](https://github.com/HyunTaek5)
-- [이도경](https://github.com/d0kyoung)
-- [강기환](https://github.com/GiHwan2)
+- 👩🏻‍💻[김정현](https://github.com/kjeongh)
+- 🧑🏻‍💻[Ryan Lee](https://github.com/printSANO)
+- 🧑🏻‍💻[백한결](https://github.com/baekhangyeol)
+- 🧑🏻‍💻[오현택](https://github.com/HyunTaek5)
+- 👩🏻‍💻[이도경](https://github.com/d0kyoung)
+- 🧑🏻‍💻[강기환](https://github.com/GiHwan2)
