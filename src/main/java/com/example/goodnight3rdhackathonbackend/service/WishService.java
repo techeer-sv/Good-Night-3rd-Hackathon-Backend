@@ -64,7 +64,7 @@ public class WishService {
     }
 
     public List<WishDto.FindAllDto> findAllWish(String wishState, int page) {
-        Pageable pageable = PageRequest.of(page, 2);
+        Pageable pageable = PageRequest.of(page, 10);
         return wishRepository.findAll(pageable)
                 .stream()
                 .filter(wish -> {
