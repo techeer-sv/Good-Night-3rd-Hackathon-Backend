@@ -14,7 +14,7 @@ public class Comments {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "wishId", nullable = false)
     private Wishes wish;
 
     @Column(nullable = false)

@@ -11,11 +11,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 @RestController
-@RequestMapping("/wishes/{id}/comments")
+@RequestMapping("/wishes/{wishId}/comments")
 public class CommentsController {
     private final CommentsService commentsService;
 
     public CommentsController(CommentsService commentsService) {
         this.commentsService = commentsService;
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createComment(@PathVariable Long wishId, @RequestBody CommentsDto commentsDto) {
+        try {
+            Comments createdComment = commentsService.createComment(wishId, commentsDto.getContent());
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
