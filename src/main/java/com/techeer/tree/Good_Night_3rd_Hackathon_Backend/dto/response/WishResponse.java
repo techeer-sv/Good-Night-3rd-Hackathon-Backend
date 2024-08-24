@@ -3,6 +3,7 @@ package com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.entity.Wish;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -90,6 +91,25 @@ public class WishResponse {
 
     public static WishReadListResponse from(Wish wish) {
       return new WishReadListResponse(wish.getId(), wish.getTitle());
+    }
+  }
+
+  @Getter
+  @AllArgsConstructor
+  public static class WishSearchResponseWrapper {
+    private List<WishSearchResponse> wishes;
+    private int status;
+    private String message;
+  }
+
+  @Getter
+  @AllArgsConstructor
+  public static class WishSearchResponse {
+    private Long id;
+    private String title;
+
+    public static WishSearchResponse from(Wish wish) {
+      return new WishSearchResponse(wish.getId(), wish.getTitle());
     }
   }
 }

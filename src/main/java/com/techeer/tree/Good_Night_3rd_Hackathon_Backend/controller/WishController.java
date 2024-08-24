@@ -85,4 +85,18 @@ public class WishController {
     List<WishResponse.WishReadListResponse> response = wishService.getAllWishes(category, confirmed);
     return ResponseEntity.ok(response);
   }
+
+  @Operation(summary = "Search wishes by title", description = "Search for wishes by title keyword")
+  @GetMapping("/search")
+  public ResponseEntity<WishResponse.WishSearchResponseWrapper> searchWishesByTitle(@RequestParam String keyword) {
+    List<WishResponse.WishSearchResponse> wishes = wishService.searchWishesByTitle(keyword);
+
+    if (wishes.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body(new WishResponse.WishSearchResponseWrapper(wishes, 400, "검색 결과가 없습니다."));
+    }
+
+    WishResponse.WishSearchResponseWrapper response = new WishResponse.WishSearchResponseWrapper(wishes, 200, "소원 검색 성공");
+    return ResponseEntity.ok(response);
+  }
 }

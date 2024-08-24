@@ -70,4 +70,12 @@ public class WishService {
         .map(WishReadListResponse::from)
         .collect(Collectors.toList());
   }
+
+  @Transactional(readOnly = true)
+  public List<WishResponse.WishSearchResponse> searchWishesByTitle(String keyword) {
+    List<Wish> wishes = wishRepository.findByTitleContainingAndIsConfirmedTrue(keyword);
+    return wishes.stream()
+        .map(WishResponse.WishSearchResponse::from)
+        .collect(Collectors.toList());
+  }
 }

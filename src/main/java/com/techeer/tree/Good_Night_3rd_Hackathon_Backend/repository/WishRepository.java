@@ -9,5 +9,7 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
     List<Wish> findByCategoryAndIsConfirmed(String category, Boolean isConfirmed);
     List<Wish> findByCategoryAndIsConfirmedIsNull(String category);
     List<Wish> findByIsConfirmedIsNull();
+
+    List<Wish> findByTitleContainingAndIsConfirmedTrue(String keyword);
 }
 
