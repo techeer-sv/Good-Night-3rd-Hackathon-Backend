@@ -18,6 +18,11 @@ public class WishController {
     public ResponseEntity<Wish> createWish(@RequestBody Wish wish) {
         return ResponseEntity.ok(wishService.createWish(wish));
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWish(@PathVariable("id") Long id) {
+        wishService.deleteWish(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Where(clause = "deleted = false")
-@SQLDelete(sql = "UPDATE wish SET deleted = true WHERE id = ?")
+@Where(clause = "deleted_at = false")
+@SQLDelete(sql = "UPDATE wish SET deleted_at = true WHERE id = ?")
 @NoArgsConstructor
 public class Wish {
 
