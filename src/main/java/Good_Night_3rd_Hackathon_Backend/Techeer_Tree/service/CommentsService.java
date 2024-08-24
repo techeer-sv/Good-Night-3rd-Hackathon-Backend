@@ -29,6 +29,10 @@ public class CommentsService {
     public Comments createComment(Long wishId, String content) {
         Wishes wish = wishesRepository.findById(wishId).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
 
+        if (wish.getIsDeleted()) {
+            throw new IllegalArgumentException("삭제된 소원입니다.");
+        }
+
         if (wish.getIsConfirm() != Wishes.WishesStatus.APPROVED) {
             throw new IllegalArgumentException("승인되지 않은 소원입니다.");
         }
@@ -43,12 +47,29 @@ public class CommentsService {
     @Transactional
     public Page<Comments> getCommentList(Long wishId, Pageable pageable) {
         Wishes wish = wishesRepository.findById(wishId).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+
+        if (wish.getIsDeleted()) {
+            throw new IllegalArgumentException("삭제된 소원입니다.");
+        }
+
+        if (wish.getIsConfirm() != Wishes.WishesStatus.APPROVED) {
+            throw new IllegalArgumentException("승인되지 않은 소원입니다.");
+        }
+
         return commentsRepository.getCommentList(wish, pageable);
     }
 
     @Transactional
     public void deleteComment(Long wishId, Long commentId) {
         Wishes wish = wishesRepository.findById(wishId).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+
+        if (wish.getIsDeleted()) {
+            throw new IllegalArgumentException("삭제된 소원입니다.");
+        }
+
+        if (wish.getIsConfirm() != Wishes.WishesStatus.APPROVED) {
+            throw new IllegalArgumentException("승인되지 않은 소원입니다.");
+        }
 
         Comments comment = commentsRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
 

@@ -25,8 +25,13 @@ public class WishesController {
     }
 
     @PostMapping
-    public Wishes createWish(@RequestBody WishesDto wishDto) {
-        return wishesService.createWish(wishDto);
+    public ResponseEntity<?> createWish(@RequestBody WishesDto wishDto) {
+        try {
+            Wishes createdWish = wishesService.createWish(wishDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdWish);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

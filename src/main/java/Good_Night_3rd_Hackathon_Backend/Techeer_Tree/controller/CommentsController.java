@@ -26,17 +26,36 @@ public class CommentsController {
             Comments createdComment = commentsService.createComment(wishId, commentsDto.getContent());
             return ResponseEntity.status(HttpStatus.CREATED).body(createdComment);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            String errorMessage = e.getMessage();
+            if (errorMessage.equals("해당 소원이 존재하지 않습니다.")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            } else if (errorMessage.equals("삭제된 소원입니다.") || errorMessage.equals("승인되지 않은 소원입니다.")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+            }
         }
     }
 
     @GetMapping
-    public Page<Comments> getComments(
+    public ResponseEntity<?> getComments(
             @PathVariable Long wishId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-        return commentsService.getCommentList(wishId, pageable);
+        try {
+            Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+            Page<Comments> comments = commentsService.getCommentList(wishId, pageable);
+            return ResponseEntity.ok(comments);
+        } catch (IllegalArgumentException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage.equals("해당 소원이 존재하지 않습니다.")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            } else if (errorMessage.equals("삭제된 소원입니다.") || errorMessage.equals("승인되지 않은 소원입니다.")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+            }
+        }
     }
 
     @DeleteMapping("/{commentId}")
@@ -45,7 +64,14 @@ public class CommentsController {
             commentsService.deleteComment(wishId, commentId);
             return ResponseEntity.ok("댓글이 삭제되었습니다.");
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            String errorMessage = e.getMessage();
+            if (errorMessage.equals("해당 소원이 존재하지 않습니다.")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            } else if (errorMessage.equals("삭제된 소원입니다.") || errorMessage.equals("승인되지 않은 소원입니다.") || errorMessage.equals("해당 댓글이 존재하지 않습니다.") || errorMessage.equals("해당 소원의 댓글이 아닙니다.")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+            }
         }
     }
 }

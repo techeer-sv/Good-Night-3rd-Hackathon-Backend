@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface WishesRepository extends JpaRepository<Wishes, Long> {
 
-    @Query("SELECT w FROM Wishes w WHERE (:status IS NULL OR w.isConfirm = :status)")
+    @Query("SELECT w FROM Wishes w WHERE (:status IS NULL OR w.isConfirm = :status) AND w.isDeleted = false")
     Page<Wishes> getWishList(Wishes.WishesStatus status, Pageable pageable);
 
     @Query("SELECT w FROM Wishes w WHERE (w.title LIKE :keyword OR w.content LIKE :keyword) AND w.category = :category AND w.isDeleted = false")
