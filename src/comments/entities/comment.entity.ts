@@ -1,20 +1,26 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, CreateDateColumn } from 'typeorm';
-import { Wish } from '../../wishes/entities/wish.entity'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+} from 'typeorm';
+import { Wish } from '../../wishes/entities/wish.entity';
 
 @Entity('comments')
 export class Comment {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ nullable: false })
-    content: string;
+  @Column({ nullable: false })
+  content: string;
 
-    @ManyToOne(() => Wish, wish => wish.comments)
-    wish: Wish;
+  @ManyToOne(() => Wish, (wish) => wish.comments)
+  wish: Wish;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @Column({ nullable: true })
-    deleted_at?: Date;
+  @Column({ nullable: true })
+  deleted_at?: Date;
 }

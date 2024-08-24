@@ -18,7 +18,7 @@ import { Comment } from './comments/entities/comment.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [Wish,Comment],
+      entities: [Wish, Comment],
       synchronize: true,
       logging: true,
     }),
