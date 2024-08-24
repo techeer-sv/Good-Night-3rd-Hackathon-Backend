@@ -1,6 +1,7 @@
 package me.kyung.TecheerTree.controller;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import me.kyung.TecheerTree.domain.Wish;
 import me.kyung.TecheerTree.dto.response.WishDetailResponse;
 import me.kyung.TecheerTree.dto.response.WishListResponse;
@@ -14,10 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/wishes")
+@RequiredArgsConstructor
 public class WishController {
-
-    @Autowired
-    private WishService wishService;
+    private final WishService wishService;
 
     @GetMapping("/{id}")
     public ResponseEntity<WishDetailResponse> findWish(@PathVariable("id") Long id){
