@@ -20,13 +20,14 @@ public class Wish {
     private Long id;
     private String title;
     private String content;
-    private String category; // 진로, 건강, 인간 관계, 돈, 목표, 학업/성적, 기타
+    @Enumerated(EnumType.STRING)
+    private Category category; // 진로, 건강, 인간 관계, 돈, 목표, 학업/성적, 기타
     private Date created_at;
     @Enumerated(EnumType.STRING)
     private WishStatus is_confirm = WishStatus.PENDING; // 초기값 = "보류중"
     private Boolean is_deleted = Boolean.FALSE;
 
-    public Wish(String title, String content, String category, Date createAt) {
+    public Wish(String title, String content, Category category, Date createAt) {
         this.title = title;
         this.content = content;
         this.category = category;
@@ -37,10 +38,14 @@ public class Wish {
         if (wishForm.getTitle() == null || wishForm.getContent() == null || wishForm.getCategory() == null || wishForm.getCreate_at() == null) {
             throw new IllegalArgumentException("Title, Content, Category, and Created_at cannot be null.");
         }
+
+        // 클라이언트에서 받은 category 한글 문자열을 Category Enum으로 변환
+        Category category = Category.fromKoreanName(wishForm.getCategory());
+
         return new Wish(
                 wishForm.getTitle(),
                 wishForm.getContent(),
-                wishForm.getCategory(),
+                category,
                 wishForm.getCreate_at()
         );
     }
@@ -49,8 +54,8 @@ public class Wish {
         this.is_deleted = Boolean.TRUE;
     }
 
-    public String confirm(WishConfirmForm wishConfirmForm) {
-        this.is_confirm = wishConfirmForm.getConfirm();
+    public String confirm(WishStatus wishStatus) {
+        this.is_confirm = wishStatus;
         return this.is_confirm.getDescription(); // 상태의 설명을 반환
     }
 

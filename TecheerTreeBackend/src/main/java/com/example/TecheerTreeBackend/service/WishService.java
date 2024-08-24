@@ -48,13 +48,13 @@ public class WishService {
 
     }
 
-    public String confirmWish(Long wishId, WishConfirmForm wishConfirmForm) {
+    public String confirmWish(Long wishId, WishStatus wishStatus) {
         // 소원 조회
         Wish wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 wishId의 소원을 찾을 수 없습니다."));
 
         // 승인 여부 결정
-        String result = wish.confirm(wishConfirmForm);
+        String result = wish.confirm(wishStatus);
 
         // 처리후 DB 저장
         wishRepository.save(wish);

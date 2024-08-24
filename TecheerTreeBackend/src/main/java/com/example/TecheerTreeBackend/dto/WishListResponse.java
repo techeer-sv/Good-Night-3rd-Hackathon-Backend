@@ -1,5 +1,6 @@
 package com.example.TecheerTreeBackend.dto;
 
+import com.example.TecheerTreeBackend.domain.Category;
 import com.example.TecheerTreeBackend.domain.Wish;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.util.Date;
 public class WishListResponse {
     private Long id;
     private String title;
-    private String category;
+    private Category category;
     private Date createAt;
 
     public static WishListResponse createWishListDto(Wish wish) {

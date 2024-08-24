@@ -5,5 +5,5 @@ import lombok.Getter;
 
 @Getter
 public class WishConfirmForm {
-    private WishStatus confirm;
+    private String confirm;
 }

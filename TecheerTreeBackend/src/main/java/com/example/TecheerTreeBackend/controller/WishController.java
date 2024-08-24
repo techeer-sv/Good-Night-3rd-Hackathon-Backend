@@ -35,8 +35,11 @@ public class WishController {
     // 소원 승인 or 거절 처리
     @PatchMapping("/wish/confirm/{wishId}")
     public String confirmWish(@PathVariable Long wishId, @RequestBody WishConfirmForm wishConfirmForm){
+        // "승인" 또는 "거절" 문자열을 WishStatus Enum으로 변환
+        WishStatus wishStatus = WishStatus.stringToEnum(wishConfirmForm);
+
         // 서비스 위임
-        return wishService.confirmWish(wishId, wishConfirmForm);
+        return wishService.confirmWish(wishId, wishStatus);
     }
 
     // 소원 단일 조회

@@ -1,5 +1,7 @@
 package com.example.TecheerTreeBackend.domain;
 
+import com.example.TecheerTreeBackend.dto.WishConfirmForm;
+
 public enum WishStatus {
     APPROVED("승인됨"),
     PENDING("보류됨"),
@@ -10,6 +12,7 @@ public enum WishStatus {
     WishStatus(String description){
         this.description = description;
     }
+
 
     public String getDescription() {
         return description;
@@ -22,6 +25,15 @@ public enum WishStatus {
         } else {
             return PENDING; // "미승인"은 보류됨(PENDING) 또는 거절됨(REJECTED)으로 간주
         }
+    }
+
+    public static WishStatus stringToEnum(WishConfirmForm wishConfirmForm) {
+        if ("승인".equals(wishConfirmForm.getConfirm())) {
+            return WishStatus.APPROVED;
+        } else if ("거절".equals(wishConfirmForm.getConfirm())) {
+            return WishStatus.REJECTED;
+        }
+        return null;
     }
 
 }
