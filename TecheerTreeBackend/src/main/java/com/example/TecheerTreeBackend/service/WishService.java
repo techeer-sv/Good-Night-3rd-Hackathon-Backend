@@ -3,11 +3,14 @@ package com.example.TecheerTreeBackend.service;
 import com.example.TecheerTreeBackend.domain.Wish;
 import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
+import com.example.TecheerTreeBackend.dto.WishListResponse;
 import com.example.TecheerTreeBackend.dto.WishResponse;
 import com.example.TecheerTreeBackend.repository.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -71,5 +74,24 @@ public class WishService {
         }else {
             return null;
         }
+    }
+
+    public List<WishListResponse> viewWishList(Boolean isConfirm) {
+        String yesOrNo = "";
+        // isConfirm이 True라면(승인)이라면 "승인됨"에 해당하는 데이터 리스트 엔티티 가져오기
+        if (isConfirm){
+            yesOrNo = "승인됨";
+        }
+        List<Wish> wishes = wishRepository.findByWishList(yesOrNo);     // 엔티티 리스트 가져오기
+
+        // 엔티티 -> dto 변환
+        List<WishListResponse> dtos = new ArrayList<WishListResponse>();
+        for (int i = 0; i < wishes.size(); i++) {
+            Wish w = wishes.get(i);
+            WishListResponse dto = WishListResponse.createWishListDto(w);
+            dtos.add(dto);
+        }
+
+        return dtos;
     }
 }

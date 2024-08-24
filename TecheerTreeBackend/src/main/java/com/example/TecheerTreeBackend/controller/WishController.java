@@ -2,12 +2,15 @@ package com.example.TecheerTreeBackend.controller;
 
 import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
+import com.example.TecheerTreeBackend.dto.WishListResponse;
 import com.example.TecheerTreeBackend.dto.WishResponse;
 import com.example.TecheerTreeBackend.service.WishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class WishController {
@@ -47,6 +50,15 @@ public class WishController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(viewWish);
+    }
+
+    // 소원 목록 조회
+    @GetMapping("/wish")
+    public ResponseEntity<List<WishListResponse>> viewWishList(@RequestParam Boolean isConfirm){
+        // 서비스 위임
+        List<WishListResponse> viewWishList = wishService.viewWishList(isConfirm);
+
+        return ResponseEntity.status(HttpStatus.OK).body(viewWishList);
     }
 
 }
