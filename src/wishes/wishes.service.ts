@@ -16,6 +16,18 @@ export class WishesService {
     return this.wishRepository.save(wish);
   }
 
+  async findAll(isConfirmed?: boolean): Promise<Wish[]> {
+    const query = this.wishRepository.createQueryBuilder('wish');
+
+    if (typeof isConfirmed !== 'undefined') {
+      query.andWhere('wish.is_confirm = :isConfirmed', { isConfirmed });
+    }
+
+    query.andWhere('wish.deleted_at IS NULL').orderBy('wish.createdAt', 'DESC');
+
+    return query.getMany();
+  }
+
   async findOne(id: number): Promise<Wish> {
     const wish = await this.wishRepository.findOne({
       where: { id, deleted_at: null, is_confirm: '승인됨' },
