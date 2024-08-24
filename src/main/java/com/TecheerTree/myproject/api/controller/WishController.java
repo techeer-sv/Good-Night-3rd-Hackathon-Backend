@@ -33,7 +33,8 @@ public class WishController {
     // 소원 승인/거절
     @PatchMapping("/{wishId}/status")
     public ResponseEntity<Wishes> updateWishStatus(@PathVariable("wishId") Long wishId,
-                                                   @RequestBody String description){
+                                                   @RequestParam("description") String description){
+        System.out.println("description: "+ description);
         Wishes updatedWish = wishService.updateWishStatus(wishId, description);
         return new ResponseEntity<>(updatedWish,HttpStatus.OK);
     }
