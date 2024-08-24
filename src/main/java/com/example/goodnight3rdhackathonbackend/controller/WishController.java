@@ -20,5 +20,11 @@ public class WishController {
         wishService.saveWish(wishDto);
     }
 
+    @DeleteMapping("/wishs/{id}")
+    public void deleteWishById(@PathVariable Long id) {
+        wishService.deleteWishById(id);
+    }
+
+
 
 }

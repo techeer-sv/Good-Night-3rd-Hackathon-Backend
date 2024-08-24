@@ -6,6 +6,7 @@ import com.example.goodnight3rdhackathonbackend.repository.WishRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 public class WishService {
@@ -23,6 +24,12 @@ public class WishService {
         wish.setCategory(wishDto.getCategory());
         wish.setCreated_at(LocalDate.now());
         wishRepository.save(wish);
+    }
+
+    public void deleteWishById(Long id) {
+        Wish targetWish = wishRepository.findById(id);
+        targetWish.setDeleted_at(LocalDateTime.now());
+        wishRepository.updateById(id, targetWish);
     }
 
 }
