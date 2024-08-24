@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 public class Wish {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO보다 IDENTITY가 더 적합한 경우가 많음
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false)
@@ -26,13 +27,16 @@ public class Wish {
   private String category;
 
   @Column(nullable = false)
-  private LocalDateTime createdAt = LocalDateTime.now();
+  private LocalDateTime createdAt;
+
+  @Column(nullable = false)
+  private Boolean isDeleted = false;
 
   @Column(nullable = true)
   private Boolean isConfirmed;
 
-  @Column(nullable = false)
-  private Boolean isDeleted = false;
+  @OneToMany(mappedBy = "wish", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comment> comments;
 
   public Wish(String title, String content, String category) {
     this.title = title;
