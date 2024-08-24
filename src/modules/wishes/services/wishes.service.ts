@@ -12,7 +12,7 @@ export class WishesService {
     }
 
     findAll() {
-        return `This action returns all wishes`;
+        return this.wishesRepository.findAll();
     }
 
     findOne(id: number) {

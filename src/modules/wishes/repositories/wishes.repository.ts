@@ -14,6 +14,10 @@ export class WishesRepository extends Repository<WishEntity> {
         return this.save(wish);
     }
 
+    findAll() {
+        return this.find();
+    }
+
     findById(id: number) {
         return this.findOne({ where: { id: id } });
     }
