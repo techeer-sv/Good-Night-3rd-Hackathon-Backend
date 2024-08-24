@@ -1,6 +1,6 @@
 package com.example.TecheerTreeBackend.dto;
 
-import com.example.TecheerTreeBackend.domain.Comment;
+import com.example.TecheerTreeBackend.domain.Comments;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,11 +13,11 @@ public class CommentListResponse {
     private String content;
     private Date created_at;
 
-    public static CommentListResponse createComment(Comment comment) {
+    public static CommentListResponse createComment(Comments comments) {
         return new CommentListResponse(
-                comment.getId(),
-                comment.getContent(),
-                comment.getCreated_at()
+                comments.getId(),
+                comments.getContent(),
+                comments.getCreated_at()
         );
 
     }

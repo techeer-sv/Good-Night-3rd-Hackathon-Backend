@@ -18,14 +18,14 @@ public class CommentController {
     private CommentService commentService;
 
     // 댓글 생성
-    @PostMapping("/comment/{wishId}")
+    @PostMapping("/comments/{wishId}")
     public String createComment(@PathVariable Long wishId, @RequestBody CommentForm commentForm){
         // 서비스 위임
         return commentService.createComment(wishId, commentForm);
     }
 
     // 댓글 리스트 조회
-    @GetMapping("/comment/{wishId}")
+    @GetMapping("/comments/{wishId}")
     public ResponseEntity<List<CommentListResponse>> viewCommentList(@PathVariable Long wishId){
         // 서비스 위임
         List<CommentListResponse> viewCommentList = commentService.viewCommentList(wishId);
@@ -35,7 +35,7 @@ public class CommentController {
     }
 
     // 댓글 삭제(soft delete)
-    @PatchMapping("/comment/{commentId}")
+    @PatchMapping("/comments/{commentId}")
     public String deleteComment(@PathVariable Long commentId){
         // 서비스 위임
         return commentService.deleteComment(commentId);

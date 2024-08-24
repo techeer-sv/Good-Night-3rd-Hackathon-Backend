@@ -1,18 +1,16 @@
 package com.example.TecheerTreeBackend.domain;
 
-import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Wish {
+public class Wishes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +25,14 @@ public class Wish {
     private WishStatus is_confirm = WishStatus.PENDING; // 초기값 = "보류중"
     private Boolean is_deleted = Boolean.FALSE;
 
-    public Wish(String title, String content, Category category, Date createAt) {
+    public Wishes(String title, String content, Category category, Date createAt) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.created_at = createAt;
     }
 
-    public static Wish createWish(WishForm wishForm) {
+    public static Wishes createWish(WishForm wishForm) {
         if (wishForm.getTitle() == null || wishForm.getContent() == null || wishForm.getCategory() == null || wishForm.getCreate_at() == null) {
             throw new IllegalArgumentException("Title, Content, Category, and Created_at cannot be null.");
         }
@@ -42,7 +40,7 @@ public class Wish {
         // 클라이언트에서 받은 category 한글 문자열을 Category Enum으로 변환
         Category category = Category.fromKoreanName(wishForm.getCategory());
 
-        return new Wish(
+        return new Wishes(
                 wishForm.getTitle(),
                 wishForm.getContent(),
                 category,

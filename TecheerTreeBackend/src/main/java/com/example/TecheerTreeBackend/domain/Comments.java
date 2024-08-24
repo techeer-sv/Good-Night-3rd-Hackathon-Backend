@@ -11,27 +11,27 @@ import java.util.Date;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Comment {
+public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
     @ManyToOne
     @JoinColumn(name = "wish_id")
-    private Wish wish;
+    private Wishes wishes;
     private String content;
     private Date created_at;
     private Boolean is_deleted = Boolean.FALSE;
 
-    public Comment(Wish wish, String content, Date createdAt) {
-        this.wish = wish;
+    public Comments(Wishes wishes, String content, Date createdAt) {
+        this.wishes = wishes;
         this.content = content;
         this.created_at = createdAt;
     }
 
-    public static Comment createComment(Wish wish, CommentForm commentForm) {
-        return new Comment(
-                wish,
+    public static Comments createComment(Wishes wishes, CommentForm commentForm) {
+        return new Comments(
+                wishes,
                 commentForm.getContent(),
                 commentForm.getCreated_at()
         );

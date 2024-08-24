@@ -19,21 +19,21 @@ public class WishController {
     private WishService wishService;
 
     // 소원 등록
-    @PostMapping("/wish")
+    @PostMapping("/wishes")
     public String createWish(@RequestBody WishForm wishForm){
         // 서비스 위임
         return wishService.createWish(wishForm);
     }
 
     // 소원 삭제(soft delete)
-    @PatchMapping("/wish/delete/{wishId}")
+    @PatchMapping("/wishes/delete/{wishId}")
     public String deleteWish(@PathVariable Long wishId){
         // 서비스 위임
         return wishService.deleteWish(wishId);
     }
 
     // 소원 승인 or 거절 처리
-    @PatchMapping("/wish/confirm/{wishId}")
+    @PatchMapping("/wishes/confirm/{wishId}")
     public String confirmWish(@PathVariable Long wishId, @RequestBody WishConfirmForm wishConfirmForm){
         // "승인" 또는 "거절" 문자열을 WishStatus Enum으로 변환
         WishStatus wishStatus = WishStatus.stringToEnum(wishConfirmForm);
@@ -43,7 +43,7 @@ public class WishController {
     }
 
     // 소원 단일 조회
-    @GetMapping("/wish/{wishId}")
+    @GetMapping("/wishes/{wishId}")
     public ResponseEntity<?> viewWish(@PathVariable Long wishId){
         // 서비스 위임
         WishResponse viewWish = wishService.viewService(wishId);
@@ -57,7 +57,7 @@ public class WishController {
     }
 
     // 소원 목록 조회
-    @GetMapping("/wish")
+    @GetMapping("/wishes")
     public ResponseEntity<List<WishListResponse>> viewWishList(@RequestParam String status){
         // "승인" 또는 "미승인" 문자열을 WishStatus Enum으로 변환
         WishStatus wishStatus = WishStatus.fromClientString(status);

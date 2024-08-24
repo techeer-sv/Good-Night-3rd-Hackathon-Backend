@@ -1,6 +1,5 @@
 package com.example.TecheerTreeBackend.dto;
 
-import com.example.TecheerTreeBackend.domain.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
