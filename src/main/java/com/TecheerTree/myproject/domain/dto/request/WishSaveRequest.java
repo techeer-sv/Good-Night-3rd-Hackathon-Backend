@@ -1,4 +1,4 @@
-package com.TecheerTree.myproject.domain.dto;
+package com.TecheerTree.myproject.domain.dto.request;
 
 import com.TecheerTree.myproject.domain.entitiy.Category;
 import jakarta.validation.constraints.NotEmpty;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class WishCreateDto {
+public class WishSaveRequest {
 
     @NotEmpty(message = "Title cannot be empty")
     private String title;
@@ -22,13 +22,7 @@ public class WishCreateDto {
         return Category.fromKoreanName(categoryName);
     }
 
-    public WishCreateDto() {
-    }
-
-    public WishCreateDto(String title, String content, String categoryName) {
-        this.title = title;
-        this.content = content;
-        this.categoryName = categoryName;
+    public WishSaveRequest() {
     }
 
 

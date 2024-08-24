@@ -1,7 +1,7 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
-import com.TecheerTree.myproject.domain.dto.CommentCreateDto;
+import com.TecheerTree.myproject.domain.dto.request.CommentSaveRequest;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -19,10 +19,10 @@ public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
-    public Comments createComment(CommentCreateDto commentCreateDto) {
+    public Comments createComment(CommentSaveRequest commentSaveRequest) {
         Comments comment = new Comments();
-        comment.setContent(commentCreateDto.getContent());
-        comment.setWishId(commentCreateDto.getWishId());
+        comment.setContent(commentSaveRequest.getContent());
+        comment.setWishId(commentSaveRequest.getWishId());
         comment.setCreatedDate(LocalDate.now());
 
         return commentsRepository.save(comment);

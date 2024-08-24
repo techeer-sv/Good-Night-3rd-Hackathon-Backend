@@ -1,9 +1,8 @@
 package com.TecheerTree.myproject.api.controller;
 
 import com.TecheerTree.myproject.api.service.CommentsService;
-import com.TecheerTree.myproject.domain.dto.CommentCreateDto;
+import com.TecheerTree.myproject.domain.dto.request.CommentSaveRequest;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
-import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,23 +18,25 @@ public class CommentsController {
 
     private final CommentsService commentsService;
 
+    // 댓글 작성
     @PostMapping
-    public ResponseEntity<Comments> createComment(@RequestBody CommentCreateDto commentCreateDto){
-        Comments comment = commentsService.createComment(commentCreateDto);
+    public ResponseEntity<Comments> createComment(@RequestBody CommentSaveRequest commentSaveRequest){
+        Comments comment = commentsService.createComment(commentSaveRequest);
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
+    // 댓글 삭제
     @DeleteMapping("/{commentId}")
     public ResponseEntity<String> deleteMember(@PathVariable("commentId") Long commentId) {
         commentsService.deleteComment(commentId);
         return ResponseEntity.ok("삭제에 성공하였습니다.");
     }
 
+    // 댓글 조회
     @GetMapping
     public ResponseEntity<Page<Comments>> getComments(@RequestParam("wishId") Long wishId,
                                       @PageableDefault(sort = "createdDate", direction = org.springframework.data.domain.Sort.Direction.DESC) Pageable pageable) {
         Page<Comments> comments = commentsService.getComments(wishId, pageable);
-
         return new ResponseEntity<>(comments,HttpStatus.OK);
     }
 

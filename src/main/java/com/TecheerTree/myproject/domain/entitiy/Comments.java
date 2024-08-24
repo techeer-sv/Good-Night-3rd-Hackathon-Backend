@@ -19,6 +19,7 @@ public class Comments {
     private LocalDate createdDate;
     private Long wishId;  // 소원의 ID만 저장
     private boolean deletedAt;
+
     public Comments() {
     }
 

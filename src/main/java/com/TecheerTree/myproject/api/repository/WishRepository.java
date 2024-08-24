@@ -1,6 +1,6 @@
 package com.TecheerTree.myproject.api.repository;
 
-import com.TecheerTree.myproject.domain.dto.ReturnAllWishDto;
+import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import org.springframework.data.domain.Page;
@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface WishRepository extends JpaRepository<Wishes, Long> {
 
@@ -18,4 +20,13 @@ public interface WishRepository extends JpaRepository<Wishes, Long> {
 
     @Query("SELECT w FROM Wishes w WHERE w.deleted_at = false")
     Page<Wishes> findAllActive(Pageable pageable);
+
+    @Query("SELECT w FROM Wishes w WHERE w.deleted_at = false AND w.category = :category AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
+    List<Wishes> findByCategoryAndKeyword(@Param("category") Category category, @Param("keyword") String keyword);
+
+    @Query("SELECT w FROM Wishes w WHERE w.deleted_at = false AND w.category = :category")
+    List<Wishes> findByCategory(@Param("category") Category category);
+
+    @Query("SELECT w FROM Wishes w WHERE w.deleted_at = false AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
+    List<Wishes> findByKeyword(@Param("keyword") String keyword);
 }

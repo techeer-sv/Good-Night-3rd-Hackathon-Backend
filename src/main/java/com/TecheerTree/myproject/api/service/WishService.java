@@ -1,9 +1,10 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.repository.WishRepository;
-import com.TecheerTree.myproject.domain.dto.ReturnAllWishDto;
-import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
-import com.TecheerTree.myproject.domain.dto.WishCreateDto;
+import com.TecheerTree.myproject.domain.dto.request.WishSearchRequest;
+import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
+import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
+import com.TecheerTree.myproject.domain.dto.response.WishResponse;
 import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
@@ -17,6 +18,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -24,18 +27,18 @@ public class WishService {
 
     private final WishRepository wishRepository;
 
-    public Wishes saveWish(WishCreateDto wishCreateDto) {
+    public Wishes saveWish(WishSaveRequest wishSaveRequest) {
         // DTO에서 Category 변환
-        Category category = wishCreateDto.getCategory();
+        Category category = wishSaveRequest.getCategory();
         if (category == null) {
             throw new InvalidCategoryWishException("유효하지 않은 카테고리입니다.");
         }
 
         Wishes newWish = new Wishes();
 
-        newWish.setTitle(wishCreateDto.getTitle());
-        newWish.setCategory(wishCreateDto.getCategory());
-        newWish.setContent(wishCreateDto.getContent());
+        newWish.setTitle(wishSaveRequest.getTitle());
+        newWish.setCategory(wishSaveRequest.getCategory());
+        newWish.setContent(wishSaveRequest.getContent());
         newWish.setStatus(Status.PENDING);
         newWish.setCreatedDate();
 
@@ -67,7 +70,7 @@ public class WishService {
 
     }
 
-    public ReturnSingleWishDto getWish(Long wishId) {
+    public WishDetailResponse getWish(Long wishId) {
         Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
@@ -75,7 +78,7 @@ public class WishService {
             throw new UnApprovedStatusException("승인된 소원이 아닙니다.");
         }
 
-        ReturnSingleWishDto findWishDto = new ReturnSingleWishDto();
+        WishDetailResponse findWishDto = new WishDetailResponse();
         findWishDto.setTitle(findWish.getTitle());
         findWishDto.setContent(findWish.getContent());
         findWishDto.setCategory(findWish.getCategory().getKoreanName());
@@ -89,5 +92,41 @@ public class WishService {
         } else {
             return wishRepository.findAllActive(pageable);
         }
+    }
+
+    public Page<WishResponse> getWishesAsResponse(Status status, Pageable pageable) {
+        Page<Wishes> wishes = getWishes(status, pageable);
+        return wishes.map(wish -> new WishResponse(
+                wish.getWishId(),
+                wish.getTitle(),
+                wish.getContent(),
+                wish.getCreatedDate()
+        ));
+    }
+
+    public List<Wishes> searchWishes(WishSearchRequest wishSearchRequest) {
+        // 카테고리 + 키워드 포함 검색
+        if(wishSearchRequest.getCategoryName() != null && wishSearchRequest.getKeyword() != null){
+           Category category = Category.fromKoreanName(wishSearchRequest.getCategoryName());
+            System.out.println(category);
+            return wishRepository.findByCategoryAndKeyword(category, wishSearchRequest.getKeyword());
+        }
+
+        // 키워드만 있다면 키워드 검색
+        if (wishSearchRequest.getKeyword() != null) {
+            return wishRepository.findByKeyword(wishSearchRequest.getKeyword());
+        }
+
+        // 카테고리만 있다면 카테고리 검색
+        if (wishSearchRequest.getCategoryName() != null) {
+            Category category = Category.fromKoreanName(wishSearchRequest.getCategoryName());
+            System.out.println(category);
+
+            return wishRepository.findByCategory(category);
+        }
+
+        // 모든 조건이 비어 있는 경우 전체 검색
+        return wishRepository.findAll();
+
     }
 }

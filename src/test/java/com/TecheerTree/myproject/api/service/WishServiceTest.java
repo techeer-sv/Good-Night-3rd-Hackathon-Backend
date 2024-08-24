@@ -2,8 +2,8 @@ package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.WishRepository;
-import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
-import com.TecheerTree.myproject.domain.dto.WishCreateDto;
+import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
+import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import com.TecheerTree.myproject.exception.InvalidCategoryWishException;
@@ -29,30 +29,30 @@ class WishServiceTest {
     @Autowired
     private WishRepository wishRepository;
 
-    private WishCreateDto wishCreateDto;
+    private WishSaveRequest wishSaveRequest;
 
 
     @BeforeEach
     void setUp(){
-        wishCreateDto = new WishCreateDto();
-        wishCreateDto.setTitle("테스트");
-        wishCreateDto.setCategoryName("진로");
-        wishCreateDto.setContent("테스트 데이터입니다.");
+        wishSaveRequest = new WishSaveRequest();
+        wishSaveRequest.setTitle("테스트234");
+        wishSaveRequest.setCategoryName("학업/성적");
+        wishSaveRequest.setContent("테스트234 데이터입니다.");
     }
 
     // 저장 테스트
     @Test
     public void saveWish() {
-        Wishes newWish = wishService.saveWish(wishCreateDto);
+        Wishes newWish = wishService.saveWish(wishSaveRequest);
         assertNotNull(newWish);
     }
 
     // 카테고리 예외 테스트
     @Test
     public void saveInvalidCategoryWish(){
-        wishCreateDto.setCategoryName("모르겠는데요");
+        wishSaveRequest.setCategoryName("모르겠는데요");
         assertThrows(InvalidCategoryWishException.class, () -> {
-            wishService.saveWish(wishCreateDto);
+            wishService.saveWish(wishSaveRequest);
         });
     }
 
@@ -94,7 +94,7 @@ class WishServiceTest {
     @Test
     public void getSingleWish(){
         Long wishId = 13L; // 존재하는 wishId로 변경
-        ReturnSingleWishDto wish = wishService.getWish(wishId);
+        WishDetailResponse wish = wishService.getWish(wishId);
         System.out.println(wish.getTitle());
         System.out.println(wish.getContent());
         System.out.println(wish.getCategory());
