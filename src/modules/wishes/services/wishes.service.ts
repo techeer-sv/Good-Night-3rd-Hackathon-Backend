@@ -16,7 +16,7 @@ export class WishesService {
     }
 
     findOne(id: number) {
-        return `This action returns a #${id} wish`;
+        return this.wishesRepository.findById(id);
     }
 
     update(id: number, updateWishDto: UpdateWishDto) {

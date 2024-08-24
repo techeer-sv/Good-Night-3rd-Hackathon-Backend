@@ -14,6 +14,10 @@ export class WishesRepository extends Repository<WishEntity> {
         return this.save(wish);
     }
 
+    findById(id: number) {
+        return this.findOne({ where: { id: id } });
+    }
+
     deleteWish(id: number) {
         return this.softDelete({ id: id });
     }

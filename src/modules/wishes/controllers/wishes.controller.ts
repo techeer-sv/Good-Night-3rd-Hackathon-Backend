@@ -6,6 +6,8 @@ import {
     Patch,
     Param,
     Delete,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { WishesService } from '../services/wishes.service';
 import { CreateWishDto } from '../dto/create-wish.dto';
@@ -16,6 +18,7 @@ export class WishesController {
     constructor(private readonly wishesService: WishesService) {}
 
     @Post()
+    @UsePipes(ValidationPipe)
     create(@Body() createWishDto: CreateWishDto) {
         return this.wishesService.create(createWishDto);
     }
