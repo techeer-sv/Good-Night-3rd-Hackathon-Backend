@@ -19,4 +19,23 @@ export class WishesService {
   async delete(id: number): Promise<void> {
     await this.wishRepository.update(id, { deleted_at: new Date() });
   }
+
+  async approveWish(id: number): Promise<Wish> {
+    return this.updateConfirmStatus(id, '승인됨');
+  }
+
+  async rejectWish(id: number): Promise<Wish> {
+    return this.updateConfirmStatus(id, '거절됨');
+  }
+
+  private async updateConfirmStatus(id: number, status: string): Promise<Wish> {
+    const wish = await this.wishRepository.findOne({
+      where: { id, deleted_at: null },
+    });
+    if (!wish) {
+      throw new NotFoundException(`Wish with ID ${id} not found`);
+    }
+    wish.is_confirm = status;
+    return this.wishRepository.save(wish);
+  }
 }
