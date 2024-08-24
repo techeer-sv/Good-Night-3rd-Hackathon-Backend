@@ -7,6 +7,7 @@ import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.service.WishService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -72,5 +73,16 @@ public class WishController {
       WishResponse.WishReadDetailResponse response = WishResponse.WishReadDetailResponse.failure(id, "소원 조회 실패: " + e.getMessage());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+  }
+
+  @Operation(summary = "Get list of wishes", description = "Retrieve a paginated list of wishes with optional filters for category and confirmation status")
+  @GetMapping
+  public ResponseEntity<List<WishResponse.WishReadListResponse>> getAllWishes(
+      @RequestParam(required = false) String category,
+      @RequestParam(required = false) String is_confirmed) {
+
+    Boolean confirmed = is_confirmed != null ? Boolean.valueOf(is_confirmed) : null;
+    List<WishResponse.WishReadListResponse> response = wishService.getAllWishes(category, confirmed);
+    return ResponseEntity.ok(response);
   }
 }

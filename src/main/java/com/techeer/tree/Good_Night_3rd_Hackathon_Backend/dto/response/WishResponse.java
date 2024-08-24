@@ -79,4 +79,15 @@ public class WishResponse {
       return new WishReadDetailResponse(id, null, null, null, 400, message);
     }
   }
+
+  @Getter
+  @AllArgsConstructor
+  public static class WishReadListResponse {
+    private Long id;
+    private String title;
+
+    public static WishReadListResponse from(Wish wish) {
+      return new WishReadListResponse(wish.getId(), wish.getTitle());
+    }
+  }
 }

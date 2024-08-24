@@ -5,5 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WishRepository extends JpaRepository<Wish, Long> {
-    List<Wish> findAllByTitleContains(String title);
+    List<Wish> findByIsConfirmed(Boolean isConfirmed);
+    List<Wish> findByCategoryAndIsConfirmed(String category, Boolean isConfirmed);
+    List<Wish> findByCategoryAndIsConfirmedIsNull(String category);
+    List<Wish> findByIsConfirmedIsNull();
 }
+

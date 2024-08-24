@@ -1,10 +1,15 @@
 package com.techeer.tree.Good_Night_3rd_Hackathon_Backend.service;
 
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.request.WishRequest;
-import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.request.WishRequest.WishCreateRequest;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response.WishResponse;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.entity.Wish;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.repository.WishRepository;
+import org.springframework.transaction.annotation.Transactional;
+//import jakarta.transaction.Transactional;
+import java.util.stream.Collectors;
+import java.util.List;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class WishService {
@@ -39,4 +44,25 @@ public class WishService {
     return wishRepository.findById(id)
         .orElseThrow(() -> new IllegalArgumentException("Wish not found with id " + id));
   }
+
+  @Transactional(readOnly = true)
+  public List<WishResponse.WishReadListResponse> getAllWishes(String category, Boolean isConfirmed) {
+    List<Wish> wishes;
+    if (category != null && isConfirmed != null) {
+      wishes = wishRepository.findByCategoryAndIsConfirmed(category, isConfirmed);
+    } else if (category != null && isConfirmed == null) {
+      wishes = wishRepository.findByCategoryAndIsConfirmedIsNull(category);
+    } else if (isConfirmed != null) {
+      wishes = wishRepository.findByIsConfirmed(isConfirmed);
+    } else if (isConfirmed == null) {
+      wishes = wishRepository.findByIsConfirmedIsNull();
+    } else {
+      wishes = wishRepository.findAll();
+    }
+
+    return wishes.stream()
+        .map(WishResponse.WishReadListResponse::from)
+        .collect(Collectors.toList());
+  }
+
 }
