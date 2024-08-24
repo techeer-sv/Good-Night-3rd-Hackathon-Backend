@@ -2,7 +2,7 @@ package com.example.techeertree.controller;
 
 import com.example.techeertree.domain.Confirm;
 import com.example.techeertree.domain.Wish;
-import com.example.techeertree.dto.wish.WishRequestDto;
+import com.example.techeertree.dto.wish.WishRequestDto.*;
 import com.example.techeertree.dto.wish.WishResponseDto.*;
 import com.example.techeertree.service.WishService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@RequestMapping("api/wish")
+@RequestMapping("api/wishes")
 @RestController
 @RequiredArgsConstructor
 public class WishController {
@@ -24,7 +24,7 @@ public class WishController {
 
     @Operation(summary = "소원 등록")
     @PostMapping
-    public ResponseEntity<WishInfoResponseDto> createWish(@Valid @RequestBody WishRequestDto requestDto){
+    public ResponseEntity<WishInfoResponseDto> createWish(@Valid @RequestBody WishCreateRequestDto requestDto){
         WishInfoResponseDto responseDto = wishService.create(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
@@ -42,12 +42,9 @@ public class WishController {
         List<WishInfoResponseDto> responseDtos= new ArrayList<>();
         for(Wish wish : pendingWishes){
             WishInfoResponseDto responseDto = WishInfoResponseDto.builder()
-                    .id(wish.getId())
                     .title(wish.getTitle())
                     .content(wish.getContent())
                     .category(wish.getCategory())
-                    .isConfirm(wish.getIsConfirm())
-                    .createdAt(wish.getCreatedAt())
                     .build();
             responseDtos.add(responseDto);
         }
@@ -63,4 +60,10 @@ public class WishController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
+    @Operation(summary = "단일조회")
+    @GetMapping("/{id}")
+    public ResponseEntity<WishInfoResponseDto> findOne(@PathVariable Long id){
+        WishInfoResponseDto responseDto = wishService.findOne(id);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+    }
 }

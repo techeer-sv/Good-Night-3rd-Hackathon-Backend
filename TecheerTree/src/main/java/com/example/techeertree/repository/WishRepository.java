@@ -13,6 +13,6 @@ public interface  WishRepository extends JpaRepository<Wish, Long> {
     List<Wish> findAll();
     Optional<Wish> findById(Long id);
 
-
     List<Wish> findByIsConfirmAndIsDeletedFalse(Confirm isconfirm);
+
 }
