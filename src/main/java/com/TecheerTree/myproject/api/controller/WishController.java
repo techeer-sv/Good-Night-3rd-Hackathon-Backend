@@ -1,12 +1,16 @@
 package com.TecheerTree.myproject.api.controller;
 
 import com.TecheerTree.myproject.api.service.WishService;
+import com.TecheerTree.myproject.domain.dto.ReturnAllWishDto;
 import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +30,21 @@ public class WishController {
     }
 
     // 소원 목록 조회
+    @GetMapping
+    public ResponseEntity<Page<ReturnAllWishDto>> getWishes(
+            @RequestParam(value = "status",required = false) Status status,
+            @PageableDefault(sort = "createdDate", direction = org.springframework.data.domain.Sort.Direction.DESC) Pageable pageable ){
 
+        // 상태가 제공된 경우 해당 상태로 필터링, 상태가 제공되지 않은 경우 전체 조회
+        Page<Wishes> wishes = wishService.getWishes(status, pageable);
+
+        Page<ReturnAllWishDto> response = wishes.map(wish -> new ReturnAllWishDto(
+                wish.getTitle(),
+                wish.getContent(),
+                wish.getCreatedDate()
+        ));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
     // 소원 단일 조회
     @GetMapping("/{wishId}")

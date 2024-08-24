@@ -1,6 +1,7 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.repository.WishRepository;
+import com.TecheerTree.myproject.domain.dto.ReturnAllWishDto;
 import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Category;
@@ -12,6 +13,8 @@ import com.TecheerTree.myproject.exception.UnApprovedStatusException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +36,7 @@ public class WishService {
         newWish.setTitle(wishCreateDto.getTitle());
         newWish.setCategory(wishCreateDto.getCategory());
         newWish.setContent(wishCreateDto.getContent());
-        newWish.setIs_confirm(Status.PENDING);
+        newWish.setStatus(Status.PENDING);
         newWish.setCreatedDate();
 
         return wishRepository.save(newWish);
@@ -58,7 +61,7 @@ public class WishService {
 
         Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
-        findWish.setIs_confirm(status);
+        findWish.setStatus(status);
 
         return wishRepository.save(findWish);
 
@@ -68,7 +71,7 @@ public class WishService {
         Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
-        if(findWish.getIs_confirm() != Status.APPROVED){
+        if(findWish.getStatus() != Status.APPROVED){
             throw new UnApprovedStatusException("승인된 소원이 아닙니다.");
         }
 
@@ -78,5 +81,13 @@ public class WishService {
         findWishDto.setCategory(findWish.getCategory().getKoreanName());
 
         return findWishDto;
+    }
+
+    public Page<Wishes> getWishes(Status status, Pageable pageable){
+        if (status != null) {
+            return wishRepository.findByStatus(status, pageable);
+        } else {
+            return wishRepository.findAll(pageable);
+        }
     }
 }

@@ -22,17 +22,18 @@ public class Wishes {
 
     private Category category;
 
-    private Status is_confirm;
+    @Column(name = "is_confirm") // 데이터베이스 컬럼 이름과 매핑
+    private Status status;
 
     public Wishes(){
     }
 
-    public Wishes(String title, String content, Category category, LocalDate createdDate, Status is_confirm, boolean deleted_at) {
+    public Wishes(String title, String content, Category category, LocalDate createdDate, Status status, boolean deleted_at) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.createdDate = createdDate;
-        this.is_confirm = is_confirm;
+        this.status = status;
         this.deleted_at = deleted_at;
     }
 

@@ -4,24 +4,16 @@ import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
-import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import com.TecheerTree.myproject.exception.InvalidCategoryWishException;
 import com.TecheerTree.myproject.exception.InvalidStatusWishException;
 import com.TecheerTree.myproject.exception.UnApprovedStatusException;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.xml.bind.ValidationException;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -87,7 +79,7 @@ class WishServiceTest {
         Wishes wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
-        assertEquals(Status.REJECTED, wish.getIs_confirm()); // REJECTED로 변경되었는지 확인
+        assertEquals(Status.REJECTED, wish.getStatus()); // REJECTED로 변경되었는지 확인
     }
 
     // status update 실패 테스트
@@ -121,4 +113,5 @@ class WishServiceTest {
             wishService.getWish(wishId);
         });
     }
+
 }
