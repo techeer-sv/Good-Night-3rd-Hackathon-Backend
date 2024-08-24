@@ -18,14 +18,14 @@ public class Comments {
     private String content;
     private LocalDate createdDate;
     private Long wishId;  // 소원의 ID만 저장
-    private boolean deleted_at;
+    private boolean deletedAt;
     public Comments() {
     }
 
-    public Comments(String content, LocalDate createdDate, Long wishId, boolean deleted_at) {
+    public Comments(String content, LocalDate createdDate, Long wishId, boolean deletedAt) {
         this.content = content;
         this.createdDate = createdDate;
         this.wishId = wishId;
-        this.deleted_at = deleted_at;
+        this.deletedAt = deletedAt;
     }
 }

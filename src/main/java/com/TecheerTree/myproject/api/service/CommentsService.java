@@ -3,14 +3,14 @@ package com.TecheerTree.myproject.api.service;
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
 import com.TecheerTree.myproject.domain.dto.CommentCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
-import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -33,8 +33,12 @@ public class CommentsService {
         Comments findComment = commentsRepository.findById(commentId).orElseThrow(()
                 -> new EntityNotFoundException("comment not found with id: " + commentId));
         // deleted_at만 true로 변경
-        findComment.setDeleted_at(true);
+        findComment.setDeletedAt(true);
 
         commentsRepository.save(findComment);
+    }
+
+    public Page<Comments> getComments(Long wishId, Pageable pageable) {
+        return commentsRepository.findByWishIdAndDeletedAtFalse(wishId,pageable);
     }
 }

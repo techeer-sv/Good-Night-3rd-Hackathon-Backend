@@ -1,13 +1,9 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.controller.CommentsController;
-import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
-import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.CommentCreateDto;
-import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
-import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,6 +49,6 @@ class CommentsServiceTest {
         Comments comment = commentsRepository.findById(commentId)
                 .orElseThrow(() -> new EntityNotFoundException("comment not found with id: " + commentId));
 
-        assertTrue(comment.isDeleted_at()); // true로 저장되었는지 확인
+        assertTrue(comment.isDeletedAt()); // true로 저장되었는지 확인
     }
 }

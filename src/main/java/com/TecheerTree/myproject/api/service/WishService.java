@@ -85,9 +85,9 @@ public class WishService {
 
     public Page<Wishes> getWishes(Status status, Pageable pageable){
         if (status != null) {
-            return wishRepository.findByStatus(status, pageable);
+            return wishRepository.findActiveWishesByStatus(status, pageable);
         } else {
-            return wishRepository.findAll(pageable);
+            return wishRepository.findAllActive(pageable);
         }
     }
 }
