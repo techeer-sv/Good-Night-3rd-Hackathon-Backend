@@ -126,3 +126,26 @@ func (h *WishHandler) GetWish(c *gin.Context) {
 
 	c.JSON(http.StatusOK, response)
 }
+
+func (h *WishHandler) GetWishList(c *gin.Context) {
+	status := c.Query("status")
+	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	pageSize, _ := strconv.Atoi(c.DefaultQuery("page_size", "10"))
+
+	wishes, err := h.service.GetAllWishes(status, page, pageSize)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve wishes"})
+		return
+	}
+
+	var response []gin.H
+	for _, wish := range wishes {
+		response = append(response, gin.H{
+			"title":      wish.Title,
+			"category":   wish.Category,
+			"created_at": wish.CreatedAt,
+		})
+	}
+
+	c.JSON(http.StatusOK, response)
+}

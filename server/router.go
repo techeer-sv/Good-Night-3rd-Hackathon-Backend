@@ -18,6 +18,7 @@ func setupRouter(handler *handlers.Handler) *gin.Engine {
 			wishGroup.PUT("/status", handler.WishHandler.UpdateWisheList)
 			wishGroup.PUT("/:id/status", handler.WishHandler.UpdateWish)
 			wishGroup.GET("/:id", handler.WishHandler.GetWish)
+			wishGroup.GET("/", handler.WishHandler.GetWishList)
 		}
 	}
 	return router

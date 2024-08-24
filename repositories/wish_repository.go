@@ -13,6 +13,7 @@ type WishRepository interface {
 	UpdateAll(status string) error
 	UpdateOne(id uint, status string) error
 	FindByID(id uint) (*models.Wish, error)
+	FindAll(status string, page, pageSize int) ([]models.Wish, error)
 }
 
 type wishRepository struct {
@@ -74,4 +75,23 @@ func (r *wishRepository) FindByID(id uint) (*models.Wish, error) {
 		return nil, err
 	}
 	return &wish, nil
+}
+
+// 6. 목록 조회
+func (r *wishRepository) FindAll(status string, page, pageSize int) ([]models.Wish, error) {
+	var wishes []models.Wish
+	query := r.db.Model(&models.Wish{}).Where("deleted_at IS NULL")
+
+	// 승인 상태 필터링
+	if status != "" {
+		query = query.Where("is_confirm = ?", status)
+	}
+
+	// 페이지네이션
+	offset := (page - 1) * pageSize
+	query = query.Offset(offset).Limit(pageSize)
+
+	// 정렬
+	err := query.Order("created_at DESC").Find(&wishes).Error
+	return wishes, err
 }
