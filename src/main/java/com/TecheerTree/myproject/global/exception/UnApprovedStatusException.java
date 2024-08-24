@@ -1,4 +1,4 @@
-package com.TecheerTree.myproject.exception;
+package com.TecheerTree.myproject.global.exception;
 
 public class UnApprovedStatusException extends RuntimeException{
 
