@@ -7,7 +7,6 @@ import {
     Delete,
     UsePipes,
     ValidationPipe,
-    Patch,
 } from '@nestjs/common';
 import { WishesService } from '../services/wishes.service';
 import { CreateWishDto } from '../dto/create-wish.dto';
@@ -38,11 +37,5 @@ export class WishesController {
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.wishesService.remove(+id);
-    }
-
-    @Patch()
-    @UsePipes(ValidationPipe)
-    confirm(@Body() updateWishDto: UpdateWishDto) {
-        return this.wishesService.confirm(updateWishDto);
     }
 }

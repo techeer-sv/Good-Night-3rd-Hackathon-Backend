@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWishDto } from '../dto/create-wish.dto';
 import { WishesRepository } from '../repositories/wishes.repository';
-import { UpdateWishDto } from '../dto/update-wish.dto';
 
 @Injectable()
 export class WishesService {
@@ -21,10 +20,5 @@ export class WishesService {
 
     remove(id: number) {
         return this.wishesRepository.deleteWish(id);
-    }
-
-    confirm(updateWishDto: UpdateWishDto) {
-        const { id, isConfirm } = updateWishDto;
-        return this.wishesRepository.confirmWish(id, isConfirm);
     }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Wish } from '../domain/wish.entity';
 import { CreateWishDto } from '../dto/create-wish.dto';
-import { UpdateWishDto } from '../dto/update-wish.dto';
 
 @Injectable()
 export class WishesRepository extends Repository<Wish> {
@@ -27,9 +26,5 @@ export class WishesRepository extends Repository<Wish> {
 
     deleteWish(id: number) {
         return this.softDelete({ id: id });
-    }
-
-    confirmWish(id: number, isConfirm: string) {
-        return this.update({ id: id }, { isConfirm: isConfirm });
     }
 }
