@@ -17,6 +17,10 @@ public class WishesService {
         return wishesRepository.save(wish).getId();
     }
 
+    public void deleteWish(Long id) {
+        wishesRepository.deleteById(id);
+    }
+
     public void confirmWish(Long id, ConfirmStatus confirmStatus) {
         wishesRepository.findById(id).ifPresent(wish -> {
             wish.setIs_confirmed(confirmStatus);
