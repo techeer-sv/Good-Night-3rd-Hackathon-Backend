@@ -31,4 +31,11 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/{wishId}")
+    public List<CommentResponse> getWishList(@RequestParam(value = "page", defaultValue = "0") int page,
+                                             @RequestParam(value = "size", defaultValue = "10") int size,
+                                             @PathVariable Long wishId) {
+        return commentService.findCommentList(page, size, wishId);
+    }
+
 }

@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     // Custom query methods can be added here
+    Page<Comment> findAllByWishId(Long wishId, Pageable pageable);
 }
