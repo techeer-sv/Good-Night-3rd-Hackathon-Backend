@@ -13,7 +13,7 @@ export class CommentsService {
     @InjectRepository(Wish)
     private readonly wishRepository: Repository<Wish>,
   ) {}
-
+  // 댓글 생성
   async create(createCommentDto: CreateCommentDto): Promise<Comment> {
     const wish = await this.wishRepository.findOne({
       where: { id: createCommentDto.wishId },
@@ -30,6 +30,7 @@ export class CommentsService {
     return this.commentRepository.save(comment);
   }
 
+  // 소원의 모든 댓글 조회
   async findAll(
     wishId: number,
     page: number = 1,
@@ -42,13 +43,14 @@ export class CommentsService {
       .andWhere('comment.deleted_at IS NULL')
       .orderBy('comment.createdAt', 'DESC');
 
-    // Apply pagination
+    // 페이지네이션
     const offset = (page - 1) * limit;
     query.skip(offset).take(limit);
 
     return query.getMany();
   }
 
+  // 댓글 논리 삭제
   async delete(id: number): Promise<void> {
     await this.commentRepository.update(id, { deleted_at: new Date() });
   }
