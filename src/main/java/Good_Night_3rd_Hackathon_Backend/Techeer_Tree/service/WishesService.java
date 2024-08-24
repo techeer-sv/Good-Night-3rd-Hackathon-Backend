@@ -5,9 +5,10 @@ import Good_Night_3rd_Hackathon_Backend.Techeer_Tree.dto.WishesDto;
 import Good_Night_3rd_Hackathon_Backend.Techeer_Tree.repository.WishesRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-
+import java.time.LocalDateTime;
 
 @Service
 public class WishesService {
@@ -35,7 +36,7 @@ public class WishesService {
         wish.setTitle(wishesDto.getTitle());
         wish.setContent(wishesDto.getContent());
         wish.setCategory(wishesDto.getCategory());
-        wish.setCreatedAt(LocalDate.now());
+        wish.setCreatedAt(LocalDateTime.now());
         wish.setIsConfirm(Wishes.WishesStatus.PENDING);
 
         return wishesRepository.save(wish);
@@ -67,6 +68,11 @@ public class WishesService {
             throw new IllegalArgumentException("승인되지 않은 소원입니다.");
         }
         return wish;
+    }
+
+    @Transactional
+    public Page<Wishes> getWishList(Wishes.WishesStatus status, Pageable pageable) {
+        return wishesRepository.getWishList(status, pageable);
     }
 }
 

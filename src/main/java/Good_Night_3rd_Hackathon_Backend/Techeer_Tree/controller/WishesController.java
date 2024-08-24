@@ -6,6 +6,10 @@ import Good_Night_3rd_Hackathon_Backend.Techeer_Tree.service.WishesService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/wishes")
@@ -61,5 +65,15 @@ public class WishesController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
             }
         }
+    }
+
+    @GetMapping
+    public Page<Wishes> getWishes(
+            @RequestParam(required = false) Wishes.WishesStatus status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return wishesService.getWishList(status, pageable);
     }
 }

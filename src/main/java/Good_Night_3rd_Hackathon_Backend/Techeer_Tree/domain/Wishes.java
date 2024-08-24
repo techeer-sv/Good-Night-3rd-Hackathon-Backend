@@ -1,7 +1,7 @@
 package Good_Night_3rd_Hackathon_Backend.Techeer_Tree.domain;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +25,7 @@ public class Wishes {
     private Category category;
 
     @Column(nullable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private WishesStatus isConfirm = WishesStatus.PENDING;
