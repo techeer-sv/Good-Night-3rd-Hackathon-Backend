@@ -46,6 +46,15 @@ public class WishController {
         return ResponseEntity.ok(wishService.updateWish(id, Wish.Status.REJECTED));
     }
 
+    @GetMapping
+    public ResponseEntity<List<WishListResponse>> findAllWish(
+            @RequestParam Wish.Status status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        List<WishListResponse> wishList = wishService.findAllWish(status, page, size);
+        return ResponseEntity.ok(wishList);
+    }
 
 
 

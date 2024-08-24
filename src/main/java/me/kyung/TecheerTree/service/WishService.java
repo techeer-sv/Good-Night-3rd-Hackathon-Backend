@@ -9,7 +9,6 @@ import me.kyung.TecheerTree.repository.WishRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +22,14 @@ import java.util.stream.Collectors;
 public class WishService {
     private final WishRepository wishRepository;
 
+    public List<WishListResponse> findAllWish(Wish.Status status, int pageNumber, int pageSize){
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Wish> wishPage = wishRepository.findByIsConfirmDesc(status, pageable);
+
+        return wishPage.getContent().stream()
+                .map(WishListResponse::from)
+                .collect(Collectors.toList());
+    }
 
     public Wish createWish(Wish wish) {
         return wishRepository.save(wish);
