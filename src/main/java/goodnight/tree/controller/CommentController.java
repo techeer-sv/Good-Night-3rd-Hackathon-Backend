@@ -5,6 +5,7 @@ import goodnight.tree.domain.dto.request.CommentSaveRequest;
 import goodnight.tree.domain.dto.response.CommentResponse;
 import goodnight.tree.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,8 @@ import java.util.List;
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
+
+    @Autowired
     private final CommentService commentService;
 
     @PostMapping

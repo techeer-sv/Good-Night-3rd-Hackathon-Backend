@@ -8,6 +8,7 @@ import goodnight.tree.domain.dto.response.WishResponse;
 import goodnight.tree.repository.WishRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,12 +16,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service @Transactional
 public class WishService {
+
+    @Autowired
     private final WishRepository wishRepository;
 
     // 소원 등록
@@ -66,6 +68,14 @@ public class WishService {
                 .map(WishResponse::from)
                 .collect(Collectors.toList());
 
+    }
+
+    // 소원 키워드 조회
+    public List<WishResponse> searchWishes(Wish.Category category, String keyword, Wish.WishStatus status) {
+        List<Wish> wishes = wishRepository.searchWishes(category, keyword, status);
+        return wishes.stream()
+                .map(WishResponse::from)
+                .collect(Collectors.toList());
     }
 
 }

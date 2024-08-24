@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/wishes")
 public class WishController {
+
+    @Autowired
     private final WishService wishService;
 
     //  소원 등록
@@ -62,5 +65,11 @@ public class WishController {
         return wishService.findWishList(page, size, status);
     }
 
+    @GetMapping("/wishes/search")
+    public List<WishResponse> searchWishes(@RequestParam(required = false) Wish.Category category,
+                                   @RequestParam String keyword,
+                                   @RequestParam(required = false) Wish.WishStatus status) {
+        return wishService.searchWishes(category, keyword, status);
+    }
 
 }

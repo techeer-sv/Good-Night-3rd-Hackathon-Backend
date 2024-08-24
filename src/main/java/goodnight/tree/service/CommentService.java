@@ -8,6 +8,7 @@ import goodnight.tree.domain.dto.response.WishResponse;
 import goodnight.tree.repository.CommentRepository;
 import goodnight.tree.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Service @Transactional
 public class CommentService {
 
+    @Autowired
     private final CommentRepository commentRepository;
     private final WishRepository wishRepository;
 
