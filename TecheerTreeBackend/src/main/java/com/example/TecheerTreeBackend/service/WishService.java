@@ -1,10 +1,13 @@
 package com.example.TecheerTreeBackend.service;
 
 import com.example.TecheerTreeBackend.domain.Wish;
+import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
 import com.example.TecheerTreeBackend.repository.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class WishService {
@@ -22,5 +25,34 @@ public class WishService {
 
         // 잘 저장이 되었다고 반환
         return "저장 성공!";
+    }
+
+    public String deleteWish(Long wishId){
+        // 소원 조회
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 wishId의 소원을 찾을 수 없습니다."));
+
+        // soft delete 처리
+        wish.softDelete();
+
+        // 처리 후 DB 저장
+        wishRepository.save(wish);
+
+        return "soft delete 처리가 되었습니다.";
+
+    }
+
+    public String confirmWish(Long wishId, WishConfirmForm wishConfirmForm) {
+        // 소원 조회
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 wishId의 소원을 찾을 수 없습니다."));
+
+        // 승인 여부 결정
+        String result = wish.confirm(wishConfirmForm);
+
+        // 처리후 DB 저장
+        wishRepository.save(wish);
+
+        return result + " 처리가 되었습니다.";
     }
 }

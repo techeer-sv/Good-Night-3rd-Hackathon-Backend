@@ -1,11 +1,14 @@
 package com.example.TecheerTreeBackend.domain;
 
+import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
+@NoArgsConstructor
 public class Wish {
 
     @Id
@@ -33,5 +36,13 @@ public class Wish {
                 wishForm.getCategory(),
                 wishForm.getCreate_at()
         );
+    }
+
+    public void softDelete() {
+        this.is_deleted = Boolean.TRUE;
+    }
+
+    public String confirm(WishConfirmForm wishConfirmForm) {
+        return this.is_confirm = wishConfirmForm.getConfirm();
     }
 }
