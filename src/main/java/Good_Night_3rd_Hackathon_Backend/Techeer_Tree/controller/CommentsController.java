@@ -38,4 +38,14 @@ public class CommentsController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         return commentsService.getCommentList(wishId, pageable);
     }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<String> deleteWish(@PathVariable Long wishId, @PathVariable Long commentId) {
+        try {
+            commentsService.deleteComment(wishId, commentId);
+            return ResponseEntity.ok("댓글이 삭제되었습니다.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 }

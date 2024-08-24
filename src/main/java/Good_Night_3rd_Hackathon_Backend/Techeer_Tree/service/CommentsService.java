@@ -46,4 +46,17 @@ public class CommentsService {
         return commentsRepository.getCommentList(wish, pageable);
     }
 
+    @Transactional
+    public void deleteComment(Long wishId, Long commentId) {
+        Wishes wish = wishesRepository.findById(wishId).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+
+        Comments comment = commentsRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+
+        if (!comment.getWish().getId().equals(wishId)) {
+            throw new IllegalArgumentException("해당 소원의 댓글이 아닙니다.");
+        }
+
+        comment.setIsDeleted(true);
+        commentsRepository.save(comment);
+    }
 }
