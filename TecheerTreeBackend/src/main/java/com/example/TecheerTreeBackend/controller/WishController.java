@@ -2,8 +2,11 @@ package com.example.TecheerTreeBackend.controller;
 
 import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
+import com.example.TecheerTreeBackend.dto.WishResponse;
 import com.example.TecheerTreeBackend.service.WishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +33,20 @@ public class WishController {
     public String confirmWish(@PathVariable Long wishId, @RequestBody WishConfirmForm wishConfirmForm){
         // 서비스 위임
         return wishService.confirmWish(wishId, wishConfirmForm);
+    }
+
+    // 소원 단일 조회
+    @GetMapping("/wish/{wishId}")
+    public ResponseEntity<WishResponse> viewWish(@PathVariable Long wishId){
+        // 서비스 위임
+        WishResponse viewWish = wishService.viewService(wishId);
+
+        // 만약 viewWish가 null이라면 BAD_REQUEST 반환
+        if (viewWish == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(viewWish);
     }
 
 }

@@ -3,11 +3,14 @@ package com.example.TecheerTreeBackend.domain;
 import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Wish {
 
@@ -44,5 +47,12 @@ public class Wish {
 
     public String confirm(WishConfirmForm wishConfirmForm) {
         return this.is_confirm = wishConfirmForm.getConfirm();
+    }
+
+    public Boolean checkConfirm() {
+        if (Objects.equals(this.getIs_confirm(), "승인됨")){
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }
