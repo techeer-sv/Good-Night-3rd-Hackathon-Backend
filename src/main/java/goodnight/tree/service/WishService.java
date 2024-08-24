@@ -58,4 +58,14 @@ public class WishService {
         return WishDetailResponse.from(wish);
     }
 
+    // 소원 리스트 조회(페이지네이션)
+    public List<WishResponse> findWishList(int page, int pageSize, Wish.WishStatus status) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Order.desc("createdAt")));
+        Page<Wish> wishes = wishRepository.findAllByIsConfirm(status, pageable);
+        return wishes.stream()
+                .map(WishResponse::from)
+                .collect(Collectors.toList());
+
+    }
+
 }

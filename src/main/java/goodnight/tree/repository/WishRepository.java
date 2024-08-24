@@ -12,5 +12,6 @@ import java.util.Optional;
 @Repository
 public interface WishRepository extends JpaRepository<Wish, Long> {
     // Custom query methods can be added here
+    Page<Wish> findAllByIsConfirm(Wish.WishStatus status, Pageable pageable);
 
 }

@@ -54,6 +54,13 @@ public class WishController {
         return response;
     }
 
+    // 소원 목록 조회
+    @GetMapping
+    public List<WishResponse> getWishList(@RequestParam(value = "page", defaultValue = "0") int page,
+                                          @RequestParam(value = "size", defaultValue = "10") int size,
+                                          @RequestParam(value = "status", defaultValue = "PENDING") Wish.WishStatus status) {
+        return wishService.findWishList(page, size, status);
+    }
 
 
 }
