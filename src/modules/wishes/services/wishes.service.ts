@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWishDto } from '../dto/create-wish.dto';
-import { UpdateWishDto } from '../dto/update-wish.dto';
 import { WishesRepository } from '../repositories/wishes.repository';
 
 @Injectable()
@@ -17,10 +16,6 @@ export class WishesService {
 
     findOne(id: number) {
         return this.wishesRepository.findById(id);
-    }
-
-    update(id: number, updateWishDto: UpdateWishDto) {
-        return `This action updates a #${id} wish`;
     }
 
     remove(id: number) {
