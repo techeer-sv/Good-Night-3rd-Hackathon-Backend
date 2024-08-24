@@ -1,6 +1,7 @@
 package com.example.goodnight3rdhackathonbackend.repository;
 
 import com.example.goodnight3rdhackathonbackend.domain.Wish;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface WishRepository {
     void updateById(Long id, Wish wish);
 
     Wish findById(Long id);
-    List<Wish> findAll();
+    List<Wish> findAll(Pageable pageable);
 
 
 }

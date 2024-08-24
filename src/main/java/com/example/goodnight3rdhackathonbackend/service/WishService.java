@@ -7,10 +7,12 @@ import com.example.goodnight3rdhackathonbackend.error.ErrorCode;
 import com.example.goodnight3rdhackathonbackend.error.NotApprovedWishException;
 import com.example.goodnight3rdhackathonbackend.error.NotFoundWishException;
 import com.example.goodnight3rdhackathonbackend.repository.WishRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.PageRequest;
+
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -61,8 +63,9 @@ public class WishService {
         return wishDto;
     }
 
-    public List<WishDto.FindAllDto> findAllWish(String wishState) {
-        return wishRepository.findAll()
+    public List<WishDto.FindAllDto> findAllWish(String wishState, int page) {
+        Pageable pageable = PageRequest.of(page, 2);
+        return wishRepository.findAll(pageable)
                 .stream()
                 .filter(wish -> {
                     if(wishState == WishConfirmState.APPROVED.getEnglish()) {

@@ -37,8 +37,9 @@ public class WishController {
     }
 
     @GetMapping("/wishs")
-    public List<WishDto.FindAllDto> findAllWish(@RequestParam(value = "state", required = false) String wishState) {
-        return wishService.findAllWish(wishState);
+    public List<WishDto.FindAllDto> findAllWish(@RequestParam(value = "state", required = false) String wishState,
+                                                @RequestParam(value = "page", defaultValue = "0") int page) {
+        return wishService.findAllWish(wishState, page);
     }
 
 }
