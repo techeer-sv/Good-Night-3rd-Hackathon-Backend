@@ -30,10 +30,23 @@ export class CommentsService {
     return this.commentRepository.save(comment);
   }
 
-  async findAll(wishId: number): Promise<Comment[]> {
-    return this.commentRepository.find({
-      where: { wish: { id: wishId }, deleted_at: null },
-    });
+  async findAll(
+    wishId: number,
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<Comment[]> {
+    const query = this.commentRepository.createQueryBuilder('comment');
+
+    query
+      .where('comment.wishId = :wishId', { wishId })
+      .andWhere('comment.deleted_at IS NULL')
+      .orderBy('comment.createdAt', 'DESC');
+
+    // Apply pagination
+    const offset = (page - 1) * limit;
+    query.skip(offset).take(limit);
+
+    return query.getMany();
   }
 
   async delete(id: number): Promise<void> {

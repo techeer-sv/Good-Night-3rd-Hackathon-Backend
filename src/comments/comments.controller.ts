@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Param, Body, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  Body,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 
@@ -12,8 +20,12 @@ export class CommentsController {
   }
 
   @Get(':wishId')
-  findAll(@Param('wishId') wishId: string) {
-    return this.commentsService.findAll(+wishId);
+  findAll(
+    @Param('wishId') wishId: number,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.commentsService.findAll(wishId, page, limit);
   }
 
   @Delete(':id')
