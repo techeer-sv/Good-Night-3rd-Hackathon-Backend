@@ -1,6 +1,7 @@
 package com.TecheerTree.myproject.api.controller;
 
 import com.TecheerTree.myproject.api.service.WishService;
+import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
@@ -20,14 +21,19 @@ public class WishController {
     // 소원 등록
     @PostMapping
     public ResponseEntity<Wishes> createWish(@Valid @RequestBody WishCreateDto wishCreateDto){
-
         Wishes newWish = wishService.saveWish(wishCreateDto);
-
         return new ResponseEntity<>(newWish, HttpStatus.CREATED);
     }
 
     // 소원 목록 조회
+
+
     // 소원 단일 조회
+    @GetMapping("/{wishId}")
+    public ResponseEntity<ReturnSingleWishDto> getWish(@PathVariable("wishId") Long wishId){
+        ReturnSingleWishDto findWish = wishService.getWish(wishId);
+        return new ResponseEntity<>(findWish, HttpStatus.OK);
+    }
 
 
     // 소원 승인/거절

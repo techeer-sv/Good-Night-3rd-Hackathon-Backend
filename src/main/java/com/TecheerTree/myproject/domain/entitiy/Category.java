@@ -33,5 +33,4 @@ public enum Category {
     public static Category fromKoreanName(String koreanName) {
         return NAME_TO_ENUM.get(koreanName);
     }
-
 }

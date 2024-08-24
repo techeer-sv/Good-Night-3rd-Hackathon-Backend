@@ -1,12 +1,14 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.repository.WishRepository;
+import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import com.TecheerTree.myproject.exception.InvalidCategoryWishException;
 import com.TecheerTree.myproject.exception.InvalidStatusWishException;
+import com.TecheerTree.myproject.exception.UnApprovedStatusException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +62,21 @@ public class WishService {
 
         return wishRepository.save(findWish);
 
+    }
+
+    public ReturnSingleWishDto getWish(Long wishId) {
+        Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
+                -> new EntityNotFoundException("Wish not found with id: " + wishId));
+
+        if(findWish.getIs_confirm() != Status.APPROVED){
+            throw new UnApprovedStatusException("승인된 소원이 아닙니다.");
+        }
+
+        ReturnSingleWishDto findWishDto = new ReturnSingleWishDto();
+        findWishDto.setTitle(findWish.getTitle());
+        findWishDto.setContent(findWish.getContent());
+        findWishDto.setCategory(findWish.getCategory().getKoreanName());
+
+        return findWishDto;
     }
 }

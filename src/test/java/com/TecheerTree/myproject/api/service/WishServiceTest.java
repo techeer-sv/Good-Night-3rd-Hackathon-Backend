@@ -2,12 +2,14 @@ package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.WishRepository;
+import com.TecheerTree.myproject.domain.dto.ReturnSingleWishDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import com.TecheerTree.myproject.exception.InvalidCategoryWishException;
 import com.TecheerTree.myproject.exception.InvalidStatusWishException;
+import com.TecheerTree.myproject.exception.UnApprovedStatusException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.xml.bind.ValidationException;
@@ -18,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -64,7 +68,7 @@ class WishServiceTest {
     // soft delete 테스트
     @Test
     public void deleteWish(){
-        Long wishId = 3L; // 존재하는 wishId로 변경
+        Long wishId = 14L; // 존재하는 wishId로 변경
         wishService.wishDelete(wishId);
 
         Wishes wish = wishRepository.findById(wishId)
@@ -78,7 +82,7 @@ class WishServiceTest {
     @Test
     public void updateStatus(){
         Long wishId = 4L; // 존재하는 wishId로 변경
-        wishService.updateWishStatus(wishId, "거절됨");
+        wishService.updateWishStatus(wishId, "승인됨");
 
         Wishes wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
@@ -92,6 +96,29 @@ class WishServiceTest {
         Long wishId = 4L; // 존재하는 wishId로 변경
         assertThrows(InvalidStatusWishException.class, () -> {
             wishService.updateWishStatus(wishId, "모르겠음");
+        });
+    }
+
+    // 소원 단일 조회 성공 테스트
+    @Test
+    public void getSingleWish(){
+        Long wishId = 13L; // 존재하는 wishId로 변경
+        ReturnSingleWishDto wish = wishService.getWish(wishId);
+        System.out.println(wish.getTitle());
+        System.out.println(wish.getContent());
+        System.out.println(wish.getCategory());
+        Wishes checkWish = wishRepository.findById(wishId).orElseThrow();
+        assertEquals(checkWish.getTitle(), wish.getTitle());
+        assertEquals(checkWish.getContent(), wish.getContent());
+        assertEquals(checkWish.getCategory().getKoreanName(), wish.getCategory());
+    }
+
+    // 소원 단일 조회 실패 테스트
+    @Test
+    public void failGetSingleWish(){
+        Long wishId = 14L; // 존재하는 wishId로 변경
+        assertThrows(UnApprovedStatusException.class, () -> {
+            wishService.getWish(wishId);
         });
     }
 }
