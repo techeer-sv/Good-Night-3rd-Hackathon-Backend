@@ -41,4 +41,10 @@ public class WishesService {
         return wishesRepository.save(wish);
     }
 
+    @Transactional
+    public void deleteWish(Long id) {
+        Wishes wish = wishesRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+        wish.setIsDeleted(true);
+        wishesRepository.save(wish);
+    }
 }
