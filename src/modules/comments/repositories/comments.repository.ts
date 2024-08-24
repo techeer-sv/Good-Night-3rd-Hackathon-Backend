@@ -14,4 +14,8 @@ export class CommentsRepository extends Repository<Comment> {
         const comment = this.create({ ...createCommentDto, wish: wish });
         return this.save(comment);
     }
+
+    deleteComment(id: number) {
+        return this.softDelete({ id: id });
+    }
 }

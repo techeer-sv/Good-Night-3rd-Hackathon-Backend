@@ -23,11 +23,7 @@ export class CommentsService {
         return `This action returns all comments`;
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} comment`;
-    }
-
     remove(id: number) {
-        return `This action removes a #${id} comment`;
+        return this.commentsRepository.deleteComment(id);
     }
 }

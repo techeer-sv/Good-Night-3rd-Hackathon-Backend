@@ -26,11 +26,6 @@ export class CommentsController {
         return this.commentsService.findAll();
     }
 
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.commentsService.findOne(+id);
-    }
-
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.commentsService.remove(+id);
