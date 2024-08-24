@@ -3,7 +3,9 @@ package com.example.Good_Night_3rd_Hackathon_Backend.service;
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.ConfirmStatus;
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.Wishes;
 import com.example.Good_Night_3rd_Hackathon_Backend.repository.WishesRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 
 @Transactional
 public class WishesService {
@@ -18,13 +20,24 @@ public class WishesService {
     }
 
     public void deleteWish(Long id) {
-        wishesRepository.deleteById(id);
+        Optional<Wishes> wish = wishesRepository.findById(id);
+        if (wish.isPresent()) {
+            Wishes foundWish = wish.get();
+            foundWish.setDeleted(true);  // 소프트 삭제 플래그 설정
+            wishesRepository.save(foundWish);  // 엔티티 업데이트
+        } else {
+            throw new EntityNotFoundException("Wish not found with id: " + id);
+        }
     }
 
     public void confirmWish(Long id, ConfirmStatus confirmStatus) {
         wishesRepository.findById(id).ifPresent(wish -> {
-            wish.setIs_confirmed(confirmStatus);
+            wish.setIsConfirmed(confirmStatus);
             wishesRepository.save(wish);
         });
+    }
+
+    public Optional<Wishes> getWish(Long id) {
+        return wishesRepository.findByIdAndIsDeletedFalseAndIsConfirmed(id, ConfirmStatus.CONFIRMED);
     }
 }

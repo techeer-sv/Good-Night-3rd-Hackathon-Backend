@@ -28,7 +28,7 @@ public class Wishes {
     @Setter
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ConfirmStatus is_confirmed = ConfirmStatus.PENDING;;
+    private ConfirmStatus isConfirmed = ConfirmStatus.PENDING;;
 
     @Column(nullable = false, updatable = false)
     @CreatedDate
@@ -40,16 +40,8 @@ public class Wishes {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime updated_at;
 
+    @Setter
     @Column(nullable = false)
-    private boolean is_deleted;
-
-    @Builder
-    public Wishes(String title, String content, String category) {
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.is_confirmed = ConfirmStatus.PENDING;
-        this.is_deleted = false;
-    }
+    private boolean isDeleted = false;
 
 }

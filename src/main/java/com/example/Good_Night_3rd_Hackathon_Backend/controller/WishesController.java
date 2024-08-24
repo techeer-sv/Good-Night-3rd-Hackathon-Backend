@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class WishesController {
@@ -23,8 +24,8 @@ public class WishesController {
     @PostMapping("/wishes")
     public ResponseEntity<String> createWishes(@Valid @RequestBody Wishes wish) {
         try {
-            wishesService.createWish(wish);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Wishes successfully created.");
+            Long id = wishesService.createWish(wish);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Wishes successfully created. id: " + id);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create wishes.");
         }
@@ -48,6 +49,20 @@ public class WishesController {
             return ResponseEntity.status(HttpStatus.OK).body("Wishes successfully confirmed.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to confirm wishes.");
+        }
+    }
+
+    @GetMapping("/wishes/{id}")
+    public ResponseEntity<Wishes> getWishes(@PathVariable Long id) {
+        try {
+            Optional<Wishes> wish = wishesService.getWish(id);
+            if (wish.isPresent()){
+                return ResponseEntity.status(HttpStatus.OK).body(wish.get());
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
