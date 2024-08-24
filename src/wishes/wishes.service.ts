@@ -16,6 +16,16 @@ export class WishesService {
     return this.wishRepository.save(wish);
   }
 
+  async findOne(id: number): Promise<Wish> {
+    const wish = await this.wishRepository.findOne({
+      where: { id, deleted_at: null, is_confirm: '승인됨' },
+    });
+    if (!wish) {
+      throw new NotFoundException(`Wish with ID ${id} not found`);
+    }
+    return wish;
+  }
+
   async delete(id: number): Promise<void> {
     await this.wishRepository.update(id, { deleted_at: new Date() });
   }
