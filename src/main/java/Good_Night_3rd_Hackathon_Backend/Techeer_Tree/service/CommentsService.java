@@ -39,4 +39,11 @@ public class CommentsService {
         comment.setCreatedAt(LocalDateTime.now());
         return commentsRepository.save(comment);
     }
+
+    @Transactional
+    public Page<Comments> getCommentList(Long wishId, Pageable pageable) {
+        Wishes wish = wishesRepository.findById(wishId).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+        return commentsRepository.getCommentList(wish, pageable);
+    }
+
 }
