@@ -2,11 +2,24 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/hoon99/Good-Night-3rd-Hackathon-Backend/docs"
 	"github.com/hoon99/Good-Night-3rd-Hackathon-Backend/handlers"
+	files "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func setupRouter(handler *handlers.Handler) *gin.Engine {
 	router := gin.Default()
+
+	docs.SwaggerInfo.Title = "Techeer Tree API"
+	docs.SwaggerInfo.Description = "Wish List"
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:8080"
+	docs.SwaggerInfo.BasePath = ""
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+
+	// Swagger 엔드포인트 설정
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(files.Handler))
 
 	apiGroup := router.Group("/api/v1")
 	{

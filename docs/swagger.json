@@ -1,0 +1,303 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/comments": {
+            "get": {
+                "description": "특정 소원에 대한 댓글을 조회합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "댓글 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Wish ID",
+                        "name": "wish_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Number of comments per page",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            },
+            "post": {
+                "description": "소원에 댓글을 작성합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "댓글 작성",
+                "parameters": [
+                    {
+                        "description": "ID와 내용을 입력하세요.",
+                        "name": "comment",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CommentInput"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/comments/{id}": {
+            "delete": {
+                "description": "ID로 특정 댓글을 삭제합니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Comments"
+                ],
+                "summary": "댓글 삭제",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Comment ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/wishes": {
+            "get": {
+                "description": "조회하려는 소원의 상태와 페이지(번호, 크기)를 선택할 수 있습니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wishes"
+                ],
+                "summary": "소원 목록 조회",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "승인: approved, 보류: pending, 거절: rejected",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "페이지 번호",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "페이지 크기",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/wishes/": {
+            "post": {
+                "description": "제목, 내용, 카테고리를 입력하여 소원을 등록해보세요.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wishes"
+                ],
+                "summary": "소원 등록",
+                "parameters": [
+                    {
+                        "description": "카테고리의 종류는 진로, 건강, 인간 관계, 돈, 목표, 학업/성적, 기타 총 7가지입니다.",
+                        "name": "wish",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.WishInput"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/wishes/status": {
+            "put": {
+                "description": "모든 소원을 승인 또는 거절 상태로 변경할 수 있습니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wishes"
+                ],
+                "summary": "모든 소원 상태 변경",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "승인: approved, 거절: rejected",
+                        "name": "status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/wishes/{id}": {
+            "get": {
+                "description": "ID를 입력하여 승인된 소원을 조회할 수 있습니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wishes"
+                ],
+                "summary": "개별 소원 조회",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Wish ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "description": "ID를 입력하여 해당 소원을 삭제할 수 있습니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wishes"
+                ],
+                "summary": "소원 삭제",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Wish ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/v1/wishes/{id}/status": {
+            "put": {
+                "description": "ID를 입력하여 해당 소원의 상태를 변경할 수 있습니다.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Wishes"
+                ],
+                "summary": "개별 소원 상태 변경",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Wish ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "승인: approved, 거절: rejected",
+                        "name": "status",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "models.CommentInput": {
+            "type": "object",
+            "required": [
+                "content",
+                "wish_id"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "wish_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.WishInput": {
+            "type": "object",
+            "required": [
+                "category",
+                "content",
+                "title"
+            ],
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
