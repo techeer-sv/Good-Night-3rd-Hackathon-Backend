@@ -44,4 +44,20 @@ public class WishResponse {
       return new WishDeleteResponse(id, 400, message); // 예: 400 Bad Request
     }
   }
+
+  @Getter
+  @AllArgsConstructor
+  public static class WishUpdateResponse {
+    private Long id;
+    private int status;
+    private String message;
+
+    public static WishUpdateResponse success(Long id) {
+      return new WishUpdateResponse(id, 200, "소원 수정 성공");
+    }
+
+    public static WishUpdateResponse failure(Long id, String message) {
+      return new WishUpdateResponse(id, 400, message);
+    }
+  }
 }

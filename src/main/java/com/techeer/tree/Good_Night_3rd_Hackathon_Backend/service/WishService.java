@@ -26,4 +26,12 @@ public class WishService {
     wish.setIsDeleted(true); // soft delete
     wishRepository.save(wish); // 변경 사항 저장
   }
+
+  public Wish updateWishConfirmation(Long id, boolean isConfirmed) {
+    Wish wish = wishRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Wish not found with id " + id));
+
+    wish.setIsConfirmed(isConfirmed);  // 업데이트 수행
+    return wishRepository.save(wish);  // 업데이트 후 저장
+  }
 }

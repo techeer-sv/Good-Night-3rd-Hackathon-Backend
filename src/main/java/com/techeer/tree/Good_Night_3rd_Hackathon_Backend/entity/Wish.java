@@ -44,4 +44,8 @@ public class Wish {
   public void setIsDeleted(Boolean isDeleted) {
     this.isDeleted = isDeleted;
   }
+
+  public void setIsConfirmed(Boolean isConfirmed) {
+    this.isConfirmed = isConfirmed;
+  }
 }
