@@ -3,6 +3,7 @@ package me.kyung.TecheerTree.controller;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.kyung.TecheerTree.domain.Wish;
+import me.kyung.TecheerTree.dto.request.WishSaveRequest;
 import me.kyung.TecheerTree.dto.response.WishDetailResponse;
 import me.kyung.TecheerTree.dto.response.WishListResponse;
 import me.kyung.TecheerTree.service.WishService;
@@ -25,8 +26,8 @@ public class WishController {
     }
 
     @PostMapping
-    public ResponseEntity<Wish> createWish(@RequestBody Wish wish) {
-        return ResponseEntity.ok(wishService.createWish(wish));
+    public ResponseEntity<Wish> createWish(@RequestBody WishSaveRequest request) {
+        return ResponseEntity.ok(wishService.createWish(request));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWish(@PathVariable("id") Long id) {

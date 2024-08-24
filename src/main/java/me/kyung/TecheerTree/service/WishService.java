@@ -3,6 +3,7 @@ package me.kyung.TecheerTree.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.kyung.TecheerTree.domain.Wish;
+import me.kyung.TecheerTree.dto.request.WishSaveRequest;
 import me.kyung.TecheerTree.dto.response.WishDetailResponse;
 import me.kyung.TecheerTree.dto.response.WishListResponse;
 import me.kyung.TecheerTree.repository.WishRepository;
@@ -31,7 +32,8 @@ public class WishService {
                 .collect(Collectors.toList());
     }
 
-    public Wish createWish(Wish wish) {
+    public Wish createWish(WishSaveRequest request) {
+        Wish wish = request.toEntity();
         return wishRepository.save(wish);
     }
 

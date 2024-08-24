@@ -34,6 +34,11 @@ public class Wish {
 
     private boolean deletedAt = Boolean.FALSE;
 
+    public Wish(String title, String content, Category category) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+    }
     // Getters and Setters
 
     public enum Category {
