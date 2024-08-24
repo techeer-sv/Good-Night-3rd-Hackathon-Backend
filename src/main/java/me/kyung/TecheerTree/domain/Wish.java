@@ -45,9 +45,19 @@ public class Wish {
     public enum Category {
         CAREER, HEALTH, RELATIONSHIP, MONEY, GOAL, ACADEMICS, OTHER
     }
-
+    @Getter
     public enum Status {
-        APPROVED, PENDING, REJECTED
+        APPROVED("승인됨"),
+        PENDING("보류됨"),
+        REJECTED("거절됨");
+
+        private final String description;
+
+        Status(String description) {
+            this.description = description;
+        }
+
     }
 }
+
 
