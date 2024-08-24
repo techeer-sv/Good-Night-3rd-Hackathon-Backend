@@ -29,4 +29,8 @@ public abstract class BaseEntity {
 
     @Column(insertable = false)
     private LocalDateTime deletedAt;
+
+    protected void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
 }

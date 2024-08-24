@@ -23,4 +23,12 @@ public class WishController {
         WishResponseDto responseDto = wishService.create(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
+
+    @Operation(summary = "소원 삭제")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWish(@PathVariable Long id){
+        wishService.softDelete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

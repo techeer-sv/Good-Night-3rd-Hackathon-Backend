@@ -5,6 +5,7 @@ import com.example.techeertree.dto.wish.WishMapper;
 import com.example.techeertree.dto.wish.WishRequestDto;
 import com.example.techeertree.dto.wish.WishResponseDto;
 import com.example.techeertree.repository.WishRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,15 @@ public class WishService {
 
        return WishMapper.INSTANCE.toDto(wish);
     }
+
+
+    @Transactional
+    public void softDelete(Long id){
+        Wish wish = wishRepository.findById(id).orElseThrow(()-> new RuntimeException("Wish not found"));
+        wish.setDeleted();
+        wishRepository.save(wish);
+    }
+
 
 }
 
