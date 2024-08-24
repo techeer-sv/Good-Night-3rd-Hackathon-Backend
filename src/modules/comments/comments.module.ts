@@ -6,9 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Comment } from './domain/comment.entity';
 import { CommentsRepository } from './repositories/comments.repository';
 
+import { WishesRepository } from '../wishes/repositories/wishes.repository';
+
 @Module({
     imports: [TypeOrmModule.forFeature([Comment])],
     controllers: [CommentsController],
-    providers: [CommentsService, CommentsRepository],
+    providers: [CommentsService, CommentsRepository, WishesRepository],
 })
 export class CommentsModule {}
