@@ -20,6 +20,13 @@ func setupRouter(handler *handlers.Handler) *gin.Engine {
 			wishGroup.GET("/:id", handler.WishHandler.GetWish)
 			wishGroup.GET("/", handler.WishHandler.GetWishList)
 		}
+
+		// Comment
+		commentGroup := apiGroup.Group("/comments")
+		{
+			commentGroup.POST("/", handler.CommentHandler.CreateComment)
+			commentGroup.GET("/", handler.CommentHandler.GetComments)
+		}
 	}
 	return router
 }

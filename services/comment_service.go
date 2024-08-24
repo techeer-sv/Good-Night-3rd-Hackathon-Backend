@@ -7,6 +7,7 @@ import (
 
 type CommentService interface {
 	CreateComment(comment *models.Comment) error
+	GetCommentsByWishID(wishID uint, page, pageSize int) ([]models.Comment, error)
 }
 
 type commentService struct {
@@ -20,4 +21,9 @@ func NewCommentService(repo repositories.CommentRepository) CommentService {
 // 1. 등록
 func (s *commentService) CreateComment(comment *models.Comment) error {
 	return s.repo.Create(comment)
+}
+
+// 2. 조회
+func (s *commentService) GetCommentsByWishID(wishID uint, page, pageSize int) ([]models.Comment, error) {
+	return s.repo.FindByWishID(wishID, page, pageSize)
 }

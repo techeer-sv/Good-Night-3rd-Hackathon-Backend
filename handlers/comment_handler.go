@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hoon99/Good-Night-3rd-Hackathon-Backend/models"
@@ -42,4 +43,34 @@ func (h *CommentHandler) CreateComment(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, newComment)
+}
+
+func (h *CommentHandler) GetComments(c *gin.Context) {
+	wishIDStr := c.Query("wish_id")
+	pageStr := c.Query("page")
+	pageSizeStr := c.Query("page_size")
+
+	wishID, err := strconv.Atoi(wishIDStr)
+	if err != nil || wishID <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid wish_id"})
+		return
+	}
+
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page <= 0 {
+		page = 1
+	}
+
+	pageSize, err := strconv.Atoi(pageSizeStr)
+	if err != nil || pageSize <= 0 {
+		pageSize = 10
+	}
+
+	comments, err := h.service.GetCommentsByWishID(uint(wishID), page, pageSize)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, comments)
 }

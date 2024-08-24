@@ -14,6 +14,7 @@ type WishRepository interface {
 	UpdateOne(id uint, status string) error
 	FindByID(id uint) (*models.Wish, error)
 	FindAll(status string, page, pageSize int) ([]models.Wish, error)
+	ExistsByID(id uint) (bool, error)
 }
 
 type wishRepository struct {
@@ -67,6 +68,7 @@ func (r *wishRepository) UpdateOne(id uint, status string) error {
 	return r.db.Save(&wish).Error
 }
 
+
 // 5. 단일 조회
 func (r *wishRepository) FindByID(id uint) (*models.Wish, error) {
 	var wish models.Wish
@@ -94,4 +96,14 @@ func (r *wishRepository) FindAll(status string, page, pageSize int) ([]models.Wi
 	// 정렬
 	err := query.Order("created_at DESC").Find(&wishes).Error
 	return wishes, err
+}
+
+// 소원 존재 여부 확인
+func (r *wishRepository) ExistsByID(id uint) (bool, error) {
+	var count int64
+	err := r.db.Model(&models.Wish{}).Where("id = ?", id).Count(&count).Error
+	if err != nil {
+		return false, err
+	}
+	return count > 0, nil
 }

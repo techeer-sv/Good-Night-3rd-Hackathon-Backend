@@ -12,6 +12,7 @@ type WishService interface {
 	UpdateWish(id uint, status string) error
 	GetWishByID(id uint) (*models.Wish, error)
 	GetAllWishes(status string, page, pageSize int) ([]models.Wish, error)
+	WishExists(id uint) (bool, error)
 }
 
 type wishService struct {
@@ -50,4 +51,9 @@ func (s *wishService) GetWishByID(id uint) (*models.Wish, error) {
 // 6. 목록 조회
 func (s *wishService) GetAllWishes(status string, page, pageSize int) ([]models.Wish, error) {
 	return s.repo.FindAll(status, page, pageSize)
+}
+
+// 소원 존재 여부 확인
+func (s *wishService) WishExists(id uint) (bool, error) {
+	return s.repo.ExistsByID(id)
 }

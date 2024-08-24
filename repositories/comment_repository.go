@@ -7,6 +7,7 @@ import (
 
 type CommentRepository interface {
 	Create(comment *models.Comment) error
+	FindByWishID(wishID uint, page, pageSize int) ([]models.Comment, error)
 }
 
 type commentRepository struct {
@@ -20,4 +21,16 @@ func NewCommentRepository(db *gorm.DB) CommentRepository {
 // 1. 생성
 func (r *commentRepository) Create(comment *models.Comment) error {
 	return r.db.Create(comment).Error
+}
+
+// 2. 조회
+func (r *commentRepository) FindByWishID(wishID uint, page, pageSize int) ([]models.Comment, error) {
+	var comments []models.Comment
+	err := r.db.Where("wish_id = ? AND deleted_at IS NULL", wishID).
+		Order("created_at DESC").
+		Offset((page - 1) * pageSize).
+		Limit(pageSize).
+		Find(&comments).Error
+		
+	return comments, err
 }
