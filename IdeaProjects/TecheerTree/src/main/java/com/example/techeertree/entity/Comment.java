@@ -20,14 +20,18 @@ public class Comment {
     @JoinColumn(name = "wish_id", nullable = false)
     private Wish wish;
 
+    @Column(nullable = false)  // 이 필드가 필요합니다.
+    private Boolean isDeleted = false;
+
     // 기본 생성자
     public Comment() {}
 
-    // 추가적인 생성자
+    // 생성자: 댓글 내용과 소원을 받아 객체 생성
     public Comment(String content, Wish wish) {
         this.content = content;
         this.wish = wish;
         this.createdDate = LocalDateTime.now();
+        this.isDeleted = false;
     }
 
     // Getter와 Setter 메서드
@@ -62,5 +66,12 @@ public class Comment {
     public void setWish(Wish wish) {
         this.wish = wish;
     }
-}
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+}
