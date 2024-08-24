@@ -9,8 +9,13 @@ export class WishesConfirmRepository extends Repository<Wish> {
     }
 
     // 보류됨 소원 목록 조회
-    confirmList() {
-        return this.find({ where: [{ isConfirm: '보류됨' }] });
+    async confirmList(limit: number, offset: number) {
+        return await this.createQueryBuilder('wish')
+            .where('wish.is_confirm = :isConfirm', { isConfirm: '보류됨' })
+            .orderBy('wish.createdAt', 'ASC') // 오래된 순으로 정렬 (ASC)
+            .limit(limit)
+            .offset(offset)
+            .getMany();
     }
 
     // 소원 승인/거절

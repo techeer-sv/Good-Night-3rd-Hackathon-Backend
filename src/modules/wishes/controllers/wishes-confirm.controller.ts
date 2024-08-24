@@ -5,6 +5,7 @@ import {
     ValidationPipe,
     Patch,
     Get,
+    Query,
 } from '@nestjs/common';
 import { WishesConfirmService } from '../services/wishes-confirm.service';
 import { ConfirmWishDto } from '../dto/confirm-wish.dto';
@@ -17,8 +18,11 @@ export class WishesConfirmController {
 
     // 보류됨 소원 목록 조회
     @Get()
-    confirmList() {
-        return this.wishesConfirmService.confirmList();
+    async confirmList(
+        @Query('limit') limit: string = '10',
+        @Query('offset') offset: string = '0',
+    ) {
+        return await this.wishesConfirmService.confirmList(+limit, +offset);
     }
 
     // 소원 승인/거절

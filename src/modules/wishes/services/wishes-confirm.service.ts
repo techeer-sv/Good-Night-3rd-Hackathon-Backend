@@ -7,8 +7,8 @@ export class WishesConfirmService {
     constructor(private wishesConfirmRepository: WishesConfirmRepository) {}
 
     // 보류됨 소원 목록 조회
-    confirmList() {
-        return this.wishesConfirmRepository.confirmList();
+    async confirmList(limit: number, offset: number) {
+        return await this.wishesConfirmRepository.confirmList(limit, offset);
     }
 
     // 소원 승인/거절
