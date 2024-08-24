@@ -8,6 +8,11 @@ export class WishesConfirmRepository extends Repository<Wish> {
         super(Wish, dataSource.createEntityManager());
     }
 
+    // 보류됨 소원 목록 조회
+    confirmList() {
+        return this.find({ where: [{ isConfirm: '보류됨' }] });
+    }
+
     // 소원 승인/거절
     confirmWish(id: number, isConfirm: string) {
         return this.update({ id: id }, { isConfirm: isConfirm });
