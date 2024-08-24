@@ -1,121 +1,85 @@
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+</p>
 
-# 🌳 Techeer Tree : 소원을 빌어봐
+[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-## 주제 설명
+  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
+<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
+<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
+<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
+    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
+  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-Techeer Tree는 테커인들이 자신의 목표나 소원을 작성하고, 이를 소원 나무에 게시하여 다른 사람들과 공유할 수 있는 플랫폼입니다. 작성된 소원은 모든 사용자에게 공개되어, 서로의 소원을 볼 수 있습니다.
+## Description
 
-## 안내사항
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-- 해커톤 진행시간은 다음과 같습니다.
-    - Backend : 2024년 8월 20일(토) 12:00 ~ 2024년 8월 21일(일) 00:00
-    - Frontend : 2024년 8월 21일(일) 12:00 ~ 2024년 8월 22일(월) 00:00
-- 꼭 정해진 시간에 해커톤을 진행해주세요.
-    - Backend 작업을 일찍 완료하시더라도, Frontend 작업은 정해진 시간에 시작해 주시고 그 전에는 충분히 휴식을 취하시길 바랍니다.
-- 참가자는 본 레포지토리를 fork한 후, 기능 구현 완료 후 PR을 통해 제출해야 합니다.
-    - 구현 내용은 README.md 하단에 이어서 작성해 주세요.
-    - 과제의 소스코드는 본인의 GitHub 레포지토리에 **Public**으로 올려주세요.
-- 진행 중 문의사항은 슬랙 “**2024-굿나잇-해커톤**” 채널(public)에 참가하여 남겨주세요.
-- 신청자에 한해 현직자 재연님께 코드리뷰를 받을 수 있습니다.
-    - 리뷰 받고 고쳐오실분만 신청해주세요.
-    - 신청 구글폼은 백엔드 해커톤이 끝난 후 채널에 올라올 예정입니다.
+## Project setup
 
-## 기본 요구사항
+```bash
+$ npm install
+```
 
-- **Techeer Tree** 앱을 구현합니다.
-- 일관된 코딩 컨벤션을 유지해주세요.
-- 기능 당 커밋은 필수입니다.
-- 환경변수는 분리하여 관리해 주세요.
+## Compile and run the project
 
-## 기술스택
+```bash
+# development
+$ npm run start
 
-- DB 및 ORM 사용은 자유입니다.
-- 새로운 언어/기술에 도전해 보는 것을 권장드립니다.
-- 아래 목록 외에도 사용할 수 있습니다.
+# watch mode
+$ npm run start:dev
 
-### 1. Java(혹은 Kotlin) + Springboot
+# production mode
+$ npm run start:prod
+```
 
-### 2. Typescript + Nest.JS
+## Run tests
 
-### 3. Golang
+```bash
+# unit tests
+$ npm run test
 
-## 도메인
+# e2e tests
+$ npm run test:e2e
 
-- Wishes
-- Comments
+# test coverage
+$ npm run test:cov
+```
 
-# 기능
+## Resources
 
-## **[🧞‍♂️ 소원]**
+Check out a few resources that may come in handy when working with NestJS:
 
-### 1. 소원 등록
+- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
+- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
+- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
+- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
+- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
+- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
+- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
 
-- 제목, 내용, 카테고리, 등록일, 승인 상태 정보를 포함해야 합니다.
-    - 카테고리의 종류는 진로, 건강, 인간 관계, 돈, 목표, 학업/성적, 기타 총 7가지입니다.
-- is_confirm(소원 승인 상태)값의 초기값을 “보류됨” 으로 설정합니다.
-    - 승인 상태 값 정의
-        - **승인됨** : 소원이 승인된 상태입니다.
-        - **보류됨** : 소원이 아직 검토 중이며 승인되지 않은 상태입니다.
-        - **거절됨** : 소원이 거절된 상태입니다.
-- 제목, 내용, 카테고리, 등록일 값이 하나라도 null일 경우 예외를 처리합니다.(추가기능)
+## Support
 
-### 2. 소원 삭제
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-- soft delete로 구현하여 소원 삭제시 데이터가 삭제 되지 않도록 합니다.
-- `deleted_at` 필드를 추가하여 삭제된 항목의 조회 여부를 결정합니다.
-- 조회 기능에서 삭제 처리된 소원은 조회하지 않도록 합니다.
+## Stay in touch
 
-### 3. **소원 승인/거절**
+- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-- 모든 소원에 대한 승인/거절을 수행합니다.
-- 보류됨 상태의 소원을 조회하여 각각의 소원에 대한 승인/거절을 진행합니다.
+## License
 
-### 4. **소원 단일 조회**
-
-- 제목, 내용, 카테고리 정보를 반환합니다.
-- 승인된 소원만 조회가 가능합니다.
-- 삭제된 소원은 조회할 수 없습니다.
-
-### 5. **소원 목록 조회**
-
-- 제목, 카테고리, 등록일 정보를 반환합니다.
-- 승인, 미승인 별로 선택하여 조회할 수 있어야합니다. (쿼리 파라미터)
-- 페이지네이션을 지원해야 합니다.
-- 생성날짜 최신순으로 정렬합니다.
-
-### 6. 소원 검색 (추가기능)
-
-- 소원의 `title`과 `content`에 특정 키워드가 포함된 소원을 검색할 수 있도록 합니다.
-- 사용자가 입력한 키워드를 기반으로, 소원의 제목이나 내용에서 일치하는 항목을 검색해 반환합니다. 이 기능은 카테고리 필터와 함께 사용할 수 있습니다.
-
-## [💬 댓글]
-
-### 7. **댓글 등록**
-
-- 소원에 대한 댓글 등록이 가능해야 합니다.
-- 댓글 내용, 등록일을 포함해야 합니다.
-
-### 8. 댓글 조회
-
-- 소원에 대한 댓글을 조회 할 수 있습니다.
-- 삭제된 댓글은 조회할 수 없습니다.
-- 페이지네이션이 가능합니다.
-
-### 9. 댓글 삭제
-
-- soft delete로 구현하여 댓글 삭제시 데이터가 삭제 되지 않도록 합니다.
-- `deleted_at` 필드를 추가하여 삭제된 항목의 조회 여부를 결정합니다.
-- 조회 기능에서 삭제 처리된 댓글은 조회하지 않도록 합니다.
-
-## [✅ 유닛 테스트]
-
-- 유닛 테스트 코드를 작성합니다. (추가기능)
-
-# 기여해주신 분
-
-- 👩🏻‍💻[김정현](https://github.com/kjeongh)
-- 🧑🏻‍💻[Ryan Lee](https://github.com/printSANO)
-- 🧑🏻‍💻[백한결](https://github.com/baekhangyeol)
-- 🧑🏻‍💻[오현택](https://github.com/HyunTaek5)
-- 👩🏻‍💻[이도경](https://github.com/d0kyoung)
-- 🧑🏻‍💻[강기환](https://github.com/GiHwan2)
+Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
