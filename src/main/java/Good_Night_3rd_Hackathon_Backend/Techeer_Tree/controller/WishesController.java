@@ -46,4 +46,20 @@ public class WishesController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getWish(@PathVariable Long id) {
+        try {
+            Wishes wish = wishesService.getWish(id);
+            return ResponseEntity.ok(wish);
+        } catch (IllegalArgumentException e) {
+            String errorMessage = e.getMessage();
+            if (errorMessage.equals("삭제된 소원입니다.") || errorMessage.equals("승인되지 않은 소원입니다.")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+            } else if (errorMessage.equals("해당 소원이 존재하지 않습니다.")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorMessage);
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("");
+            }
+        }
+    }
 }

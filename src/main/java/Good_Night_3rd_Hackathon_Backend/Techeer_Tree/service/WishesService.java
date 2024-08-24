@@ -56,5 +56,17 @@ public class WishesService {
             wishesRepository.save(wish);
         }
     }
+
+    @Transactional
+    public Wishes getWish(Long id) {
+        Wishes wish = wishesRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+        if (wish.getIsDeleted()) {
+            throw new IllegalArgumentException("삭제된 소원입니다.");
+        }
+        if (wish.getIsConfirm() != Wishes.WishesStatus.APPROVED) {
+            throw new IllegalArgumentException("승인되지 않은 소원입니다.");
+        }
+        return wish;
+    }
 }
 
