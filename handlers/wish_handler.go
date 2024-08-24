@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/hoon99/Good-Night-3rd-Hackathon-Backend/models"
@@ -54,4 +55,14 @@ func (h *WishHandler) CreateWish(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, newWish)
+}
+
+func (h *WishHandler) DeleteWish(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := h.service.DeleteWish(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Wish not found"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Wish deleted successfully"})
 }

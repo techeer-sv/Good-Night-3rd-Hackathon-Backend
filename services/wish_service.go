@@ -7,6 +7,7 @@ import (
 
 type WishService interface {
 	CreateWish(post *models.Wish) error
+	DeleteWish(id uint) error
 }
 
 type wishService struct {
@@ -20,4 +21,9 @@ func NewWishService(repo repositories.WishRepository) WishService {
 // 1. 등록
 func (s *wishService) CreateWish(wish *models.Wish) error {
 	return s.repo.Create(wish)
+}
+
+// 2. 삭제
+func (s *wishService) DeleteWish(id uint) error {
+	return s.repo.Delete(id)
 }
