@@ -23,15 +23,20 @@ public class WishController {
         wishDao.createWish(wish);
     }
 
-    @GetMapping("/view/{id}")
+    @GetMapping("/{id}")
     public String getWish(@PathVariable("id") int id) {
         Wish wish = wishDao.getWish(id);
         return wish.getTitle();
     }
 
     // 전체 Wish 리스트를 조회하는 엔드포인트
-    @GetMapping("/view/list") // 소원리스트 쭉 뽑기
+    @GetMapping("/list") // 소원리스트 쭉 뽑기
     public List<Wish> getWishList() {
         return wishDao.getWishList();
+    }
+    @DeleteMapping("/delete/{id}")
+    public void deleteWish(@PathVariable("id") int id){
+        wishDao.deleteWish(id);
+        return;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -24,8 +25,9 @@ public class WishDaoImpl implements WishDao {
 
     @Override
     public void createWish(Wish wish) {
-        String sql = "INSERT INTO wishes(title,content,category) VALUES (?,?,?)";
-        jdbcTemplate.update(sql, wish.getTitle(),wish.getContent(),wish.getCategory());
+        String sql = "INSERT INTO wishes(title,content,category,registrationdate) VALUES (?,?,?,?)";
+        Timestamp current = new Timestamp(new Date().getTime());
+        jdbcTemplate.update(sql, wish.getTitle(),wish.getContent(),wish.getCategory(),current);
         return;
     }
     //메서드 시그니처를 보면 인자들이 어떻게 전달되는지 이해할 수 있음.
@@ -44,8 +46,9 @@ public class WishDaoImpl implements WishDao {
     }
 
     @Override
-    public void deleteWish(int wishId) {
-        // Implement the method to delete a wish by ID
+    public void deleteWish(int id) {
+        String sql = "DELETE FROM wishes WHERE id = ?";
+        jdbcTemplate.update(sql,id);
     }
 
     @Override
@@ -61,8 +64,12 @@ public class WishDaoImpl implements WishDao {
             wish.setTitle(rs.getString("title"));
             wish.setContent(rs.getString("content"));
             wish.setCategory(rs.getString("category"));
-            wish.setRegistrationDate(Timestamp.valueOf(rs.getTimestamp("registrationDate").toLocalDateTime()));
-            wish.setIsConfirmed(String.valueOf(rs.getBoolean("isConfirmed")));
+//            wish.setRegistrationDate(Timestamp.valueOf(rs.getTimestamp("registrationDate").toLocalDateTime()));
+            Timestamp registrationDate = rs.getTimestamp("registrationDate");
+            if (registrationDate != null) {
+                wish.setRegistrationDate(Timestamp.valueOf(registrationDate.toLocalDateTime()));
+            }
+            wish.setIsConfirmed(rs.getString("isConfirmed"));
             return wish;
         }
     }
