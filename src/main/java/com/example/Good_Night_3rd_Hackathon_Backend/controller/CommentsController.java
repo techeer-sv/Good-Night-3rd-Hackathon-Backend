@@ -2,14 +2,15 @@ package com.example.Good_Night_3rd_Hackathon_Backend.controller;
 
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.Comments;
 import com.example.Good_Night_3rd_Hackathon_Backend.dto.CommentDto;
+import com.example.Good_Night_3rd_Hackathon_Backend.dto.WishesListDto;
 import com.example.Good_Night_3rd_Hackathon_Backend.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CommentsController {
@@ -27,6 +28,17 @@ public class CommentsController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Comments successfully created. id: " + id);
         } catch (Exception e) {
             throw new RuntimeException("Failed to create comment.");
+        }
+    }
+
+    @GetMapping("/comments/{wishId}")
+    public ResponseEntity<List<CommentDto>> getComments(@PathVariable Long wishId, @RequestParam int page, @RequestParam int size) {
+        try {
+            Page<CommentDto> commentsPage = commentsService.getComments(wishId, page, size);
+            System.out.println(commentsPage.getContent());
+            return ResponseEntity.status(HttpStatus.OK).body(commentsPage.getContent());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }
