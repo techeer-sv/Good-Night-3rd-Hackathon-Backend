@@ -21,8 +21,12 @@ export class WishesController {
   }
 
   @Get()
-  findAll(@Query('isConfirmed') isConfirmed?: boolean) {
-    return this.wishesService.findAll(isConfirmed);
+  findAll(
+    @Query('isConfirmed') isConfirmed?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+  ) {
+    return this.wishesService.findAll(isConfirmed, page, limit);
   }
 
   @Get(':id')

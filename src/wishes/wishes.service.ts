@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Wish } from './entities/wish.entity';
@@ -16,21 +20,38 @@ export class WishesService {
     return this.wishRepository.save(wish);
   }
 
-  async findAll(isConfirmed?: boolean): Promise<Wish[]> {
+  async findAll(
+    isConfirmed?: string,
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<Wish[]> {
     const query = this.wishRepository.createQueryBuilder('wish');
 
-    if (typeof isConfirmed !== 'undefined') {
-      query.andWhere('wish.is_confirm = :isConfirmed', { isConfirmed });
+    if (isConfirmed === 'true') {
+      query.andWhere('wish.is_confirm = :isConfirmed', {
+        isConfirmed: '승인됨',
+      });
+    } else if (isConfirmed === 'false') {
+      query.andWhere('wish.is_confirm = :isConfirmed', {
+        isConfirmed: '거절됨',
+      });
+    } else if (isConfirmed) {
+      throw new BadRequestException('올바르지 않은 값입니다.');
     }
 
     query.andWhere('wish.deleted_at IS NULL').orderBy('wish.createdAt', 'DESC');
+
+    // Apply pagination
+    const offset = (page - 1) * limit;
+    query.skip(offset).take(limit);
 
     return query.getMany();
   }
 
   async findOne(id: number): Promise<Wish> {
     const wish = await this.wishRepository.findOne({
-      where: { id, deleted_at: null, is_confirm: '승인됨' },
+      where: { id, is_confirm: '승인됨', deleted_at: null },
+      cache: false, // 캐시 비활성화
     });
     if (!wish) {
       throw new NotFoundException(`Wish with ID ${id} not found`);
