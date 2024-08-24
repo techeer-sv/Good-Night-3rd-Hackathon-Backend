@@ -77,12 +77,19 @@ public class WishController {
 
   @Operation(summary = "Get list of wishes", description = "Retrieve a paginated list of wishes with optional filters for category and confirmation status")
   @GetMapping
-  public ResponseEntity<List<WishResponse.WishReadListResponse>> getAllWishes(
+  public ResponseEntity<WishResponse.WishReadListWrapperResponse> getAllWishes(
       @RequestParam(required = false) String category,
       @RequestParam(required = false) String is_confirmed) {
 
     Boolean confirmed = is_confirmed != null ? Boolean.valueOf(is_confirmed) : null;
-    List<WishResponse.WishReadListResponse> response = wishService.getAllWishes(category, confirmed);
+    List<WishResponse.WishReadListResponse> wishes = wishService.getAllWishes(category, confirmed);
+
+    if (wishes.isEmpty()) {
+      WishResponse.WishReadListWrapperResponse response = new WishResponse.WishReadListWrapperResponse(wishes, 400, "소원이 없습니다.");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
+    WishResponse.WishReadListWrapperResponse response = new WishResponse.WishReadListWrapperResponse(wishes, 200, "소원 목록 조회 성공");
     return ResponseEntity.ok(response);
   }
 

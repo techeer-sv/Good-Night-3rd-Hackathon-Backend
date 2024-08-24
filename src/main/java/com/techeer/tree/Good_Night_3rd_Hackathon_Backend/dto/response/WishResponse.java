@@ -85,6 +85,14 @@ public class WishResponse {
 
   @Getter
   @AllArgsConstructor
+  public static class WishReadListWrapperResponse {
+    private List<WishReadListResponse> wishes;
+    private int status;
+    private String message;
+  }
+
+  @Getter
+  @AllArgsConstructor
   public static class WishReadListResponse {
     private Long id;
     private String title;
