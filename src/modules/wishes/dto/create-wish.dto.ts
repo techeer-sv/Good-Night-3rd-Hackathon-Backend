@@ -1,1 +1,5 @@
-export class CreateWishDto {}
+export class CreateWishDto {
+    title: string;
+    content: string;
+    category: string;
+}

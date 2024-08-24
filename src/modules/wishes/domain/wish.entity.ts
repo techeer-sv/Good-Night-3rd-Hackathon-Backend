@@ -21,10 +21,15 @@ export class WishEntity {
     @Column({ type: 'varchar', length: 30, comment: '카테고리' })
     category: string;
 
-    @Column({ type: 'varchar', length: 10, comment: '제목' })
-    approved: string;
+    @Column({
+        type: 'varchar',
+        length: 10,
+        name: 'is_confirm',
+        comment: '승인 상태',
+    })
+    isConfirm: string;
 
-    @CreateDateColumn({ name: 'create_at', comment: '생성일' })
+    @CreateDateColumn({ name: 'create_at', comment: '등록일' })
     createdAt: Date;
 
     @UpdateDateColumn({ name: 'update_at', comment: '수정일' })

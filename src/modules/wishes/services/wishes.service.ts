@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateWishDto } from '../dto/create-wish.dto';
 import { UpdateWishDto } from '../dto/update-wish.dto';
+import { WishesRepository } from '../repositories/wishes.repository';
 
 @Injectable()
 export class WishesService {
-    create(createWishDto: CreateWishDto) {
-        return 'This action adds a new wish';
+    constructor(private wishesRepository: WishesRepository) {}
+
+    createWish(createWishDto: CreateWishDto) {
+        return this.wishesRepository.createWish(createWishDto);
     }
 
     findAll() {

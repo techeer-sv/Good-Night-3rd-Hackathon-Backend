@@ -9,8 +9,8 @@ export class WishesRepository extends Repository<WishEntity> {
         super(WishEntity, dataSource.createEntityManager());
     }
 
-    createBoard(createWishDto: CreateWishDto) {
-        const wish = this.create({ ...createWishDto });
-        return this.save(wish);
+    createWish(createWishDto: CreateWishDto) {
+        const newWish = this.create({ ...createWishDto, isConfirm: '보류됨' });
+        return this.save(newWish);
     }
 }
