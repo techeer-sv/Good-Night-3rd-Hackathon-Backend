@@ -32,4 +32,18 @@ public class WishesController {
         }
     }
 
+    @PatchMapping("/{id}/approve")
+    public ResponseEntity<String> approveWish(@PathVariable Long id, @RequestBody Wishes.WishesStatus status) {
+        try {
+            wishesService.approveWish(id, status);
+            if (status == Wishes.WishesStatus.APPROVED) {
+                return ResponseEntity.ok("소원이 승인되었습니다.");
+            } else {
+                return ResponseEntity.ok("소원이 거절되었습니다.");
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage()); // 해당 소원이 존재하지 않습니다.
+        }
+    }
+
 }

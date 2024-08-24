@@ -47,4 +47,14 @@ public class WishesService {
         wish.setIsDeleted(true);
         wishesRepository.save(wish);
     }
+
+    @Transactional
+    public void approveWish(Long id, Wishes.WishesStatus status) {
+        Wishes wish = wishesRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 소원이 존재하지 않습니다."));
+        if (wish.getIsConfirm() == Wishes.WishesStatus.PENDING) {
+            wish.setIsConfirm(status);
+            wishesRepository.save(wish);
+        }
+    }
 }
+
