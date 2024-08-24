@@ -35,4 +35,8 @@ export class CommentsService {
       where: { wish: { id: wishId }, deleted_at: null },
     });
   }
+
+  async delete(id: number): Promise<void> {
+    await this.commentRepository.update(id, { deleted_at: new Date() });
+  }
 }
