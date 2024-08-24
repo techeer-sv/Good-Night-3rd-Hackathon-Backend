@@ -18,8 +18,8 @@ export class CommentsService {
     }
 
     // 댓글 목록 조회
-    findAll(id: number) {
-        return this.commentsRepository.findAll(id);
+    findAll(id: number, limit: number, offset: number) {
+        return this.commentsRepository.findAll(id, limit, offset);
     }
 
     // 댓글 삭제

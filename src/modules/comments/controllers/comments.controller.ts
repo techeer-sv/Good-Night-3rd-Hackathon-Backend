@@ -7,6 +7,7 @@ import {
     Delete,
     UsePipes,
     ValidationPipe,
+    Query,
 } from '@nestjs/common';
 import { CommentsService } from '../services/comments.service';
 import { CreateCommentDto } from '../dto/create-comment.dto';
@@ -26,8 +27,12 @@ export class CommentsController {
 
     // 댓글 목록 조회
     @Get(':id')
-    findAll(@Param('id') id: string) {
-        return this.commentsService.findAll(+id);
+    findAll(
+        @Param('id') id: string,
+        @Query('limit') limit: string = '10',
+        @Query('offset') offset: string = '0',
+    ) {
+        return this.commentsService.findAll(+id, +limit, +offset);
     }
 
     // 댓글 삭제

@@ -17,9 +17,11 @@ export class CommentsRepository extends Repository<Comment> {
     }
 
     // 댓글 목록 조회
-    async findAll(id: number) {
+    async findAll(id: number, limit: number, offset: number) {
         return await this.createQueryBuilder('comment')
             .where('comment.wish_id = :id', { id: id })
+            .limit(limit)
+            .offset(offset)
             .getMany();
     }
 
