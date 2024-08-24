@@ -11,11 +11,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -52,5 +55,19 @@ public class CommentController {
       CommentResponse.CommentDeleteResponse response = CommentResponse.CommentDeleteResponse.failure(comment_id, "댓글 삭제 실패: " + e.getMessage());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+  }
+
+  @Operation(summary = "Get all comments", description = "Get all comments by wishId")
+  @GetMapping("")
+  public ResponseEntity<CommentResponse.CommentListResponseWrapper> getAllComments(@RequestParam(required = false) Long wishId) {
+    List<CommentResponse.CommentListResponse> comments = commentService.getAllComments(wishId);
+
+    if (comments.isEmpty()) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body(new CommentResponse.CommentListResponseWrapper(comments, 400, "댓글이 없습니다."));
+    }
+
+    CommentResponse.CommentListResponseWrapper response = new CommentResponse.CommentListResponseWrapper(comments, 200, "댓글 목록 조회 성공");
+    return ResponseEntity.ok(response);
   }
 }

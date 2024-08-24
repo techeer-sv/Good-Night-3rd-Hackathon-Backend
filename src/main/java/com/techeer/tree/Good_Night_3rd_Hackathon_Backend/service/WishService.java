@@ -1,8 +1,14 @@
 package com.techeer.tree.Good_Night_3rd_Hackathon_Backend.service;
 
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.request.WishRequest;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.request.WishRequest.WishCreateRequest;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response.CommentResponse;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response.CommentResponse.CommentListResponse;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response.WishResponse;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response.WishResponse.WishReadListResponse;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.entity.Comment;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.entity.Wish;
+import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.repository.CommentRepository;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.repository.WishRepository;
 import org.springframework.transaction.annotation.Transactional;
 //import jakarta.transaction.Transactional;
@@ -20,7 +26,7 @@ public class WishService {
     this.wishRepository = wishRepository;
   }
 
-  public Wish createWish(WishRequest.WishCreateRequest request) {
+  public Wish createWish(WishCreateRequest request) {
     Wish wish = request.toEntity();
     return wishRepository.save(wish);
   }
@@ -46,7 +52,7 @@ public class WishService {
   }
 
   @Transactional(readOnly = true)
-  public List<WishResponse.WishReadListResponse> getAllWishes(String category, Boolean isConfirmed) {
+  public List<WishReadListResponse> getAllWishes(String category, Boolean isConfirmed) {
     List<Wish> wishes;
     if (category != null && isConfirmed != null) {
       wishes = wishRepository.findByCategoryAndIsConfirmed(category, isConfirmed);
@@ -61,8 +67,7 @@ public class WishService {
     }
 
     return wishes.stream()
-        .map(WishResponse.WishReadListResponse::from)
+        .map(WishReadListResponse::from)
         .collect(Collectors.toList());
   }
-
 }

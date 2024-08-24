@@ -3,6 +3,7 @@ package com.techeer.tree.Good_Night_3rd_Hackathon_Backend.dto.response;
 import com.techeer.tree.Good_Night_3rd_Hackathon_Backend.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -45,5 +46,25 @@ public class CommentResponse {
     public static CommentDeleteResponse failure(Long id, String message) {
       return new CommentDeleteResponse(id, 400, message); // 예: 400 Bad Request
     }
+  }
+
+  @Getter
+  @AllArgsConstructor
+  public static class CommentListResponse {
+    private Long id;
+    private String content;
+    private Long wishId;
+
+    public static CommentListResponse from(Comment comment) {
+      return new CommentListResponse(comment.getId(), comment.getContent(), comment.getWish().getId());
+    }
+  }
+
+  @Getter
+  @AllArgsConstructor
+  public static class CommentListResponseWrapper {
+    private List<CommentListResponse> comments;
+    private int status;
+    private String message;
   }
 }
