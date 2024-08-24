@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class WishesService {
@@ -73,6 +74,12 @@ public class WishesService {
     @Transactional
     public Page<Wishes> getWishList(Wishes.WishesStatus status, Pageable pageable) {
         return wishesRepository.getWishList(status, pageable);
+    }
+
+    @Transactional
+    public List<Wishes> searchWishes(String keyword, Wishes.Category category) {
+        String searchKeyword = "%" + keyword + "%";
+        return wishesRepository.searchWishes(searchKeyword, category);
     }
 }
 

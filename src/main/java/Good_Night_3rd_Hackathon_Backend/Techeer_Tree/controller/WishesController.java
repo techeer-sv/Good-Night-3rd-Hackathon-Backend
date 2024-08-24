@@ -11,6 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/wishes")
 public class WishesController {
@@ -75,5 +78,14 @@ public class WishesController {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         return wishesService.getWishList(status, pageable);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Wishes>> searchWishes(@RequestParam String keyword, @RequestParam Wishes.Category category) {
+        List<Wishes> results = wishesService.searchWishes(keyword, category);
+        if (results.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 검색 결과가 없을 때 204 반환
+        }
+        return new ResponseEntity<>(results, HttpStatus.OK); // 성공 시 200 반환
     }
 }
