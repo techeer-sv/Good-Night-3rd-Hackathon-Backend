@@ -3,6 +3,8 @@ package com.TecheerTree.myproject.api.service;
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
 import com.TecheerTree.myproject.domain.dto.CommentCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
+import com.TecheerTree.myproject.domain.entitiy.Wishes;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,12 @@ public class CommentsService {
     }
 
     public void deleteComment(Long commentId) {
+        // soft delete이기에 실제로 삭제 X
+        Comments findComment = commentsRepository.findById(commentId).orElseThrow(()
+                -> new EntityNotFoundException("comment not found with id: " + commentId));
+        // deleted_at만 true로 변경
+        findComment.setDeleted_at(true);
 
+        commentsRepository.save(findComment);
     }
 }

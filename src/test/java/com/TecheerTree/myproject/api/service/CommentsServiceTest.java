@@ -8,6 +8,7 @@ import com.TecheerTree.myproject.domain.dto.CommentCreateDto;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,12 @@ class CommentsServiceTest {
     // 댓글 삭제 테스트
     @Test
     void deleteComment(){
+        Long commentId = 1L; // 존재하는 wishId로 변경
+        commentsService.deleteComment(commentId);
 
+        Comments comment = commentsRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException("comment not found with id: " + commentId));
+
+        assertTrue(comment.isDeleted_at()); // true로 저장되었는지 확인
     }
 }
