@@ -10,7 +10,11 @@ export class WishesRepository extends Repository<WishEntity> {
     }
 
     createWish(createWishDto: CreateWishDto) {
-        const newWish = this.create({ ...createWishDto, isConfirm: '보류됨' });
-        return this.save(newWish);
+        const wish = this.create({ ...createWishDto, isConfirm: '보류됨' });
+        return this.save(wish);
+    }
+
+    deleteWish(id: number) {
+        return this.softDelete({ id: id });
     }
 }

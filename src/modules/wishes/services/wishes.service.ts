@@ -7,7 +7,7 @@ import { WishesRepository } from '../repositories/wishes.repository';
 export class WishesService {
     constructor(private wishesRepository: WishesRepository) {}
 
-    createWish(createWishDto: CreateWishDto) {
+    create(createWishDto: CreateWishDto) {
         return this.wishesRepository.createWish(createWishDto);
     }
 
@@ -24,6 +24,6 @@ export class WishesService {
     }
 
     remove(id: number) {
-        return `This action removes a #${id} wish`;
+        return this.wishesRepository.deleteWish(id);
     }
 }
