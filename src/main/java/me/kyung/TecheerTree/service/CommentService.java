@@ -42,6 +42,7 @@ public class CommentService {
     }
 
     public void deleteComment(Long id){
+        Comment comment = commentRepository.findById(id).orElseThrow(() ->new RuntimeException("존재하지 않는 댓글입니다."));
         commentRepository.deleteById(id);
 
     }

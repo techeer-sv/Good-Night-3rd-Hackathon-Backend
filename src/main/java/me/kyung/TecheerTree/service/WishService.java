@@ -36,6 +36,8 @@ public class WishService {
     }
 
     public void deleteWish(Long id){
+        Wish wish = wishRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 게시글입니다."));
         wishRepository.deleteById(id);
 
     }
@@ -47,7 +49,7 @@ public class WishService {
 
     public Wish updateWish(Long id, Wish.Status status){
         Wish wish = wishRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 소원이 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 게시글입니다."));
         wish.setIsConfirm(status);
 
         return wishRepository.save(wish);
