@@ -1,8 +1,6 @@
 package com.TecheerTree.myproject.domain.entitiy;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,16 +17,17 @@ public class Wishes {
     private Long wishId;
     private String title;
     private String content;
+    private LocalDate createdDate;
+    private boolean deleted_at;
+
     private Category category;
 
-    private LocalDate createdDate;
-    private Confirm is_confirm;
-    private boolean deleted_at;
+    private Status is_confirm;
 
     public Wishes(){
     }
 
-    public Wishes(String title, String content, Category category, LocalDate createdDate, Confirm is_confirm, boolean deleted_at) {
+    public Wishes(String title, String content, Category category, LocalDate createdDate, Status is_confirm, boolean deleted_at) {
         this.title = title;
         this.content = content;
         this.category = category;

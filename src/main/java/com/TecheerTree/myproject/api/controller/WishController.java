@@ -2,6 +2,7 @@ package com.TecheerTree.myproject.api.controller;
 
 import com.TecheerTree.myproject.api.service.WishService;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
+import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,15 @@ public class WishController {
 
     // 소원 목록 조회
     // 소원 단일 조회
-    // 소원 승인
-    // 소원 거절
+
+
+    // 소원 승인/거절
+    @PatchMapping("/{wishId}/status")
+    public ResponseEntity<Wishes> updateWishStatus(@PathVariable("wishId") Long wishId,
+                                                   @RequestBody String description){
+        Wishes updatedWish = wishService.updateWishStatus(wishId, description);
+        return new ResponseEntity<>(updatedWish,HttpStatus.OK);
+    }
 
     // 소원 삭제
     @DeleteMapping("/{wishId}")

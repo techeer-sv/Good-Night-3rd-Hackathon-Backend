@@ -4,8 +4,10 @@ import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.WishCreateDto;
 import com.TecheerTree.myproject.domain.entitiy.Category;
+import com.TecheerTree.myproject.domain.entitiy.Status;
 import com.TecheerTree.myproject.domain.entitiy.Wishes;
-import com.TecheerTree.myproject.exception.InvalidWishException;
+import com.TecheerTree.myproject.exception.InvalidCategoryWishException;
+import com.TecheerTree.myproject.exception.InvalidStatusWishException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.xml.bind.ValidationException;
@@ -54,7 +56,7 @@ class WishServiceTest {
     @Test
     public void saveInvalidCategoryWish(){
         wishCreateDto.setCategoryName("모르겠는데요");
-        assertThrows(InvalidWishException.class, () -> {
+        assertThrows(InvalidCategoryWishException.class, () -> {
             wishService.saveWish(wishCreateDto);
         });
     }
@@ -68,9 +70,28 @@ class WishServiceTest {
         Wishes wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
-        assertTrue(wish.isDeleted_at()); // true가 1로 저장되었는지 확인
+        assertTrue(wish.isDeleted_at()); // true로 저장되었는지 확인
 
     }
 
+    // status update 테스트
+    @Test
+    public void updateStatus(){
+        Long wishId = 4L; // 존재하는 wishId로 변경
+        wishService.updateWishStatus(wishId, "거절됨");
 
+        Wishes wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
+
+        assertEquals(Status.REJECTED, wish.getIs_confirm()); // REJECTED로 변경되었는지 확인
+    }
+
+    // status update 실패 테스트
+    @Test
+    public void updateInvalidStatus(){
+        Long wishId = 4L; // 존재하는 wishId로 변경
+        assertThrows(InvalidStatusWishException.class, () -> {
+            wishService.updateWishStatus(wishId, "모르겠음");
+        });
+    }
 }
