@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class ReturnAllWishDto {
-
+    private Long wishId;
     private String title;
     private String category;
     private LocalDate createdDate;
@@ -16,7 +16,8 @@ public class ReturnAllWishDto {
     public ReturnAllWishDto() {
     }
 
-    public ReturnAllWishDto(String title, String category, LocalDate createdDate) {
+    public ReturnAllWishDto(Long wishId ,String title, String category, LocalDate createdDate) {
+        this.wishId = wishId;
         this.title = title;
         this.category = category;
         this.createdDate = createdDate;

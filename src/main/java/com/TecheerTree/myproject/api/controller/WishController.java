@@ -39,6 +39,7 @@ public class WishController {
         Page<Wishes> wishes = wishService.getWishes(status, pageable);
 
         Page<ReturnAllWishDto> response = wishes.map(wish -> new ReturnAllWishDto(
+                wish.getWishId(),
                 wish.getTitle(),
                 wish.getContent(),
                 wish.getCreatedDate()
