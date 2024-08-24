@@ -8,10 +8,11 @@ import lombok.Getter;
 @Getter
 public enum WishConfirmState {
 
-    APPROVED("승인됨"),
-    PENDING("보류됨"),
-    REJECTED("거절됨");
+    APPROVED("승인됨", "approved"),
+    PENDING("보류됨", "pending"),
+    REJECTED("거절됨", "rejected");
 
 
     private final String korean;
+    private final String english;
 }

@@ -33,7 +33,7 @@ public class WishService {
 
     public void deleteWishById(Long id) {
         Wish targetWish = wishRepository.findById(id);
-        targetWish.setDeleted_at(LocalDateTime.now());
+        targetWish.set_deleted(true);
         wishRepository.updateById(id, targetWish);
     }
 
@@ -45,7 +45,7 @@ public class WishService {
 
     public WishDto.FindDto findWishById(Long id) {
         Wish targetWish = wishRepository.findById(id);
-        if (targetWish.getDeleted_at() != null) {
+        if (targetWish.is_deleted()) {
             throw new NotFoundWishException(ErrorCode.NOT_EXIST_WISH);
         }
         if (targetWish.getIs_confirm() != WishConfirmState.APPROVED.getKorean()) {
@@ -61,9 +61,21 @@ public class WishService {
         return wishDto;
     }
 
-    public List<WishDto.FindAllDto> findAllWish() {
+    public List<WishDto.FindAllDto> findAllWish(String wishState) {
         return wishRepository.findAll()
                 .stream()
+                .filter(wish -> {
+                    if(wishState == WishConfirmState.APPROVED.getEnglish()) {
+                        return WishConfirmState.APPROVED.getKorean().equals(wish.getIs_confirm());
+                    }
+                    if(wishState == WishConfirmState.PENDING.getEnglish()) {
+                        return WishConfirmState.PENDING.getKorean().equals(wish.getIs_confirm());
+                    }
+                    if(wishState == WishConfirmState.REJECTED.getEnglish()) {
+                        return WishConfirmState.REJECTED.getKorean().equals(wish.getIs_confirm());
+                    }
+                    return true;
+                })
                 .map(wish -> {
                     WishDto.FindAllDto wishDto = new WishDto.FindAllDto();
                     wishDto.setTitle(wish.getTitle());

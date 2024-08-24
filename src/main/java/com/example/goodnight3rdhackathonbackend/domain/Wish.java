@@ -16,5 +16,5 @@ public class Wish {
     private String category;
     private LocalDate created_at;
     private String is_confirm = WishConfirmState.PENDING.getKorean();
-    private LocalDateTime deleted_at;
+    private boolean is_deleted;
 }
