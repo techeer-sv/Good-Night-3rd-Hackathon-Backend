@@ -1,6 +1,7 @@
 package com.example.Good_Night_3rd_Hackathon_Backend.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,17 +15,19 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @NoArgsConstructor
-public class Wishes extends BaseEntity{
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Comments extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+
+    @ManyToOne
+    @JoinColumn(name = "wish_id", nullable = false)
+    private Wishes wish;
     private String content;
-    private String category;
 
-    @Setter
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ConfirmStatus isConfirmed = ConfirmStatus.PENDING;;
-
-
+    @Builder
+    public Comments(Wishes wish, String content) {
+        this.wish = wish;
+        this.content = content;
+    }
 }
