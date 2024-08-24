@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"errors"
 	"time"
 
 	"github.com/d0kyoung/Techeer-Good-Night-3rd-Hackathon-Backend/models"
@@ -56,12 +57,20 @@ func (w *wishRepository) GetAllWishes(status string, page int, pageSize int) ([]
 
 // GetWish implements WishRepository.
 func (w *wishRepository) GetWish(id uint) (*models.Wish, error) {
-	panic("unimplemented")
+	var wish models.Wish
+	err := w.db.Where("id = ? AND deleted_at IS NULL", id).First(&wish).Error
+	if err != nil {
+		return nil, err
+	}
+	if wish.IsConfirm != "승인됨" {
+		return nil, errors.New("wish not approved")
+	}
+	return &wish, nil
 }
 
 // UpdateWish implements WishRepository.
 func (w *wishRepository) UpdateWish(id uint, status string) error {
-	panic("unimplemented")
+	return w.db.Model(&models.Wish{}).Where("id = ?", id).Update("is_confirm", status).Error
 }
 
 func NewWishReposityory(db *gorm.DB) WishRepository {

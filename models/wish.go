@@ -13,7 +13,7 @@ type Wish struct {
 	Title     string    `json:"title" gorm:"not null"`
 	Content   string    `json:"content" gorm:"not null"`
 	Category  string    `json: "category" gorm: "size:255;not null"`
-	IsConfirm bool      `json: "is_confirm"`
+	IsConfirm string    `json: "is_confirm"`
 	CreatedAt time.Time `json:"created_at"`
 }
 
