@@ -15,7 +15,9 @@ export class WishesRepository extends Repository<WishEntity> {
     }
 
     findAll() {
-        return this.find();
+        return this.createQueryBuilder('wish')
+            .orderBy('wish.createdAt', 'DESC')
+            .getMany();
     }
 
     findById(id: number) {
