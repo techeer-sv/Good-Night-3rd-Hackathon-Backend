@@ -1,9 +1,11 @@
 package com.example.goodnight3rdhackathonbackend.service;
 
+import com.example.goodnight3rdhackathonbackend.domain.Wish;
 import com.example.goodnight3rdhackathonbackend.dto.WishDto;
 import com.example.goodnight3rdhackathonbackend.repository.WishRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 
 @Service
 public class WishService {
@@ -14,7 +16,13 @@ public class WishService {
         this.wishRepository = wishRepository;
     }
 
-    public void saveWish(WishDto wishDto) {
+    public void saveWish(WishDto.SaveDto wishDto) {
+        Wish wish = new Wish();
+        wish.setTitle(wishDto.getTitle());
+        wish.setContent(wishDto.getContent());
+        wish.setCategory(wishDto.getCategory());
+        wish.setCreated_at(LocalDate.now());
+        wishRepository.save(wish);
     }
 
 }
