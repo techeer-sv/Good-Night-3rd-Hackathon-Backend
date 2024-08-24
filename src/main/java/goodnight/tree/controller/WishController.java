@@ -32,6 +32,12 @@ public class WishController {
     }
 
 
+    // 소원 삭제
+    @DeleteMapping("/{wishId}")
+    public ResponseEntity<Void> deleteWish(@PathVariable Long wishId){
+        wishService.deleteWish(wishId);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
 
 
 }

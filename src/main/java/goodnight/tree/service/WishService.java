@@ -30,4 +30,11 @@ public class WishService {
 
     }
 
+    // 소원 삭제(소프트)
+    public void deleteWish(Long wishId) {
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new RuntimeException("Wish not found"));
+        wishRepository.delete(wish);  // Soft delete occurs here
+    }
+
 }
