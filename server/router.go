@@ -26,6 +26,7 @@ func setupRouter(handler *handlers.Handler) *gin.Engine {
 		{
 			commentGroup.POST("/", handler.CommentHandler.CreateComment)
 			commentGroup.GET("/", handler.CommentHandler.GetComments)
+			commentGroup.DELETE("/:id", handler.CommentHandler.DeleteComment)
 		}
 	}
 	return router

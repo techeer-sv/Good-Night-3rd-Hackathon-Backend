@@ -8,6 +8,7 @@ import (
 type CommentService interface {
 	CreateComment(comment *models.Comment) error
 	GetCommentsByWishID(wishID uint, page, pageSize int) ([]models.Comment, error)
+	DeleteComment(id uint) error
 }
 
 type commentService struct {
@@ -26,4 +27,9 @@ func (s *commentService) CreateComment(comment *models.Comment) error {
 // 2. 조회
 func (s *commentService) GetCommentsByWishID(wishID uint, page, pageSize int) ([]models.Comment, error) {
 	return s.repo.FindByWishID(wishID, page, pageSize)
+}
+
+// 3. 삭제
+func (s *commentService) DeleteComment(id uint) error {
+	return s.repo.Delete(id)
 }

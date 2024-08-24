@@ -8,6 +8,7 @@ import (
 type CommentRepository interface {
 	Create(comment *models.Comment) error
 	FindByWishID(wishID uint, page, pageSize int) ([]models.Comment, error)
+	Delete(id uint) error
 }
 
 type commentRepository struct {
@@ -33,4 +34,13 @@ func (r *commentRepository) FindByWishID(wishID uint, page, pageSize int) ([]mod
 		Find(&comments).Error
 		
 	return comments, err
+}
+
+// 3. 삭제
+func (r *commentRepository) Delete(id uint) error {
+	var comment models.Comment
+	if err := r.db.First(&comment, id).Error; err != nil {
+		return err
+	}
+	return r.db.Delete(&comment).Error
 }

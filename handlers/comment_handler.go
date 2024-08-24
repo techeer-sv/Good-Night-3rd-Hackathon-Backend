@@ -74,3 +74,20 @@ func (h *CommentHandler) GetComments(c *gin.Context) {
 
 	c.JSON(http.StatusOK, comments)
 }
+
+func (h *CommentHandler) DeleteComment(c *gin.Context) {
+	idStr := c.Param("id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil || id <= 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid comment ID"})
+		return
+	}
+
+	err = h.service.DeleteComment(uint(id))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusNoContent, nil)
+}
