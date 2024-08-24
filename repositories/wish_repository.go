@@ -27,7 +27,7 @@ func (w *wishRepository) CreateWish(wish *models.Wish) error {
 
 // DeleteWish implements WishRepository.
 func (w *wishRepository) DeleteWish(id uint) error {
-	return w.db.Delete(&models.Wish{}).Where("id = ?", id).Update("deleted_at", gorm.DeletedAt{Time: time.Now(), Valid: true}).Error
+	return w.db.Model(&models.Wish{}).Where("id = ?", id).Update("deleted_at", gorm.DeletedAt{Time: time.Now(), Valid: true}).Error
 }
 
 // GetAllWishes implements WishRepository.
@@ -73,6 +73,6 @@ func (w *wishRepository) UpdateWish(id uint, status string) error {
 	return w.db.Model(&models.Wish{}).Where("id = ?", id).Update("is_confirm", status).Error
 }
 
-func NewWishReposityory(db *gorm.DB) WishRepository {
+func NewWishRepository(db *gorm.DB) WishRepository {
 	return &wishRepository{db: db}
 }
