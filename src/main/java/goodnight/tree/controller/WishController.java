@@ -47,5 +47,13 @@ public class WishController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
+    // 소원 단일 조회
+    @GetMapping("/{wishId}")
+    public WishDetailResponse getWish(@PathVariable Long wishId){
+        WishDetailResponse response = wishService.findWish(wishId);
+        return response;
+    }
+
+
 
 }

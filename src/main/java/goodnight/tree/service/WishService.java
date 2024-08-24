@@ -46,5 +46,16 @@ public class WishService {
         wishRepository.save(wish);
     }
 
+    // 소원 개별 조회
+    public WishDetailResponse findWish(Long wishId) {
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new RuntimeException("Wish not found"));
+
+        if (wish.getIsConfirm() != Wish.WishStatus.APPROVED) {
+            throw new RuntimeException("Only approved wishes can be viewed.");
+        }
+
+        return WishDetailResponse.from(wish);
+    }
 
 }
