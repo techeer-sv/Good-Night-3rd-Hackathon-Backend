@@ -66,3 +66,41 @@ func (h *WishHandler) DeleteWish(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"message": "Wish deleted successfully"})
 }
+
+func (h *WishHandler) UpdateWisheList(c *gin.Context) {
+	status := c.Query("status")
+	if status != string(models.Approved) && status != string(models.Rejected) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status"})
+		return
+	}
+
+	err := h.service.UpdateAllWishes(status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update all wishes"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "All wishes status updated successfully"})
+}
+
+func (h *WishHandler) UpdateWish(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	status := c.Query("status")
+	if status != string(models.Approved) && status != string(models.Rejected) {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid status"})
+		return
+	}
+
+	err = h.service.UpdateWish(uint(id), status)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update wish status"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Wish status updated successfully"})
+}
