@@ -2,9 +2,14 @@ package com.example.Good_Night_3rd_Hackathon_Backend.service;
 
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.ConfirmStatus;
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.Wishes;
+import com.example.Good_Night_3rd_Hackathon_Backend.dto.WishesListDto;
 import com.example.Good_Night_3rd_Hackathon_Backend.repository.WishesRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import java.util.Optional;
 
 @Transactional
@@ -39,5 +44,12 @@ public class WishesService {
 
     public Optional<Wishes> getWish(Long id) {
         return wishesRepository.findByIdAndIsDeletedFalseAndIsConfirmed(id, ConfirmStatus.CONFIRMED);
+    }
+
+    public Page<WishesListDto> getWishesByStatus(ConfirmStatus is_confirmed, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<Wishes> wishes = wishesRepository.findAllByIsDeletedFalseAndIsConfirmed(is_confirmed, pageable);
+        System.out.println(wishes);
+        return wishes.map(WishesListDto::new);
     }
 }

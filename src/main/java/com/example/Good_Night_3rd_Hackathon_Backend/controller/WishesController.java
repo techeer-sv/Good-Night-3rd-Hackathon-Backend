@@ -2,13 +2,15 @@ package com.example.Good_Night_3rd_Hackathon_Backend.controller;
 
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.ConfirmStatus;
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.Wishes;
+import com.example.Good_Night_3rd_Hackathon_Backend.dto.WishesListDto;
 import com.example.Good_Night_3rd_Hackathon_Backend.service.WishesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -66,4 +68,15 @@ public class WishesController {
         }
     }
 
+    @GetMapping("/wishes")
+    public ResponseEntity<List<WishesListDto>> getWishes(@RequestParam ConfirmStatus status, @RequestParam int page, @RequestParam int size) {
+        try {
+            Page<WishesListDto> wishesPage = wishesService.getWishesByStatus(status, page, size);
+            System.out.println(wishesPage.getContent());
+            return ResponseEntity.status(HttpStatus.OK).body(wishesPage.getContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }
