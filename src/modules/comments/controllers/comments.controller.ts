@@ -18,7 +18,6 @@ export class CommentsController {
     @Post()
     @UsePipes(ValidationPipe)
     async create(@Body() createCommentDto: CreateCommentDto) {
-        console.log(createCommentDto);
         return await this.commentsService.create(createCommentDto);
     }
 
