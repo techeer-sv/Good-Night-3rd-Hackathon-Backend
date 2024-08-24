@@ -15,4 +15,8 @@ export class WishesService {
     const wish = this.wishRepository.create(createWishDto);
     return this.wishRepository.save(wish);
   }
+
+  async delete(id: number): Promise<void> {
+    await this.wishRepository.update(id, { deleted_at: new Date() });
+  }
 }
