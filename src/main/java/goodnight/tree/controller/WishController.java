@@ -32,6 +32,14 @@ public class WishController {
     }
 
 
+    // 소원 승인 / 거절
+    @PatchMapping("/{wishId}")
+    public ResponseEntity<Void> updateWish(@RequestBody WishUpdateRequest request,
+                                           @PathVariable Long wishId){
+        wishService.updateWish(request, wishId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     // 소원 삭제
     @DeleteMapping("/{wishId}")
     public ResponseEntity<Void> deleteWish(@PathVariable Long wishId){

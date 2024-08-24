@@ -37,4 +37,14 @@ public class WishService {
         wishRepository.delete(wish);  // Soft delete occurs here
     }
 
+    // 소원 승인/거절
+    public void updateWish(WishUpdateRequest request, Long wishId) {
+        Wish wish = wishRepository.findById(wishId)
+                .orElseThrow(() -> new RuntimeException("Wish not found"));
+
+        wish.changeStatus(request.getStatus()); // 제약 없이 상태 변경
+        wishRepository.save(wish);
+    }
+
+
 }
