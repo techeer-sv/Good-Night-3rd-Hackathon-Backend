@@ -119,3 +119,13 @@ Techeer Tree는 테커인들이 자신의 목표나 소원을 작성하고, 이�
 - 🧑🏻‍💻[오현택](https://github.com/HyunTaek5)
 - 👩🏻‍💻[이도경](https://github.com/d0kyoung)
 - 🧑🏻‍💻[강기환](https://github.com/GiHwan2)
+
+---
+
+<img width="1703" alt="image" src="https://github.com/user-attachments/assets/9ad87cb3-63a0-43e7-bef3-3e0ab747160e">
+
+추가 기능을 포함한 1-9번 기능 구현 모두 완료하였습니다.
+response body에는 반드시 status와 message를 출력하도록 구현했습니다.
+
+하지만 유닛 테스트 코드는 작성하지 못하였고 페이지네이션 기능을 구현하지 못했습니다.
+
