@@ -2,6 +2,7 @@ package com.example.TecheerTreeBackend.controller;
 
 
 import com.example.TecheerTreeBackend.dto.CommentForm;
+import com.example.TecheerTreeBackend.dto.CommentListResponse;
 import com.example.TecheerTreeBackend.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,9 @@ public class CommentController {
 
     // 댓글 리스트 조회
     @GetMapping("/comment/{wishId}")
-    public ResponseEntity<List<CommentForm>> viewCommentList(@PathVariable Long wishId){
+    public ResponseEntity<List<CommentListResponse>> viewCommentList(@PathVariable Long wishId){
         // 서비스 위임
-        List<CommentForm> viewCommentList = commentService.viewCommentList(wishId);
+        List<CommentListResponse> viewCommentList = commentService.viewCommentList(wishId);
 
         // 댓글 리스트 출력
         return ResponseEntity.status(HttpStatus.OK).body(viewCommentList);
