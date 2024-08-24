@@ -1,0 +1,24 @@
+# Python 관련
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# 가상 환경
+myenv/
+
+# 데이터베이스 파일
+*.sqlite3
+db.sqlite3
+
+# Django 관련
+/static/
+media/
+*.log
+
+# 환경 변수 파일
+.env
+
+# IDE 관련 (예: VSCode)
+.vscode/
+.idea/
