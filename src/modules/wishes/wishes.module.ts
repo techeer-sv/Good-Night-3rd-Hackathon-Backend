@@ -3,10 +3,10 @@ import { WishesService } from './services/wishes.service';
 import { WishesController } from './controllers/wishes.controller';
 import { WishesRepository } from './repositories/wishes.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { WishEntity } from './domain/wish.entity';
+import { Wish } from './domain/wish.entity';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([WishEntity])],
+    imports: [TypeOrmModule.forFeature([Wish])],
     controllers: [WishesController],
     providers: [WishesService, WishesRepository],
 })

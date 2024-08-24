@@ -1,3 +1,4 @@
+import { Comment } from 'src/modules/comments/domain/comment.entity';
 import {
     Column,
     Entity,
@@ -5,10 +6,11 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     DeleteDateColumn,
+    OneToMany,
 } from 'typeorm';
 
 @Entity('wish')
-export class WishEntity {
+export class Wish {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -37,4 +39,7 @@ export class WishEntity {
 
     @DeleteDateColumn({ name: 'delete_at', comment: '삭제일' })
     deletedAt: boolean;
+
+    @OneToMany(() => Comment, (comment) => comment.wish)
+    comments: Comment[];
 }
