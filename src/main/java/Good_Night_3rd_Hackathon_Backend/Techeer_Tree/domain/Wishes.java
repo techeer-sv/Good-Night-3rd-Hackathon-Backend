@@ -1,9 +1,13 @@
 package Good_Night_3rd_Hackathon_Backend.Techeer_Tree.domain;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import java.time.LocalDate;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Wishes {
 
     @Id
@@ -21,7 +25,7 @@ public class Wishes {
     private Category category;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @Enumerated(EnumType.STRING)
     private WishesStatus isConfirm = WishesStatus.PENDING;

@@ -1,5 +1,7 @@
 package Good_Night_3rd_Hackathon_Backend.Techeer_Tree.controller;
 
+import Good_Night_3rd_Hackathon_Backend.Techeer_Tree.domain.Wishes;
+import Good_Night_3rd_Hackathon_Backend.Techeer_Tree.dto.WishesDto;
 import Good_Night_3rd_Hackathon_Backend.Techeer_Tree.service.WishesService;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,5 +13,10 @@ public class WishesController {
 
     public WishesController(WishesService wishesService) {
         this.wishesService = wishesService; // WishesController 객체가 생성될 때 WishesService 객체 주입
+    }
+
+    @PostMapping
+    public Wishes createWish(@RequestBody WishesDto wishDto) {
+        return wishesService.createWish(wishDto);
     }
 }
