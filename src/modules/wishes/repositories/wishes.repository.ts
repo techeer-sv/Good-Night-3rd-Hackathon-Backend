@@ -16,7 +16,11 @@ export class WishesRepository extends Repository<Wish> {
     }
 
     // 소원 목록 조회 - 승인/미승인
-    async findAll(confirm: number): Promise<Wish[]> {
+    async findAll(
+        confirm: number,
+        limit: number,
+        offset: number,
+    ): Promise<Wish[]> {
         const queryBuilder = this.createQueryBuilder('wish');
 
         if (confirm) {
@@ -26,12 +30,16 @@ export class WishesRepository extends Repository<Wish> {
             });
         } else {
             // 미승인된 경우
-            queryBuilder.where('wish.isConfirm IN (:...isConfirm)', {
+            queryBuilder.where('wish.is_confirm IN (:...isConfirm)', {
                 isConfirm: ['보류됨', '거절됨'],
             });
         }
 
-        return queryBuilder.orderBy('wish.createdAt', 'DESC').getMany();
+        return queryBuilder
+            .orderBy('wish.createdAt', 'DESC')
+            .limit(limit)
+            .offset(offset)
+            .getMany();
     }
 
     // 소원 단일 조회
