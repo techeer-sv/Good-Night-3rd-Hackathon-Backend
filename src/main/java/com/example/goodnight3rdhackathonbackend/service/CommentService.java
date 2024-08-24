@@ -42,4 +42,11 @@ public class CommentService {
                 .toList();
     }
 
+    public void deleteCommentById(Long commentId) {
+        Comment targetComment = commentRepository.findById(commentId);
+        targetComment.set_deleted(true);
+        commentRepository.updateById(commentId, targetComment);
+    }
+
+
 }

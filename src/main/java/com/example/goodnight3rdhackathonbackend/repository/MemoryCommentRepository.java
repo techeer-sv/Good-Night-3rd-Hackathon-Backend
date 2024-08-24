@@ -23,6 +23,12 @@ public class MemoryCommentRepository implements CommentRepository {
     }
 
     @Override
+    public Comment findById(Long id) {
+        return memory.get(id);
+    }
+
+
+    @Override
     public List<Comment> findAll(Pageable pageable) {
         return memory.values().stream()
                 .sorted(Comparator.comparing(Comment::getComment_id).reversed())

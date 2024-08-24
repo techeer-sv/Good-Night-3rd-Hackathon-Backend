@@ -25,5 +25,10 @@ public class CommentController {
         return commentService.findAllCommentByWishId(wishId, page);
     }
 
+    @DeleteMapping("/comment/{commentId}")
+    public void deleteComment(@PathVariable Long commentId) {
+        commentService.deleteCommentById(commentId);
+    }
+
 
 }
