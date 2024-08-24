@@ -23,14 +23,12 @@ public class Wishes {
     @Enumerated(EnumType.STRING) // 열거형 -> DB에 문자열로 저장
     @Column(nullable = false)
     private Category category;
-
-    @Column(nullable = false)
+    
     private LocalDateTime createdAt;
 
     @Enumerated(EnumType.STRING)
     private WishesStatus isConfirm = WishesStatus.PENDING;
 
-    @Column(nullable = false)
     private Boolean isDeleted = false;
 
     public enum Category {
