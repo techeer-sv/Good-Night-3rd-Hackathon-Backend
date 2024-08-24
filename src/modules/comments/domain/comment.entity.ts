@@ -7,6 +7,7 @@ import {
     UpdateDateColumn,
     DeleteDateColumn,
     ManyToOne,
+    JoinColumn,
 } from 'typeorm';
 
 @Entity('comment')
@@ -27,5 +28,6 @@ export class Comment {
     deletedAt: boolean;
 
     @ManyToOne(() => Wish, (wish) => wish.comments)
+    @JoinColumn({ name: 'wish_id' })
     wish: Wish;
 }

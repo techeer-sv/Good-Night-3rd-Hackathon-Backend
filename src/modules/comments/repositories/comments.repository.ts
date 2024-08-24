@@ -15,6 +15,12 @@ export class CommentsRepository extends Repository<Comment> {
         return this.save(comment);
     }
 
+    async findAll(id: number) {
+        return await this.createQueryBuilder('comment')
+            .where('comment.wish_id = :id', { id: id })
+            .getMany();
+    }
+
     deleteComment(id: number) {
         return this.softDelete({ id: id });
     }
