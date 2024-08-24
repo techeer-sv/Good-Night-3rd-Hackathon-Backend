@@ -11,8 +11,8 @@ export class CommentsRepository extends Repository<Comment> {
     }
 
     // 댓글 등록
-    createComment(createCommentDto: CreateCommentDto, wish: Wish) {
-        const comment = this.create({ ...createCommentDto, wish: wish });
+    createComment(content: string, wish: Wish) {
+        const comment = this.create({ content: content, wish: wish });
         return this.save(comment);
     }
 

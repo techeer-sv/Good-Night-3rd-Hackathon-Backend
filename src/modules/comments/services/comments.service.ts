@@ -12,12 +12,9 @@ export class CommentsService {
 
     // 댓글 등록
     async create(createCommentDto: CreateCommentDto) {
-        const { wishId } = createCommentDto;
+        const { wishId, content } = createCommentDto;
         const wish = this.wishesRepository.findById(wishId);
-        return this.commentsRepository.createComment(
-            createCommentDto,
-            await wish,
-        );
+        return this.commentsRepository.createComment(content, await wish);
     }
 
     // 댓글 목록 조회
