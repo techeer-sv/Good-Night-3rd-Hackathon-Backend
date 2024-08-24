@@ -3,11 +3,13 @@ package com.example.TecheerTreeBackend.domain;
 
 import com.example.TecheerTreeBackend.dto.CommentForm;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
+@Getter
 @NoArgsConstructor
 public class Comment {
     @Id
