@@ -22,6 +22,8 @@ export class WishesService {
 
   async findAll(
     isConfirmed?: string,
+    keyword?: string,
+    category?: string,
     page: number = 1,
     limit: number = 10,
   ): Promise<Wish[]> {
@@ -37,6 +39,17 @@ export class WishesService {
       });
     } else if (isConfirmed) {
       throw new BadRequestException('올바르지 않은 값입니다.');
+    }
+
+    if (keyword) {
+      query.andWhere(
+        '(wish.title LIKE :keyword OR wish.content LIKE :keyword)',
+        { keyword: `%${keyword}%` },
+      );
+    }
+
+    if (category) {
+      query.andWhere('wish.category = :category', { category });
     }
 
     query.andWhere('wish.deleted_at IS NULL').orderBy('wish.createdAt', 'DESC');

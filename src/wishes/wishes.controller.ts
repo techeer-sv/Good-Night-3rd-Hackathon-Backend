@@ -23,10 +23,18 @@ export class WishesController {
   @Get()
   findAll(
     @Query('isConfirmed') isConfirmed?: string,
+    @Query('keyword') keyword?: string,
+    @Query('category') category?: string,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.wishesService.findAll(isConfirmed, page, limit);
+    return this.wishesService.findAll(
+      isConfirmed,
+      keyword,
+      category,
+      page,
+      limit,
+    );
   }
 
   @Get(':id')
