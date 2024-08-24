@@ -29,4 +29,10 @@ export class CommentsService {
     });
     return this.commentRepository.save(comment);
   }
+
+  async findAll(wishId: number): Promise<Comment[]> {
+    return this.commentRepository.find({
+      where: { wish: { id: wishId }, deleted_at: null },
+    });
+  }
 }
