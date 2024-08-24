@@ -41,4 +41,14 @@ public class CommentsController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @DeleteMapping("/comments/{id}")
+    public ResponseEntity<String> deleteWishes(@PathVariable Long id) {
+        try {
+            commentsService.deleteComment(id);
+            return ResponseEntity.status(HttpStatus.OK).body("Comments successfully deleted.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete comments.");
+        }
+    }
 }

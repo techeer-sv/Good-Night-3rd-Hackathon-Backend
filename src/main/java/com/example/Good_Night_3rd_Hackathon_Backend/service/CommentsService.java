@@ -35,7 +35,6 @@ public class CommentsService {
         } else {
             throw new EntityNotFoundException("Comment not found with id: " + id);
         }
-        commentsRepository.deleteById(id);
     }
 
     public Long createComment(Long wishId, String content) {
