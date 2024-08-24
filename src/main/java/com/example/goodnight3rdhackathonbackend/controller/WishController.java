@@ -6,6 +6,7 @@ import com.example.goodnight3rdhackathonbackend.dto.WishDto;
 import com.example.goodnight3rdhackathonbackend.service.WishService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 public class WishController {
@@ -30,9 +31,14 @@ public class WishController {
         wishService.confirmWishById(id, wishDto);
     }
 
+    @GetMapping("wishs/{id}")
+    public WishDto.FindDto findWishById(@PathVariable Long id) {
+        return wishService.findWishById(id);
+    }
 
-
-
-
+    @GetMapping("/wishs")
+    public List<WishDto.FindAllDto> findAllWish() {
+        return wishService.findAllWish();
+    }
 
 }

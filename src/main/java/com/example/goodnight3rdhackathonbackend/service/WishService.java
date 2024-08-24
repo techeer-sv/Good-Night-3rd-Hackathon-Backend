@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class WishService {
@@ -58,6 +59,19 @@ public class WishService {
         wishDto.setCategory(targetWish.getCategory());
 
         return wishDto;
+    }
+
+    public List<WishDto.FindAllDto> findAllWish() {
+        return wishRepository.findAll()
+                .stream()
+                .map(wish -> {
+                    WishDto.FindAllDto wishDto = new WishDto.FindAllDto();
+                    wishDto.setTitle(wish.getTitle());
+                    wishDto.setCategory(wish.getCategory());
+                    wishDto.setCreated_at(wish.getCreated_at());
+                    return wishDto;
+                })
+                .toList();
     }
 
 }
