@@ -14,3 +14,8 @@ type Comment struct {
 	CreatedAt time.Time      `json:"created_at" gorm:"autoCreateTime"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 }
+
+type CommentInput struct {
+	WishID  uint   `json:"wish_id" binding:"required"`
+	Content string `json:"content" binding:"required"`
+}
