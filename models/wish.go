@@ -35,3 +35,9 @@ type Wish struct {
 	IsConfirm WishStatus     `json:"is_confirm" gorm:"default:'pending'"`
 	DeletedAt gorm.DeletedAt `json:"deleted_at" gorm:"index"`
 }
+
+type WishInput struct {
+	Title    string `json:"title" binding:"required"`
+	Content  string `json:"content" binding:"required"`
+	Category string `json:"category" binding:"required"`
+}
