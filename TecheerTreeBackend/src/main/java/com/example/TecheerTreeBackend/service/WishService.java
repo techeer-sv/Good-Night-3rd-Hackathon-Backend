@@ -69,10 +69,10 @@ public class WishService {
         // 승인 처리 확인
         Boolean check = wish.checkConfirm();
 
-        // 승인 처리가 되었다면 정상 반환 되지 않았다면 null 반환
-        if (check) {
+        // 승인 처리가 되었고, 삭제 처리가 되지 않았다면 정상 반환
+        if (check && !wish.getIs_deleted()) {
             return WishResponse.createWishDto(wish);
-        }else {
+        } else { // 이 외의 경우 null 반환
             return null;
         }
     }

@@ -44,13 +44,13 @@ public class WishController {
 
     // 소원 단일 조회
     @GetMapping("/wish/{wishId}")
-    public ResponseEntity<WishResponse> viewWish(@PathVariable Long wishId){
+    public ResponseEntity<?> viewWish(@PathVariable Long wishId){
         // 서비스 위임
         WishResponse viewWish = wishService.viewService(wishId);
 
         // 만약 viewWish가 null이라면 BAD_REQUEST 반환
         if (viewWish == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("승인 된 소원이 아니거나 삭제 된 소원입니다..");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(viewWish);

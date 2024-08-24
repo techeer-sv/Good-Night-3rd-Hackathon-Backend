@@ -12,6 +12,6 @@ import java.util.Optional;
 
 public interface WishRepository extends JpaRepository<Wish, Long> {
 
-    @Query(value = "SELECT * FROM wish WHERE  (:wishStatus = 'APPROVED' AND is_confirm = 'APPROVED') OR (:wishStatus != 'APPROVED' AND is_confirm != 'APPROVED')  ORDER BY created_at DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM wish WHERE  ((:wishStatus = 'APPROVED' AND is_confirm = 'APPROVED') AND is_deleted = FALSE) OR ((:wishStatus != 'APPROVED' AND is_confirm != 'APPROVED') AND is_deleted = FALSE)  ORDER BY created_at DESC", nativeQuery = true)
     List<Wish> findByWishStatus(WishStatus wishStatus);
 }
