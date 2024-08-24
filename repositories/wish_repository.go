@@ -12,6 +12,7 @@ type WishRepository interface {
 	Delete(id uint) error
 	UpdateAll(status string) error
 	UpdateOne(id uint, status string) error
+	FindByID(id uint) (*models.Wish, error)
 }
 
 type wishRepository struct {
@@ -63,4 +64,14 @@ func (r *wishRepository) UpdateOne(id uint, status string) error {
 
 	wish.IsConfirm = models.WishStatus(status)
 	return r.db.Save(&wish).Error
+}
+
+// 5. 단일 조회
+func (r *wishRepository) FindByID(id uint) (*models.Wish, error) {
+	var wish models.Wish
+	err := r.db.Where("id = ? AND is_confirm = '승인' AND deleted_at IS NULL", id).First(&wish).Error
+	if err != nil {
+		return nil, err
+	}
+	return &wish, nil
 }

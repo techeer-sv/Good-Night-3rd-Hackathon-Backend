@@ -10,6 +10,7 @@ type WishService interface {
 	DeleteWish(id uint) error
 	UpdateAllWishes(status string) error
 	UpdateWish(id uint, status string) error
+	GetWishByID(id uint) (*models.Wish, error)
 }
 
 type wishService struct {
@@ -38,4 +39,9 @@ func (s *wishService) UpdateAllWishes(status string) error {
 // 4. 개별 승인/거절
 func (s *wishService) UpdateWish(id uint, status string) error {
 	return s.repo.UpdateOne(id, status)
+}
+
+// 5. 단일 조회
+func (s *wishService) GetWishByID(id uint) (*models.Wish, error) {
+	return s.repo.FindByID(id)
 }

@@ -104,3 +104,25 @@ func (h *WishHandler) UpdateWish(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Wish status updated successfully"})
 }
+
+func (h *WishHandler) GetWish(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+
+	wish, err := h.service.GetWishByID(uint(id))
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Wish not found or not accessible"})
+		return
+	}
+
+	response := gin.H{
+		"title":    wish.Title,
+		"content":  wish.Content,
+		"category": wish.Category,
+	}
+
+	c.JSON(http.StatusOK, response)
+}
