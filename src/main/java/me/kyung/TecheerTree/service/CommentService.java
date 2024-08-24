@@ -40,4 +40,9 @@ public class CommentService {
                 .map(CommentListResponse::from)
                 .collect(Collectors.toList());
     }
+
+    public void deleteComment(Long id){
+        commentRepository.deleteById(id);
+
+    }
 }

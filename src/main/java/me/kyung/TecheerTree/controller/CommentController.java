@@ -29,4 +29,9 @@ public class CommentController {
         List<CommentListResponse> commentList = commentService.findAllComment(wishId,page, size);
         return ResponseEntity.ok(commentList);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteComment(@PathVariable("id") Long id){
+        commentService.deleteComment(id);
+        return ResponseEntity.noContent().build();
+    }
 }
