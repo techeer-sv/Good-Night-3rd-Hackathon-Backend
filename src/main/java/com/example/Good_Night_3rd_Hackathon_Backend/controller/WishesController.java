@@ -75,7 +75,16 @@ public class WishesController {
             System.out.println(wishesPage.getContent());
             return ResponseEntity.status(HttpStatus.OK).body(wishesPage.getContent());
         } catch (Exception e) {
-            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/wishes/search")
+    public ResponseEntity<List<WishesListDto>> searchWishes(@RequestParam String keyword, @RequestParam(required = false) String category, @RequestParam ConfirmStatus status, @RequestParam int page, @RequestParam int size) {
+        try {
+            Page<WishesListDto> wishesPage = wishesService.searchWishes(keyword, category, status, page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(wishesPage.getContent());
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }

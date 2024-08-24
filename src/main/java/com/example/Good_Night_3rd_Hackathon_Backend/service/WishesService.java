@@ -49,7 +49,13 @@ public class WishesService {
     public Page<WishesListDto> getWishesByStatus(ConfirmStatus is_confirmed, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Wishes> wishes = wishesRepository.findAllByIsDeletedFalseAndIsConfirmed(is_confirmed, pageable);
-        System.out.println(wishes);
         return wishes.map(WishesListDto::new);
     }
+
+    public Page<WishesListDto> searchWishes(String keyword, String category, ConfirmStatus isConfirmed, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<Wishes> wishes = wishesRepository.searchWishes(keyword, category, isConfirmed, pageable);
+        return wishes.map(WishesListDto::new);
+    }
+
 }
