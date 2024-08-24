@@ -36,6 +36,7 @@ public class WishController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "'보류됨'상태의 소원 조회")
     @GetMapping("/pending")
     public ResponseEntity<List<WishInfoResponseDto>> getPendingWishes() {
         List<Wish> pendingWishes = wishService.getPendingWishes();
@@ -60,7 +61,7 @@ public class WishController {
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 
-    @Operation(summary = "단일조회")
+    @Operation(summary = "소원 단일 조회")
     @GetMapping("/{id}")
     public ResponseEntity<WishInfoResponseDto> findOne(@PathVariable Long id){
         WishInfoResponseDto responseDto = wishService.findOne(id);

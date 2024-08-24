@@ -46,6 +46,7 @@ public class WishService {
         return WishUpdateMapper.INSTANCE.toDto(wish);
     }
 
+    @Transactional
     public WishInfoResponseDto findOne(Long id){
         Wish wish = wishRepository.findById(id)
                 .filter(w -> {
@@ -64,9 +65,7 @@ public class WishService {
 
         return WishCreateMapper.INSTANCE.toDto(wish);
     }
-    //소원 단일 조회
-    //제목, 내용, 카테고리 정보를 반환합니다.
-    //승인된 소원만 조회가 가능합니다.
+
 
 
 
