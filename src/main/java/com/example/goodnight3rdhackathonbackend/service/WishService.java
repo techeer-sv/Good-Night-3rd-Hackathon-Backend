@@ -32,4 +32,10 @@ public class WishService {
         wishRepository.updateById(id, targetWish);
     }
 
+    public void confirmWishById(Long id, WishDto.ConfirmDto wishDto) {
+        Wish targetWish = wishRepository.findById(id);
+        targetWish.setIs_confirm(wishDto.getIs_confirm());
+        wishRepository.updateById(id, targetWish);
+    }
+
 }

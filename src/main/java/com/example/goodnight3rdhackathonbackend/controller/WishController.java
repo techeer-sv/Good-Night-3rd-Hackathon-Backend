@@ -25,6 +25,14 @@ public class WishController {
         wishService.deleteWishById(id);
     }
 
+    @PutMapping("/wishs/{id}")
+    public void confirmWishById(@PathVariable Long id, @RequestBody WishDto.ConfirmDto wishDto) {
+        wishService.confirmWishById(id, wishDto);
+    }
+
+
+
+
 
 
 }
