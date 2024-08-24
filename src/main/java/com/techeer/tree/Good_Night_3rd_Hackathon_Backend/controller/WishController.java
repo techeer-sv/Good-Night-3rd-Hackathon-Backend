@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,21 @@ public class WishController {
       WishResponse.WishUpdateResponse response = WishResponse.WishUpdateResponse.success(id);
       return ResponseEntity.ok(response);
     } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+      WishResponse.WishUpdateResponse response = WishResponse.WishUpdateResponse.failure(id, "소원 수정 실패: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+  }
+
+  @Operation(summary = "View a wish", description = "View a wish by its ID")
+  @GetMapping("/{id}")
+  public ResponseEntity<WishResponse.WishReadDetailResponse> getWish(@PathVariable Long id) {
+    try {
+      Wish wish = wishService.readDetailWish(id);
+      WishResponse.WishReadDetailResponse response = WishResponse.WishReadDetailResponse.success(wish);
+      return ResponseEntity.ok(response);
+    } catch (Exception e) {
+      WishResponse.WishReadDetailResponse response = WishResponse.WishReadDetailResponse.failure(id, "소원 조회 실패: " + e.getMessage());
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
   }
 }

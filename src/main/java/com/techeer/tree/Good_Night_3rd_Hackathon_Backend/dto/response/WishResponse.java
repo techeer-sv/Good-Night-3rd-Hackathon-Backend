@@ -60,4 +60,23 @@ public class WishResponse {
       return new WishUpdateResponse(id, 400, message);
     }
   }
+
+  @Getter
+  @AllArgsConstructor
+  public static class WishReadDetailResponse {
+    private Long id;
+    private String title;
+    private String content;
+    private String category;
+    private int status;
+    private String message;
+
+    public static WishReadDetailResponse success(Wish wish) {
+      return new WishReadDetailResponse(wish.getId(), wish.getTitle(), wish.getContent(), wish.getCategory(), 200, "소원 조회 성공");
+    }
+
+    public static WishReadDetailResponse failure(Long id, String message) {
+      return new WishReadDetailResponse(id, null, null, null, 400, message);
+    }
+  }
 }

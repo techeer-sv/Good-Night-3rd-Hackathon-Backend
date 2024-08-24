@@ -34,4 +34,9 @@ public class WishService {
     wish.setIsConfirmed(isConfirmed);  // 업데이트 수행
     return wishRepository.save(wish);  // 업데이트 후 저장
   }
+
+  public Wish readDetailWish(Long id) {
+    return wishRepository.findById(id)
+        .orElseThrow(() -> new IllegalArgumentException("Wish not found with id " + id));
+  }
 }
