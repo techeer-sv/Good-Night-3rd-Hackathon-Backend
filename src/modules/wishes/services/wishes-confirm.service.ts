@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { WishesConfirmRepository } from '../repositories/wishes-confirm.repository';
-import { UpdateWishDto } from '../dto/update-wish.dto';
+import { ConfirmWishDto } from '../dto/confirm-wish.dto';
 
 @Injectable()
 export class WishesConfirmService {
@@ -12,8 +12,8 @@ export class WishesConfirmService {
     }
 
     // 소원 승인/거절
-    confirm(updateWishDto: UpdateWishDto) {
-        const { id, isConfirm } = updateWishDto;
+    confirm(confirmWishDto: ConfirmWishDto) {
+        const { id, isConfirm } = confirmWishDto;
         return this.wishesConfirmRepository.confirmWish(id, isConfirm);
     }
 }

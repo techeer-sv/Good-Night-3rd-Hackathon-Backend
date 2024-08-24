@@ -7,7 +7,7 @@ import {
     Get,
 } from '@nestjs/common';
 import { WishesConfirmService } from '../services/wishes-confirm.service';
-import { UpdateWishDto } from '../dto/update-wish.dto';
+import { ConfirmWishDto } from '../dto/confirm-wish.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('confirm')
@@ -24,7 +24,7 @@ export class WishesConfirmController {
     // 소원 승인/거절
     @Patch()
     @UsePipes(ValidationPipe)
-    confirm(@Body() updateWishDto: UpdateWishDto) {
-        return this.wishesConfirmService.confirm(updateWishDto);
+    confirm(@Body() confirmWishDto: ConfirmWishDto) {
+        return this.wishesConfirmService.confirm(confirmWishDto);
     }
 }

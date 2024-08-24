@@ -2,11 +2,11 @@ import { IsNotEmpty } from 'class-validator';
 
 export class CreateWishDto {
     @IsNotEmpty()
-    title: string;
+    readonly title: string;
 
     @IsNotEmpty()
-    content: string;
+    readonly content: string;
 
     @IsNotEmpty()
-    category: string;
+    readonly category: string;
 }
