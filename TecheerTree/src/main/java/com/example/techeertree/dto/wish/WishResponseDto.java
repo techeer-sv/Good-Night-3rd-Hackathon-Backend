@@ -14,13 +14,9 @@ public class WishResponseDto {
     @Getter
     public static class WishInfoResponseDto {
 
-    private Long id;
     private String title;
     private String content;
     private Category category;
-    private Confirm isConfirm;
-    private LocalDateTime  createdAt;
-
     }
 
     @Getter
@@ -30,4 +26,5 @@ public class WishResponseDto {
         private Confirm isConfirm;
         private LocalDateTime modifiedAt;
     }
+
 }
