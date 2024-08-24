@@ -13,10 +13,10 @@ import java.util.List;
 @Repository
 public interface WishesRepository extends JpaRepository<Wishes, Long> {
 
-    @Query("SELECT wish FROM Wishes wish WHERE (:status IS NULL OR wish.isConfirm = :status)")
+    @Query("SELECT w FROM Wishes w WHERE (:status IS NULL OR w.isConfirm = :status)")
     Page<Wishes> getWishList(Wishes.WishesStatus status, Pageable pageable);
 
-    @Query("SELECT wish FROM Wishes wish WHERE (wish.title LIKE :keyword OR wish.content LIKE :keyword) AND wish.category = :category AND wish.isDeleted = false")
+    @Query("SELECT w FROM Wishes w WHERE (w.title LIKE :keyword OR w.content LIKE :keyword) AND w.category = :category AND w.isDeleted = false")
     List<Wishes> searchWishes(@Param("keyword") String keyword, @Param("category") Wishes.Category category);
 }
 
