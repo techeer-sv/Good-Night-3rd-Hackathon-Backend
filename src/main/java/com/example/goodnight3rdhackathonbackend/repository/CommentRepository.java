@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface CommentRepository {
     void save(Comment comment);
-    List<Comment> findAllByWishId(Long id, Pageable pageable);
+    List<Comment> findAll(Pageable pageable);
     void updateById(Long id, Comment comment);
 }

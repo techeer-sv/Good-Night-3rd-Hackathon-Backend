@@ -4,6 +4,8 @@ package com.example.goodnight3rdhackathonbackend.service;
 import com.example.goodnight3rdhackathonbackend.domain.Comment;
 import com.example.goodnight3rdhackathonbackend.dto.CommentDto;
 import com.example.goodnight3rdhackathonbackend.repository.CommentRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -23,6 +25,21 @@ public class CommentService {
         comment.setContent(commentDto.getContent());
         comment.setCreated_at(LocalDate.now());
         commentRepository.save(comment);
+    }
+
+
+    public List<CommentDto> findAllCommentByWishId(Long wishId, int page) {
+        Pageable pageable = PageRequest.of(page, 5);
+        return commentRepository.findAll(pageable)
+                .stream()
+                .filter(comment -> wishId.equals(comment.getWish_id()))
+                .map(comment -> {
+                    CommentDto commentDto = new CommentDto();
+                    commentDto.setContent(comment.getContent());
+                    commentDto.setCreated_at(comment.getCreated_at());
+                    return commentDto;
+                })
+                .toList();
     }
 
 }

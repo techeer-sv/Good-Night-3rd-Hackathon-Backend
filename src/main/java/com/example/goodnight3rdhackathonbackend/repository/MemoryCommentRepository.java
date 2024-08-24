@@ -23,9 +23,8 @@ public class MemoryCommentRepository implements CommentRepository {
     }
 
     @Override
-    public List<Comment> findAllByWishId(Long id, Pageable pageable) {
+    public List<Comment> findAll(Pageable pageable) {
         return memory.values().stream()
-                .filter(comment -> id.equals(comment.getWish_id()))
                 .sorted(Comparator.comparing(Comment::getComment_id).reversed())
                 .skip((long) pageable.getPageNumber() * pageable.getPageSize())
                 .limit(pageable.getPageSize())
