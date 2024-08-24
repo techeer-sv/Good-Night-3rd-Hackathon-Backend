@@ -29,7 +29,11 @@ public class WishController {
     // 소원 단일 조회
     // 소원 승인
     // 소원 거절
+
     // 소원 삭제
-
-
+    @DeleteMapping("/{wishId}")
+    public ResponseEntity<String> deleteMember(@PathVariable("wishId") Long wishId) {
+       wishService.wishDelete(wishId);
+       return ResponseEntity.ok("삭제에 성공하였습니다.");
+    }
 }

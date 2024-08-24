@@ -1,7 +1,6 @@
 package com.TecheerTree.myproject.domain.dto;
 
 import com.TecheerTree.myproject.domain.entitiy.Category;
-import com.TecheerTree.myproject.domain.entitiy.Confirm;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
