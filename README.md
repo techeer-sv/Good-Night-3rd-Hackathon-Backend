@@ -122,6 +122,7 @@ Techeer Tree는 테커인들이 자신의 목표나 소원을 작성하고, 이�
 
 ---
 
+## 구현한 기능 소개
 <img width="1703" alt="image" src="https://github.com/user-attachments/assets/9ad87cb3-63a0-43e7-bef3-3e0ab747160e">
 
 추가 기능을 포함한 1-9번 기능 구현 모두 완료하였습니다.
