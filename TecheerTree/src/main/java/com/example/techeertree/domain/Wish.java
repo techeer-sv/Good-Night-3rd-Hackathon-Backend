@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -49,4 +50,7 @@ public class Wish extends BaseEntity{
         this.setDeletedAt(LocalDateTime.now());
     }
 
+    public void updateIsConfirm(Confirm isConfirm){
+        this.isConfirm = isConfirm;
+    }
 }

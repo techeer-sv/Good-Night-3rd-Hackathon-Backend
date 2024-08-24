@@ -7,9 +7,12 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Builder
-@Getter
+
 public class WishResponseDto {
+
+    @Builder
+    @Getter
+    public static class WishInfoResponseDto {
 
     private Long id;
     private String title;
@@ -18,4 +21,13 @@ public class WishResponseDto {
     private Confirm isConfirm;
     private LocalDateTime  createdAt;
 
+    }
+
+    @Getter
+    @Builder
+    public static class WishUpdateResponseDto {
+        private Long id;
+        private Confirm isConfirm;
+        private LocalDateTime modifiedAt;
+    }
 }
