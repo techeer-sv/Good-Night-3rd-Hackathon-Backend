@@ -20,9 +20,10 @@ public class Wish {
     private Long id;
     private String title;
     private String content;
-    private String category;
+    private String category; // 진로, 건강, 인간 관계, 돈, 목표, 학업/성적, 기타
     private Date created_at;
-    private String is_confirm = "보류됨";
+    @Enumerated(EnumType.STRING)
+    private WishStatus is_confirm = WishStatus.PENDING; // 초기값 = "보류중"
     private Boolean is_deleted = Boolean.FALSE;
 
     public Wish(String title, String content, String category, Date createAt) {
@@ -33,6 +34,9 @@ public class Wish {
     }
 
     public static Wish createWish(WishForm wishForm) {
+        if (wishForm.getTitle() == null || wishForm.getContent() == null || wishForm.getCategory() == null || wishForm.getCreate_at() == null) {
+            throw new IllegalArgumentException("Title, Content, Category, and Created_at cannot be null.");
+        }
         return new Wish(
                 wishForm.getTitle(),
                 wishForm.getContent(),
@@ -46,13 +50,11 @@ public class Wish {
     }
 
     public String confirm(WishConfirmForm wishConfirmForm) {
-        return this.is_confirm = wishConfirmForm.getConfirm();
+        this.is_confirm = wishConfirmForm.getConfirm();
+        return this.is_confirm.getDescription(); // 상태의 설명을 반환
     }
 
     public Boolean checkConfirm() {
-        if (Objects.equals(this.getIs_confirm(), "승인됨")){
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+        return this.is_confirm == WishStatus.APPROVED;
     }
 }

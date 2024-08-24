@@ -36,4 +36,8 @@ public class Comment {
                 commentForm.getCreated_at()
         );
     }
+
+    public void softDelete() {
+        this.is_deleted = Boolean.TRUE;
+    }
 }

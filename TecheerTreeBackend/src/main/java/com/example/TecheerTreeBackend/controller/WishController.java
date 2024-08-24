@@ -1,5 +1,6 @@
 package com.example.TecheerTreeBackend.controller;
 
+import com.example.TecheerTreeBackend.domain.WishStatus;
 import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
 import com.example.TecheerTreeBackend.dto.WishListResponse;
@@ -54,9 +55,12 @@ public class WishController {
 
     // 소원 목록 조회
     @GetMapping("/wish")
-    public ResponseEntity<List<WishListResponse>> viewWishList(@RequestParam Boolean isConfirm){
+    public ResponseEntity<List<WishListResponse>> viewWishList(@RequestParam String status){
+        // "승인" 또는 "미승인" 문자열을 WishStatus Enum으로 변환
+        WishStatus wishStatus = WishStatus.fromClientString(status);
+
         // 서비스 위임
-        List<WishListResponse> viewWishList = wishService.viewWishList(isConfirm);
+        List<WishListResponse> viewWishList = wishService.viewWishList(wishStatus);
 
         return ResponseEntity.status(HttpStatus.OK).body(viewWishList);
     }

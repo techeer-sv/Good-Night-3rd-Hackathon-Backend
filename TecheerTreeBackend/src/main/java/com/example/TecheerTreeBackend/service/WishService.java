@@ -1,6 +1,7 @@
 package com.example.TecheerTreeBackend.service;
 
 import com.example.TecheerTreeBackend.domain.Wish;
+import com.example.TecheerTreeBackend.domain.WishStatus;
 import com.example.TecheerTreeBackend.dto.WishConfirmForm;
 import com.example.TecheerTreeBackend.dto.WishForm;
 import com.example.TecheerTreeBackend.dto.WishListResponse;
@@ -69,20 +70,16 @@ public class WishService {
         Boolean check = wish.checkConfirm();
 
         // 승인 처리가 되었다면 정상 반환 되지 않았다면 null 반환
-        if (check == Boolean.TRUE) {
+        if (check) {
             return WishResponse.createWishDto(wish);
         }else {
             return null;
         }
     }
 
-    public List<WishListResponse> viewWishList(Boolean isConfirm) {
-        String yesOrNo = "";
-        // isConfirm이 True라면(승인)이라면 "승인됨"에 해당하는 데이터 리스트 엔티티 가져오기
-        if (isConfirm){
-            yesOrNo = "승인됨";
-        }
-        List<Wish> wishes = wishRepository.findByWishList(yesOrNo);     // 엔티티 리스트 가져오기
+    public List<WishListResponse> viewWishList(WishStatus wishStatus) {
+        // 해당 상태에 따른 소원 리스트 가져오기
+        List<Wish> wishes = wishRepository.findByWishStatus(wishStatus);
 
         // 엔티티 -> dto 변환
         List<WishListResponse> dtos = new ArrayList<WishListResponse>();

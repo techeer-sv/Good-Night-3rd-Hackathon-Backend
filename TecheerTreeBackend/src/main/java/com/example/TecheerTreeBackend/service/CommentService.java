@@ -52,4 +52,18 @@ public class CommentService {
 
         return dtos;
     }
+
+    public String deleteComment(Long commentId) {
+        // 댓글 조회
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 commentId의 댓글을 찾을 수 없습니다."));
+
+        // soft delete 처리
+        comment.softDelete();
+
+        // 처리 후 DB 저장
+        commentRepository.save(comment);
+
+        return "soft delete 처리가 되었습니다.";
+    }
 }

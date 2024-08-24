@@ -33,4 +33,11 @@ public class CommentController {
         // 댓글 리스트 출력
         return ResponseEntity.status(HttpStatus.OK).body(viewCommentList);
     }
+
+    // 댓글 삭제(soft delete)
+    @PatchMapping("/comment/{commentId}")
+    public String deleteComment(@PathVariable Long commentId){
+        // 서비스 위임
+        return commentService.deleteComment(commentId);
+    }
 }
