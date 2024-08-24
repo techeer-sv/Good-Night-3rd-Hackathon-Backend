@@ -8,11 +8,12 @@ import me.kyung.TecheerTree.domain.Wish;
 @Setter
 @AllArgsConstructor
 public class WishDetailResponse {
+    private Long id;
     private String title;
     private String content;
     private Wish.Category category;
 
     public static WishDetailResponse from(Wish wish) {
-        return new WishDetailResponse(wish.getTitle(), wish.getContent(), wish.getCategory());
+        return new WishDetailResponse(wish.getId(), wish.getTitle(), wish.getContent(), wish.getCategory());
     }
 }

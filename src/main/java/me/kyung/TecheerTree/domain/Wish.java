@@ -20,24 +20,18 @@ public class Wish {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
     private String content;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Category category;
 
-    @Column(nullable = false)
     private LocalDateTime createdDate = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Status isConfirm = Status.PENDING;
 
-    @Column
     private boolean deletedAt = Boolean.FALSE;
 
     // Getters and Setters

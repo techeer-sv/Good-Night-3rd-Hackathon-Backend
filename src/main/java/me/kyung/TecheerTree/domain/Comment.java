@@ -20,13 +20,11 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
     private LocalDateTime createdDate = LocalDateTime.now();
 
-    @Column
+
     private boolean deletedAt = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.LAZY)

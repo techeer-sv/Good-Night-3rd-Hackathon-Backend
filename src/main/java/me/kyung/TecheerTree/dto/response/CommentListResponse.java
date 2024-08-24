@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class CommentListResponse {
+    private Long id;
     private String content;
     private LocalDateTime createDate;
 
     public static CommentListResponse from(Comment comment){
-        return new CommentListResponse(comment.getContent(), comment.getCreatedDate());
+        return new CommentListResponse(comment.getId(),comment.getContent(), comment.getCreatedDate());
     }
 }
