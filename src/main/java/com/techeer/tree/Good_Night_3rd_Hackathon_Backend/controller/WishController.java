@@ -37,40 +37,40 @@ public class WishController {
   }
 
   @Operation(summary = "Delete a wish", description = "Delete a wish by marking it as deleted (soft delete)")
-  @DeleteMapping("/{id}")
-  public ResponseEntity<WishResponse.WishDeleteResponse> deleteWish(@PathVariable Long id) {
+  @DeleteMapping("/{wish_id}")
+  public ResponseEntity<WishResponse.WishDeleteResponse> deleteWish(@PathVariable Long wish_id) {
     try {
-      wishService.deleteWish(id);
-      WishResponse.WishDeleteResponse response = WishResponse.WishDeleteResponse.success(id);
+      wishService.deleteWish(wish_id);
+      WishResponse.WishDeleteResponse response = WishResponse.WishDeleteResponse.success(wish_id);
       return ResponseEntity.ok(response);
     } catch (Exception e) {
-      WishResponse.WishDeleteResponse response = WishResponse.WishDeleteResponse.failure(id, "소원 삭제 실패: " + e.getMessage());
+      WishResponse.WishDeleteResponse response = WishResponse.WishDeleteResponse.failure(wish_id, "소원 삭제 실패: " + e.getMessage());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
   }
 
   @Operation(summary = "Approve or reject a wish", description = "Update the confirmation status of a wish")
-  @PatchMapping("/{id}")
-  public ResponseEntity<WishResponse.WishUpdateResponse> updateWishConfirmation(@PathVariable Long id, @RequestParam boolean is_confirmed) {
+  @PatchMapping("/{wish_id}")
+  public ResponseEntity<WishResponse.WishUpdateResponse> updateWishConfirmation(@PathVariable Long wish_id, @RequestParam boolean is_confirmed) {
     try {
-      wishService.updateWishConfirmation(id, is_confirmed);
-      WishResponse.WishUpdateResponse response = WishResponse.WishUpdateResponse.success(id);
+      wishService.updateWishConfirmation(wish_id, is_confirmed);
+      WishResponse.WishUpdateResponse response = WishResponse.WishUpdateResponse.success(wish_id);
       return ResponseEntity.ok(response);
     } catch (Exception e) {
-      WishResponse.WishUpdateResponse response = WishResponse.WishUpdateResponse.failure(id, "소원 수정 실패: " + e.getMessage());
+      WishResponse.WishUpdateResponse response = WishResponse.WishUpdateResponse.failure(wish_id, "소원 수정 실패: " + e.getMessage());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
   }
 
   @Operation(summary = "View a wish", description = "View a wish by its ID")
-  @GetMapping("/{id}")
-  public ResponseEntity<WishResponse.WishReadDetailResponse> getWish(@PathVariable Long id) {
+  @GetMapping("/{wish_id}")
+  public ResponseEntity<WishResponse.WishReadDetailResponse> getWish(@PathVariable Long wish_id) {
     try {
-      Wish wish = wishService.readDetailWish(id);
+      Wish wish = wishService.readDetailWish(wish_id);
       WishResponse.WishReadDetailResponse response = WishResponse.WishReadDetailResponse.success(wish);
       return ResponseEntity.ok(response);
     } catch (Exception e) {
-      WishResponse.WishReadDetailResponse response = WishResponse.WishReadDetailResponse.failure(id, "소원 조회 실패: " + e.getMessage());
+      WishResponse.WishReadDetailResponse response = WishResponse.WishReadDetailResponse.failure(wish_id, "소원 조회 실패: " + e.getMessage());
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
   }

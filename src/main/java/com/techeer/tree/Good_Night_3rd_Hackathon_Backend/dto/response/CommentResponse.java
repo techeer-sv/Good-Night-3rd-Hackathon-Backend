@@ -30,4 +30,20 @@ public class CommentResponse {
       return new CommentCreateResponse(comment.getId(), comment.getContent(), 400, message); // 예: 400 Bad Request
     }
   }
+
+  @Getter
+  @AllArgsConstructor
+  public static class CommentDeleteResponse {
+    private Long id;
+    private int status;
+    private String message;
+
+    public static CommentDeleteResponse success(Long id) {
+      return new CommentDeleteResponse(id, 200, "댓글 삭제 성공");
+    }
+
+    public static CommentDeleteResponse failure(Long id, String message) {
+      return new CommentDeleteResponse(id, 400, message); // 예: 400 Bad Request
+    }
+  }
 }

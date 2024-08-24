@@ -27,4 +27,12 @@ public class CommentService {
     Comment comment = new Comment(request.getContent(), wish);
     return commentRepository.save(comment);
   }
+
+  @Transactional
+  public void deleteComment(Long wishId) {
+    Comment comment = commentRepository.findById(wishId)
+        .orElseThrow(() -> new IllegalArgumentException("Comment not found with id " + wishId));
+    comment.setIsDeleted(true); // soft delete
+    commentRepository.save(comment); // 변경 사항 저장
+  }
 }
