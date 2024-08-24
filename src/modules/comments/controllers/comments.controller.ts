@@ -17,17 +17,20 @@ import { ApiTags } from '@nestjs/swagger';
 export class CommentsController {
     constructor(private readonly commentsService: CommentsService) {}
 
+    // 댓글 등록
     @Post()
     @UsePipes(ValidationPipe)
     async create(@Body() createCommentDto: CreateCommentDto) {
         return await this.commentsService.create(createCommentDto);
     }
 
+    // 댓글 목록 조회
     @Get(':id')
     findAll(@Param('id') id: string) {
         return this.commentsService.findAll(+id);
     }
 
+    // 댓글 삭제
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.commentsService.remove(+id);

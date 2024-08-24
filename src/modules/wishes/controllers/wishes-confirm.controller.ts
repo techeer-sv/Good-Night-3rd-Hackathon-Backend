@@ -14,6 +14,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class WishesConfirmController {
     constructor(private readonly wishesConfirmService: WishesConfirmService) {}
 
+    // 소원 승인/거절
     @Patch()
     @UsePipes(ValidationPipe)
     confirm(@Body() updateWishDto: UpdateWishDto) {

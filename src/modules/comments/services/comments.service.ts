@@ -10,6 +10,7 @@ export class CommentsService {
         private wishesRepository: WishesRepository,
     ) {}
 
+    // 댓글 등록
     async create(createCommentDto: CreateCommentDto) {
         const { wishId } = createCommentDto;
         const wish = this.wishesRepository.findById(wishId);
@@ -19,10 +20,12 @@ export class CommentsService {
         );
     }
 
+    // 댓글 목록 조회
     findAll(id: number) {
         return this.commentsRepository.findAll(id);
     }
 
+    // 댓글 삭제
     remove(id: number) {
         return this.commentsRepository.deleteComment(id);
     }
