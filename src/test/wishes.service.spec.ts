@@ -156,14 +156,14 @@ describe('WishesService', () => {
         deleted_at: null,
       };
 
-      mockWishRepository.getOne.mockResolvedValue(result);
+      jest.spyOn(mockWishRepository, 'findOne').mockResolvedValue(result);
 
       expect(await service.findOne(id)).toEqual(result);
     });
 
     it('소원을 찾을 수 없을 때 예외 처리 테스트', async () => {
       const id = 1;
-      mockWishRepository.getOne.mockResolvedValue(null);
+      jest.spyOn(mockWishRepository, 'findOne').mockResolvedValue(null);
 
       await expect(service.findOne(id)).rejects.toThrow(NotFoundException);
     });
