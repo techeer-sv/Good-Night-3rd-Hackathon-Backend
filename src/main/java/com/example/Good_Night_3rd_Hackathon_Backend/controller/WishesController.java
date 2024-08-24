@@ -4,6 +4,7 @@ import com.example.Good_Night_3rd_Hackathon_Backend.domain.ConfirmStatus;
 import com.example.Good_Night_3rd_Hackathon_Backend.domain.Wishes;
 import com.example.Good_Night_3rd_Hackathon_Backend.dto.WishesListDto;
 import com.example.Good_Night_3rd_Hackathon_Backend.service.WishesService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
+@Tag(name = "Wishes", description = "소원 API")
 public class WishesController {
     private final WishesService wishesService;
 
@@ -72,7 +74,6 @@ public class WishesController {
     public ResponseEntity<List<WishesListDto>> getWishes(@RequestParam ConfirmStatus status, @RequestParam int page, @RequestParam int size) {
         try {
             Page<WishesListDto> wishesPage = wishesService.getWishesByStatus(status, page, size);
-            System.out.println(wishesPage.getContent());
             return ResponseEntity.status(HttpStatus.OK).body(wishesPage.getContent());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
