@@ -23,9 +23,11 @@ public class WishResponse {
     private String title;
     private String content;
     private String category;
+    private int status;
+    private String message;
 
     public static WishCreateResponse from(Wish wish) {
-      return new WishCreateResponse(wish.getId(), wish.getTitle(), wish.getContent(), wish.getCategory());
+      return new WishCreateResponse(wish.getId(), wish.getTitle(), wish.getContent(), wish.getCategory(), 200, "소원 생성 성공");
     }
   }
 

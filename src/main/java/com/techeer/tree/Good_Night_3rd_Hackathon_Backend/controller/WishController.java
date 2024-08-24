@@ -31,9 +31,9 @@ public class WishController {
 
   @Operation(summary = "Create a new wish", description = "Create a new wish")
   @PostMapping("")
-  public WishResponse createWish(@RequestBody @Valid WishRequest.WishCreateRequest request) {
+  public WishResponse.WishCreateResponse createWish(@RequestBody @Valid WishRequest.WishCreateRequest request) {
     Wish wish = wishService.createWish(request);
-    return WishResponse.from(wish);
+    return WishResponse.WishCreateResponse.from(wish);
   }
 
   @Operation(summary = "Delete a wish", description = "Delete a wish by marking it as deleted (soft delete)")

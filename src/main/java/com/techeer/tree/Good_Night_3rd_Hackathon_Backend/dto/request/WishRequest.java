@@ -32,24 +32,4 @@ public class WishRequest {
             return new Wish(title, content, category);
         }
     }
-
-//    @Getter
-//    @Setter
-//    @NoArgsConstructor
-//    public static class WishUpdateRequest {
-//        @Schema(description = "새로운 제목", example = "New Wish Title")
-//        @NotBlank(message = "공백일 수 없습니다.")
-//        private String newTitle;
-//
-//        @Schema(description = "새로운 내용", example = "New Wish Content")
-//        @NotBlank(message = "공백일 수 없습니다.")
-//        private String newContent;
-//
-//        public void updateEntity(Wish wish) {
-//            wish.setTitle(newTitle);
-//            wish.setContent(newContent);
-//        }
-//    }
-
-    // 추가적인 요청 DTO를 필요에 따라 이 안에 정의할 수 있습니다.
 }
