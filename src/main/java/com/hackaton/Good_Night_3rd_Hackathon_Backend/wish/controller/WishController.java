@@ -26,7 +26,7 @@ public class WishController {
     }
 
     @GetMapping("/{id}")
-    public String getWish(@PathVariable("id") int id) {
+    public String getWish(@PathVariable("id") Long id) {
         Wish wish = wishDao.getWish(id);
         return wish.getTitle();
     }
@@ -37,15 +37,15 @@ public class WishController {
         return wishDao.getWishList();
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteWish(@PathVariable("id") int id){
+    public void deleteWish(@PathVariable("id") Long id){
         wishDao.deleteWish(id);
         return;
     }
 
     @PatchMapping("/approval/{id}")
-    public void approvalWish(@PathVariable("id") int id, @RequestBody ConfirmYN request)
+    public void approvalWish(@PathVariable("id") Long id, @RequestBody ConfirmYN request)
     {
-//        System.out.println(id + " " + request.getConfirm());
+
         wishDao.confirmWish(id, request.getConfirm());
     };
 }

@@ -1,5 +1,7 @@
 package com.hackaton.Good_Night_3rd_Hackathon_Backend;
 
+import com.hackaton.Good_Night_3rd_Hackathon_Backend.comment.dao.CommentDao;
+import com.hackaton.Good_Night_3rd_Hackathon_Backend.comment.dao.CommentDaoImpl;
 import com.hackaton.Good_Night_3rd_Hackathon_Backend.wish.dao.WishDao;
 import com.hackaton.Good_Night_3rd_Hackathon_Backend.wish.dao.WishDaoImpl;
 import org.springframework.context.annotation.Bean;
@@ -31,4 +33,9 @@ public class AppConfig {
     public WishDao wishDao() {
         return new WishDaoImpl(jdbcTemplate());
     }
+
+    @Bean
+    public CommentDao commentDao() {return new CommentDaoImpl(jdbcTemplate());}
+
+
 }

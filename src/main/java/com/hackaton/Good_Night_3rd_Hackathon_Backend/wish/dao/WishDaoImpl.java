@@ -33,7 +33,7 @@ public class WishDaoImpl implements WishDao {
     //메서드 시그니처를 보면 인자들이 어떻게 전달되는지 이해할 수 있음.
     @Override //@PathVariable은 URL 경로에 포함된 값을 메서드 매개변수로 바인딩할 때 사용
               // @RequestParam은 URL 쿼리 파라미터를 메서드 매개변수로 바인딩할 때 사용합니다
-    public Wish getWish(int id) {
+    public Wish getWish(Long id) {
         String sql = "SELECT * FROM wishes WHERE id = ?";
         System.out.println(id);
         return jdbcTemplate.queryForObject(sql, new WishRowMapper(), id);
@@ -46,13 +46,13 @@ public class WishDaoImpl implements WishDao {
     }
 
     @Override
-    public void deleteWish(int id) {
+    public void deleteWish(Long id) {
         String sql = "DELETE FROM wishes WHERE id = ?";
         jdbcTemplate.update(sql,id);
     }
 
     @Override
-    public void confirmWish(int id, Boolean confirm) {
+    public void confirmWish(Long id, Boolean confirm) {
         String sql = "UPDATE wishes SET isConfirmed = ? WHERE id = ?";
         jdbcTemplate.update(sql,confirm,id);
 
@@ -63,7 +63,7 @@ public class WishDaoImpl implements WishDao {
         @Override // rs는 쿼리의 결과,
         public Wish mapRow(ResultSet rs, int rowNum) throws SQLException {
             Wish wish = new Wish();
-            wish.setWishId(rs.getInt("id"));
+            wish.setWishId(rs.getLong("id"));
             wish.setTitle(rs.getString("title"));
             wish.setContent(rs.getString("content"));
             wish.setCategory(rs.getString("category"));

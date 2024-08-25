@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 public class Wish {
-    private int wishId;
+    private Long wishId;
     private String title;
     private String content;
     private String category;
