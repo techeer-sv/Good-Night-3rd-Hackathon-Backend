@@ -8,6 +8,7 @@ import com.example.techeertree.service.WishService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,7 @@ public class WishController {
         List<WishInfoResponseDto> responseDtos= new ArrayList<>();
         for(Wish wish : pendingWishes){
             WishInfoResponseDto responseDto = WishInfoResponseDto.builder()
+                    .id(wish.getId())
                     .title(wish.getTitle())
                     .content(wish.getContent())
                     .category(wish.getCategory())
@@ -67,4 +69,18 @@ public class WishController {
         WishInfoResponseDto responseDto = wishService.findOne(id);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
+
+    @Operation(summary = "소원 목록 조회")
+    @GetMapping
+    public ResponseEntity<Page<WishListResponseDto>> findAllWishes(@RequestParam Confirm confirm,
+                                                                   @RequestParam(defaultValue = "0") int page,
+                                                                   @RequestParam(defaultValue = "5") int size ){
+
+        Page<WishListResponseDto> wishes = wishService.findAllWishes(confirm, page, size);
+
+        return ResponseEntity.status(HttpStatus.OK).body(wishes);
+
+    }
+
+
 }

@@ -14,6 +14,7 @@ public class WishResponseDto {
     @Getter
     public static class WishInfoResponseDto {
 
+    private Long id;
     private String title;
     private String content;
     private Category category;
@@ -27,4 +28,11 @@ public class WishResponseDto {
         private LocalDateTime modifiedAt;
     }
 
+    @Getter
+    @Builder
+    public static class WishListResponseDto {
+        private String title;
+        private Category category;
+        private LocalDateTime createdAt;
+    }
 }

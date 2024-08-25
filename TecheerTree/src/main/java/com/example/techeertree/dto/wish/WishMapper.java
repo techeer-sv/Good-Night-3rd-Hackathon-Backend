@@ -37,5 +37,12 @@ public interface WishMapper {
 
     }
 
+    @Mapper
+    interface WishReadMapper {
+        WishReadMapper INSTANCE = Mappers.getMapper(WishReadMapper.class);
+
+        WishListResponseDto toDto(Wish wish);
+    }
+
 
 }
