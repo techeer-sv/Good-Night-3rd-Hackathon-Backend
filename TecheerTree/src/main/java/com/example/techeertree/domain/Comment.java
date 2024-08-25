@@ -5,6 +5,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -22,14 +25,23 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "wishId")
     private Wish wish;
 
+    @ColumnDefault("false")
+    private boolean isDeleted = false;
+
     @Builder
     public Comment(Long id, String comment, Wish wish) {
         this.id = id;
         this.comment = comment;
         this.wish = wish;
+        this.isDeleted = false;
     }
 
-    public void setWish(Wish wish){
+    public void matchWish(Wish wish){
         this.wish = wish;
+    }
+
+    public void setDeleted(){
+        this.isDeleted = true;
+        this.setDeletedAt(LocalDateTime.now());
     }
 }

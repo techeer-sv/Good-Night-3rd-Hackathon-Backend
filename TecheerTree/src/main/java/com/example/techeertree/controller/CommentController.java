@@ -22,4 +22,12 @@ public class CommentController {
         CommentInfoResponseDto responseDto = commentService.create(wishId, commentCreateRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
+
+    @Operation(summary = "댓글 삭제")
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId){
+        commentService.softDelete(commentId);
+        return ResponseEntity.noContent().build();
+    }
+
 }

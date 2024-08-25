@@ -46,6 +46,10 @@ public class CommentService {
         return CommentCreateMapper.INSTANCE.toDto(comment);
     }
 
+    public void softDelete(Long id){
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_COMMENT));
+        comment.setDeleted();
 
-    
+        commentRepository.save(comment);
+    }
 }
