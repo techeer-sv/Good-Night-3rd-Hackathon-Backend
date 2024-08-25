@@ -8,7 +8,7 @@ import com.example.techeertree.dto.wish.WishResponseDto.*;
 import com.example.techeertree.exception.BaseException;
 import com.example.techeertree.exception.ErrorCode;
 import com.example.techeertree.repository.WishRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -47,7 +47,7 @@ public class WishService {
         return WishUpdateMapper.INSTANCE.toDto(wish);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public WishInfoResponseDto findOne(Long id){
         Wish wish = wishRepository.findById(id)
                 .filter(w -> {
@@ -67,7 +67,7 @@ public class WishService {
         return WishCreateMapper.INSTANCE.toDto(wish);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<WishListResponseDto> findAllWishes(Confirm confirm,int page, int size){
         Pageable pageable = PageRequest.of(page, size);
 

@@ -11,6 +11,7 @@ import com.example.techeertree.repository.CommentRepository;
 import com.example.techeertree.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final WishRepository wishRepository;
 
-
+    
     public CommentInfoResponseDto create(Long id, CommentCreateRequestDto commentCreateRequestDto) {
         // 소원 존재 유무 조회
         Wish wish = wishRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_WISH));
@@ -36,4 +37,6 @@ public class CommentService {
 
         return CommentCreateMapper.INSTANCE.toDto(comment);
     }
+
+
 }
