@@ -16,4 +16,6 @@ public class Comment {
     private String content;
     private java.sql.Timestamp registrationDate;
     private Long wish_id;
+    private java.sql.Timestamp deleted_at;
+    private boolean is_deleted;
 }

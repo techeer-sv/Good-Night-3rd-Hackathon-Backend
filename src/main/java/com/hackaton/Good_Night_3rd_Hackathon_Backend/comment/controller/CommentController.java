@@ -21,6 +21,11 @@ public class CommentController {
         commentDao.createComment(comment);
     }
 
+    @PatchMapping("/softdelete/{comment_id}")
+    public void softDeleteComment(@PathVariable("comment_id") Long comment_id){
+        commentDao.deleteComment(comment_id);
+    }
+
     @GetMapping("/{wish_id}")
     public List<Comment> getComment(@PathVariable("wish_id") Long wish_id){
         return commentDao.getAllComment(wish_id);

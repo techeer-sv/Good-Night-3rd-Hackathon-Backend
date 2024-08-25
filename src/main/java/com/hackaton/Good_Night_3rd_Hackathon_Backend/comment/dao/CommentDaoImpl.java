@@ -31,13 +31,14 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public void deleteComment(Long comment_id) {
-
+        String sql = "UPDATE comments SET is_deleted = true, deleted_at=NOW() WHERE id = ?";
+        jdbcTemplate.update(sql, comment_id);
     }
 
     @Override
     public List<Comment> getAllComment(Long wish_id) {
         // as 뒤에 별칭으로 entity객체 안에 있는 변수와 이름을 동일하게 안해주면 오류가 나옴.
-        String sql = "SELECT B.id as comment_id ,B.content,B.registrationDate,B.wish_id FROM wishes A, comments B WHERE A.id IN (B.wish_id) AND A.id = ?";
+        String sql = "SELECT B.id as comment_id ,B.content,B.registrationDate,B.wish_id, B.is_deleted, B.deleted_at FROM wishes A, comments B WHERE A.id IN (B.wish_id) AND A.id = ?";
         return jdbcTemplate.query(sql, new CommentRowMapper(),wish_id);
 
     }
@@ -50,10 +51,19 @@ public class CommentDaoImpl implements CommentDao {
             comment.setComment_id(rs.getLong("comment_id"));
             comment.setContent(rs.getString("content"));
             comment.setWish_id(rs.getLong("wish_id"));
+            comment.set_deleted(rs.getBoolean("is_deleted"));
             Timestamp registrationDate = rs.getTimestamp("registrationDate");
             if (registrationDate != null) {
                 comment.setRegistrationDate(Timestamp.valueOf(registrationDate.toLocalDateTime()));
             }
+            Timestamp deleted_at = rs.getTimestamp("deleted_at"); // null값 허용
+            if(deleted_at !=null){
+                comment.setDeleted_at(Timestamp.valueOf(deleted_at.toLocalDateTime()));
+            }
+
+
+
+
             return comment;
         }
     }
