@@ -16,7 +16,7 @@ async function bootstrap() {
         .addTag('confirm')
         .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/v1/docs', app, document);
+    SwaggerModule.setup('api/v1', app, document);
 
     await app.listen(8000);
 }
