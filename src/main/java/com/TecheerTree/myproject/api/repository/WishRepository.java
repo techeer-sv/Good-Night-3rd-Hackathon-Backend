@@ -29,4 +29,7 @@ public interface WishRepository extends JpaRepository<Wishes, Long> {
 
     @Query("SELECT w FROM Wishes w WHERE w.deleted_at = false AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
     List<Wishes> findByKeyword(@Param("keyword") String keyword);
+
+    @Query("SELECT w FROM Wishes w WHERE w.status = :status AND w.deleted_at = false")
+    List<Wishes> findByConfirmStatus(@Param("status") Status status);
 }

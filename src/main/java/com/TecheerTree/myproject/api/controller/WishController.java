@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173") // 프론트엔드 주소를 설정
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/wishes")
@@ -49,13 +50,19 @@ public class WishController {
         return new ResponseEntity<>(findWish, HttpStatus.OK);
     }
 
+    // 보류 상태 소원 전체 조회
+    @GetMapping("/pending")
+    public ResponseEntity<List<Wishes>> getPendingWishes(){
+        List<Wishes> pendingWishes = wishService.getPendingWishes();
+        return new ResponseEntity<>(pendingWishes,HttpStatus.OK);
+    }
 
     // 소원 승인/거절
     @PatchMapping("/{wishId}/status")
     public ResponseEntity<Wishes> updateWishStatus(@PathVariable("wishId") Long wishId,
-                                                   @RequestParam("description") String description){
+                                                   @RequestParam("description") String description) {
         Wishes updatedWish = wishService.updateWishStatus(wishId, description);
-        return new ResponseEntity<>(updatedWish,HttpStatus.OK);
+        return new ResponseEntity<>(updatedWish, HttpStatus.OK);
     }
 
     // 소원 삭제

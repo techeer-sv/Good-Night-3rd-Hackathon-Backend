@@ -99,7 +99,7 @@ public class WishService {
         return wishes.map(wish -> new WishResponse(
                 wish.getWishId(),
                 wish.getTitle(),
-                wish.getContent(),
+                wish.getCategory(),
                 wish.getCreatedDate()
         ));
     }
@@ -128,5 +128,9 @@ public class WishService {
         // 모든 조건이 비어 있는 경우 전체 검색
         return wishRepository.findAll();
 
+    }
+
+    public List<Wishes> getPendingWishes() {
+        return wishRepository.findByConfirmStatus(Status.PENDING);
     }
 }

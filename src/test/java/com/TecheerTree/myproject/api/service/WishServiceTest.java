@@ -72,7 +72,7 @@ class WishServiceTest {
     // status update 테스트
     @Test
     public void updateStatus(){
-        Long wishId = 4L; // 존재하는 wishId로 변경
+        Long wishId = 22L; // 존재하는 wishId로 변경
         wishService.updateWishStatus(wishId, "승인됨");
 
         Wishes wish = wishRepository.findById(wishId)
