@@ -44,5 +44,4 @@ public interface WishMapper {
         WishListResponseDto toDto(Wish wish);
     }
 
-
 }

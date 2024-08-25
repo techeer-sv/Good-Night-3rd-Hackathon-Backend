@@ -13,11 +13,10 @@ public class WishResponseDto {
     @Builder
     @Getter
     public static class WishInfoResponseDto {
-
-    private Long id;
-    private String title;
-    private String content;
-    private Category category;
+        private Long id;
+        private String title;
+        private String content;
+        private Category category;
     }
 
     @Getter

@@ -67,12 +67,6 @@ public class WishService {
         return WishCreateMapper.INSTANCE.toDto(wish);
     }
 
-    //소원 목록 조회
-   // 제목, 카테고리, 등록일 정보를 반환합니다.
-   //         승인, 미승인 별로 선택하여 조회할 수 있어야합니다. (쿼리 파라미터)
-    //페이지네이션을 지원해야 합니다.
-   // 생성날짜 최신순으로 정렬합니다.
-
     @Transactional
     public Page<WishListResponseDto> findAllWishes(Confirm confirm,int page, int size){
         Pageable pageable = PageRequest.of(page, size);
