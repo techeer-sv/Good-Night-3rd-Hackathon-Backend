@@ -1,5 +1,6 @@
 package com.example.techeertree.controller;
 
+import com.example.techeertree.domain.Category;
 import com.example.techeertree.domain.Confirm;
 import com.example.techeertree.domain.Wish;
 import com.example.techeertree.dto.wish.WishRequestDto.*;
@@ -80,6 +81,18 @@ public class WishController {
 
         return ResponseEntity.status(HttpStatus.OK).body(wishes);
 
+    }
+
+    @Operation(summary = "키워드 기반 소원 검색")
+    @GetMapping("/search")
+    public ResponseEntity<List<WishInfoResponseDto>> searchWishes(@RequestParam String keyword,
+                                                                  @RequestParam(required = false) Category category){
+        List<WishInfoResponseDto> wishes = wishService.searchWishes(keyword, category);
+
+        if (wishes.size() == 0){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(wishes);
     }
 
 

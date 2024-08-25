@@ -1,5 +1,6 @@
 package com.example.techeertree.service;
 
+import com.example.techeertree.domain.Category;
 import com.example.techeertree.domain.Confirm;
 import com.example.techeertree.domain.Wish;
 import com.example.techeertree.dto.wish.WishMapper.*;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -82,5 +84,13 @@ public class WishService {
         return new PageImpl<>(filteredWishes, pageable, wishes.getTotalElements());
     }
 
+    public List<WishInfoResponseDto> searchWishes(String keyword, Category category){
+        List<Wish> wishes = wishRepository.findAllWishesWithKeyWord(keyword, category);
+
+        List<WishInfoResponseDto> filteredWishes = wishes.stream()
+                .map(WishCreateMapper.INSTANCE::toDto).toList();
+
+        return filteredWishes;
+    }
 }
 
