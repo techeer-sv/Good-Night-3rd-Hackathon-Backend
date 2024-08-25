@@ -118,3 +118,15 @@ Techeer Tree는 테커인들이 자신의 목표나 소원을 작성하고, 이�
 - 🧑🏻‍💻[오현택](https://github.com/HyunTaek5)
 - 👩🏻‍💻[이도경](https://github.com/d0kyoung)
 - 🧑🏻‍💻[강기환](https://github.com/GiHwan2)
+
+---
+
+---
+
+# 개발 내용
+
+<img width="1345" alt="스크린샷 2024-08-25 오후 6 27 34" src="https://github.com/user-attachments/assets/ed7700a4-87e7-4f79-85c4-942d51b8ea2f">
+
+3번 소원 승인/거절 기능의 경우, 일반 회원이 아닌 관리자가 사용할 기능이므로 /admin 카테고리로 분리했습니다.
+
+파일 명 또한 wishes-confirm.controller.ts, wishes-confirm.services.ts, wishes-confirm.repository.ts 로 분리해 작성했습니다.
