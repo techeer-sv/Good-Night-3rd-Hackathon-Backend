@@ -9,6 +9,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Getter
@@ -36,13 +38,18 @@ public class Wish extends BaseEntity{
     @ColumnDefault("false")
     private boolean isDeleted = false;
 
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL )
+    private List<Comment> comments = new ArrayList<>();
+
     @Builder
-    protected Wish(String title, String content, Category category, Confirm isConfirm) {
+    protected Wish(String title, String content, Category category, Confirm isConfirm, List<Comment> comments) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.isConfirm = isConfirm == null ? Confirm.PENDING : isConfirm;
         this.isDeleted = false;
+        this.comments = comments;
+
     }
 
     public void setDeleted(){
