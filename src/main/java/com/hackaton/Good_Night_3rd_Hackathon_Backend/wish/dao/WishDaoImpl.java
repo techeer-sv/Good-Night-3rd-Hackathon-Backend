@@ -52,7 +52,10 @@ public class WishDaoImpl implements WishDao {
     }
 
     @Override
-    public void confirmWish(Boolean confirm) {
+    public void confirmWish(int id, Boolean confirm) {
+        String sql = "UPDATE wishes SET isConfirmed = ? WHERE id = ?";
+        jdbcTemplate.update(sql,confirm,id);
+
     }
 
     // 내부 RowMapper 클래스

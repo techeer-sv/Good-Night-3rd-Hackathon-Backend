@@ -12,5 +12,5 @@ public interface WishDao {
     List<Wish> getWishList(); // 소원리스트 조회
 
     void deleteWish(int wishId); // 소원삭제
-    void confirmWish(Boolean confirm); //소원 승인
+    void confirmWish(int id, Boolean confirm); //소원 승인
 }

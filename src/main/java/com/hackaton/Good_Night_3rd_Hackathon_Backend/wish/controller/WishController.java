@@ -1,11 +1,13 @@
 package com.hackaton.Good_Night_3rd_Hackathon_Backend.wish.controller;
 
 import com.hackaton.Good_Night_3rd_Hackathon_Backend.wish.dao.WishDao;
+import com.hackaton.Good_Night_3rd_Hackathon_Backend.wish.dto.ConfirmYN;
 import com.hackaton.Good_Night_3rd_Hackathon_Backend.wish.entity.Wish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("api/v1/wish")
@@ -39,4 +41,11 @@ public class WishController {
         wishDao.deleteWish(id);
         return;
     }
+
+    @PatchMapping("/approval/{id}")
+    public void approvalWish(@PathVariable("id") int id, @RequestBody ConfirmYN request)
+    {
+//        System.out.println(id + " " + request.getConfirm());
+        wishDao.confirmWish(id, request.getConfirm());
+    };
 }
