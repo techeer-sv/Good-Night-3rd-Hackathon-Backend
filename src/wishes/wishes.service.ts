@@ -40,6 +40,10 @@ export class WishesService {
       query.andWhere('wish.is_confirm = :isConfirmed', {
         isConfirmed: '거절됨',
       });
+    } else if (isConfirmed === 'pending') {
+      query.andWhere('wish.is_confirm = :isConfirmed', {
+        isConfirmed: '보류됨',
+      });
     } else if (isConfirmed) {
       throw new BadRequestException('올바르지 않은 값입니다.');
     }
