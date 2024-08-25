@@ -6,12 +6,16 @@ import com.example.techeertree.domain.Wish;
 import com.example.techeertree.dto.comment.CommentMapper.*;
 import com.example.techeertree.dto.comment.CommentRequestDto.*;
 import com.example.techeertree.dto.comment.CommentResponseDto.*;
-import com.example.techeertree.dto.wish.WishResponseDto;
+
 import com.example.techeertree.exception.BaseException;
 import com.example.techeertree.exception.ErrorCode;
 import com.example.techeertree.repository.CommentRepository;
 import com.example.techeertree.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +48,31 @@ public class CommentService {
         wishRepository.save(wish);
 
         return CommentCreateMapper.INSTANCE.toDto(comment);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CommentInfoResponseDto> getComments(Long wishId, int page, int size){
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Wish wish = wishRepository.findById(wishId)
+                .filter(w -> {
+                    if(w.getIsConfirm() != Confirm.CONFIRM) {
+                        throw new BaseException(ErrorCode.NOT_CONFIRMED);
+                    }
+                    return true;
+                })
+                .filter(w -> {
+                    if(w.isDeleted()){
+                        throw new BaseException(ErrorCode.NOT_EXIST_WISH);
+                    }
+                    return true;
+                })
+                .orElseThrow(()-> new BaseException(ErrorCode.NOT_EXIST_WISH));
+
+        Page<Comment> comments = commentRepository.findByWishAndIsDeletedFalse(wish, pageable);
+
+        return comments.map(CommentCreateMapper.INSTANCE::toDto);
     }
 
     public void softDelete(Long id){

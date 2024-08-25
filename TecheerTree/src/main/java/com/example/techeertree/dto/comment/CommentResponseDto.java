@@ -17,12 +17,5 @@ public class CommentResponseDto {
         private LocalDateTime createdAt;
     }
 
-    @Getter
-    @Builder
-    public static class CommentReadResponseDto {
-        private Long id;
-        private String comment;
-        private Wish wish;
-        private LocalDateTime createdAt;
-    }
+
 }
