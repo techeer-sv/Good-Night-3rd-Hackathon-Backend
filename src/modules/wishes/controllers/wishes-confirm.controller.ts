@@ -11,13 +11,13 @@ import { WishesConfirmService } from '../services/wishes-confirm.service';
 import { ConfirmWishDto } from '../dto/confirm-wish.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('confirm')
-@Controller('confirm')
+@ApiTags('admin')
+@Controller('admin')
 export class WishesConfirmController {
     constructor(private readonly wishesConfirmService: WishesConfirmService) {}
 
     // 보류됨 소원 목록 조회
-    @Get()
+    @Get('wishes')
     async confirmList(
         @Query('limit') limit: string = '10',
         @Query('offset') offset: string = '0',
@@ -26,7 +26,7 @@ export class WishesConfirmController {
     }
 
     // 소원 승인/거절
-    @Patch()
+    @Patch('wishes')
     @UsePipes(ValidationPipe)
     confirm(@Body() confirmWishDto: ConfirmWishDto) {
         return this.wishesConfirmService.confirm(confirmWishDto);

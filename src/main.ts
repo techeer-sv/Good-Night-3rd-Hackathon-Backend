@@ -13,7 +13,7 @@ async function bootstrap() {
         .setVersion('1.0')
         .addTag('wishes')
         .addTag('comments')
-        .addTag('confirm')
+        .addTag('admin')
         .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/v1', app, document);
