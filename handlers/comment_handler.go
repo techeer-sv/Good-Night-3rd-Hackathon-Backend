@@ -26,11 +26,16 @@ func (h *CommentHandler) CreateComment(c *gin.Context) {
 		return
 	}
 
-	// Check if the wish exists
-	if exists, err := h.wishService.WishExists(commentInput.WishID); err != nil || !exists {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Wish not found"})
-		return
-	}
+	// 소원 존재 여부 확인
+	if exists, err := h.wishService.WishExists(commentInput.WishID); err != nil {
+    // 데이터베이스 조회 중 에러가 발생한 경우
+    c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal server error"})
+    return
+} else if !exists {
+    // 소원이 존재하지 않는 경우
+    c.JSON(http.StatusNotFound, gin.H{"error": "Wish not found"})
+    return
+}
 
 	newComment := &models.Comment{
 		WishID:  commentInput.WishID,
