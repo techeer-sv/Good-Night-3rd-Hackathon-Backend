@@ -72,7 +72,7 @@ func (r *wishRepository) UpdateOne(id uint, status string) error {
 // 5. 단일 조회
 func (r *wishRepository) FindByID(id uint) (*models.Wish, error) {
 	var wish models.Wish
-	err := r.db.Where("id = ? AND is_confirm = '승인' AND deleted_at IS NULL", id).First(&wish).Error
+	err := r.db.Where("id = ? AND is_confirm = '승인'", id).First(&wish).Error
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func (r *wishRepository) FindByID(id uint) (*models.Wish, error) {
 // 6. 목록 조회
 func (r *wishRepository) FindAll(status string, page, pageSize int) ([]models.Wish, error) {
 	var wishes []models.Wish
-	query := r.db.Model(&models.Wish{}).Where("deleted_at IS NULL")
+	query := r.db.Model(&models.Wish{})
 
 	// 승인 상태 필터링
 	if status != "" {

@@ -27,7 +27,7 @@ func (r *commentRepository) Create(comment *models.Comment) error {
 // 2. 조회
 func (r *commentRepository) FindByWishID(wishID uint, page, pageSize int) ([]models.Comment, error) {
 	var comments []models.Comment
-	err := r.db.Where("wish_id = ? AND deleted_at IS NULL", wishID).
+	err := r.db.Where("wish_id = ?", wishID).
 		Order("created_at DESC").
 		Offset((page - 1) * pageSize).
 		Limit(pageSize).
