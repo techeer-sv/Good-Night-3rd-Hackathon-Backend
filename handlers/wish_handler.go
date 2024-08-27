@@ -61,7 +61,7 @@ func (h *WishHandler) CreateWish(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, newWish)
+	c.JSON(http.StatusCreated, newWish)
 }
 
 // @Summary 소원 삭제
@@ -78,7 +78,7 @@ func (h *WishHandler) DeleteWish(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Wish not found"})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"message": "Wish deleted successfully"})
+	c.JSON(http.StatusNoContent, gin.H{"message": "Wish deleted successfully"})
 }
 
 // @Summary 모든 소원 상태 변경
