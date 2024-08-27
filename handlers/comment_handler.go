@@ -10,12 +10,12 @@ import (
 )
 
 type CommentHandler struct {
-	service    services.CommentService
+	commentService    services.CommentService
 	wishService services.WishService
 }
 
-func NewCommentHandler(service services.CommentService, wishService services.WishService) *CommentHandler {
-	return &CommentHandler{service: service, wishService: wishService}
+func NewCommentHandler(commentService services.CommentService, wishService services.WishService) *CommentHandler {
+	return &CommentHandler{commentService: commentService, wishService: wishService}
 }
 
 func (h *CommentHandler) CreateComment(c *gin.Context) {
@@ -37,7 +37,7 @@ func (h *CommentHandler) CreateComment(c *gin.Context) {
 		Content: commentInput.Content,
 	}
 
-	if err := h.service.CreateComment(newComment); err != nil {
+	if err := h.commentService.CreateComment(newComment); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -66,7 +66,7 @@ func (h *CommentHandler) GetComments(c *gin.Context) {
 		pageSize = 10
 	}
 
-	comments, err := h.service.GetCommentsByWishID(uint(wishID), page, pageSize)
+	comments, err := h.commentService.GetCommentsByWishID(uint(wishID), page, pageSize)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -83,7 +83,7 @@ func (h *CommentHandler) DeleteComment(c *gin.Context) {
 		return
 	}
 
-	err = h.service.DeleteComment(uint(id))
+	err = h.commentService.DeleteComment(uint(id))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
