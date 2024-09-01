@@ -9,6 +9,7 @@ import goodnight.tree.service.WishService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +24,12 @@ import java.util.List;
 @RequestMapping("/api/wishes")
 public class WishController {
 
-    @Autowired
     private final WishService wishService;
 
     //  소원 등록
     // request 제목, 내용, 카테고리, 등록일, 승인 상태 정보
     @PostMapping
-    public ResponseEntity<Void> saveWishes(@RequestBody WishSaveRequest request){
+    public ResponseEntity<Void> saveWishes(@Valid @RequestBody WishSaveRequest request){
         wishService.saveWishes(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

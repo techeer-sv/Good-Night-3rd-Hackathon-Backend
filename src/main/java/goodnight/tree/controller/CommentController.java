@@ -4,6 +4,7 @@ package goodnight.tree.controller;
 import goodnight.tree.domain.dto.request.CommentSaveRequest;
 import goodnight.tree.domain.dto.response.CommentResponse;
 import goodnight.tree.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Void> savePost(@RequestBody CommentSaveRequest request) {
+    public ResponseEntity<Void> savePost(@Valid @RequestBody CommentSaveRequest request) {
         commentService.saveComment(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
