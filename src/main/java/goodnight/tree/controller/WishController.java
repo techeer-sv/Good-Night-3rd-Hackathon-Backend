@@ -67,7 +67,7 @@ public class WishController {
         return wishService.findWishList(pageable, status);
     }
 
-    @GetMapping("/wishes/search")
+    @GetMapping("/search")
     public List<WishResponse> searchWishes(@RequestParam(required = false) Wish.Category category,
                                    @RequestParam String keyword,
                                    @RequestParam(required = false) Wish.WishStatus status) {

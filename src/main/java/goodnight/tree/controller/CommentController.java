@@ -19,25 +19,25 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping
+    @PostMapping("/comments")
     public ResponseEntity<Void> savePost(@Valid @RequestBody CommentSaveRequest request) {
         commentService.saveComment(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @DeleteMapping("/{commentId}")
+    @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<Void> deletePost(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping("/{wishId}")
+    @GetMapping("/wishes/{wishId}/comments")
     public List<CommentResponse> getCommentList(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                              @PathVariable Long wishId) {
         return commentService.findCommentList(pageable, wishId);
