@@ -6,10 +6,12 @@ import {
     Param,
     Delete,
     Query,
+    BadRequestException,
 } from '@nestjs/common';
 import { WishesService } from '../services/wishes.service';
 import { CreateWishDto } from '../dto/create-wish.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import { WishStatus } from '../domain/wish.entity';
 
 @ApiTags('wishes')
 @Controller('wishes')
@@ -24,12 +26,31 @@ export class WishesController {
 
     // 소원 목록 조회 - 승인/미승인
     @Get()
-    async findAll(
-        @Query('confirm') confirm: string,
+    @ApiQuery({ name: 'limit', required: false, type: Number })
+    @ApiQuery({ name: 'offset', required: false, type: Number })
+    async findWishes(
+        @Query('status') status: string,
+        @Query('order') order: string = 'DESC',
         @Query('limit') limit: string = '10',
         @Query('offset') offset: string = '0',
     ): Promise<any> {
-        return await this.wishesService.findAll(+confirm, +limit, +offset);
+        const statusArray = status.split(',');
+        for (const s of statusArray) {
+            if (!Object.values(WishStatus).includes(s as WishStatus)) {
+                throw new BadRequestException(`Invalid status value: ${s}`);
+            }
+        }
+        if (order !== 'ASC' && order !== 'DESC') {
+            throw new BadRequestException(
+                'Invalid order parameter. It should be ASC or DESC.',
+            );
+        }
+        return await this.wishesService.findWishes(
+            statusArray,
+            order,
+            +limit,
+            +offset,
+        );
     }
 
     // 소원 단일 조회

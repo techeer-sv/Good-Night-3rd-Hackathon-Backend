@@ -8,17 +8,6 @@ import { ApiTags, ApiQuery } from '@nestjs/swagger';
 export class WishesAdminController {
     constructor(private readonly wishesAdminService: WishesAdminService) {}
 
-    // 보류됨 소원 목록 조회
-    @Get('wishes')
-    @ApiQuery({ name: 'limit', required: false })
-    @ApiQuery({ name: 'offset', required: false })
-    async confirmList(
-        @Query('limit') limit: string = '10',
-        @Query('offset') offset: string = '0',
-    ) {
-        return await this.wishesAdminService.confirmList(+limit, +offset);
-    }
-
     // 소원 승인/거절
     @Patch('wishes')
     confirm(@Body() confirmWishDto: ConfirmWishDto) {

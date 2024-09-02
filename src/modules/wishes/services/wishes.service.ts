@@ -12,8 +12,18 @@ export class WishesService {
     }
 
     // 소원 목록 조회 - 승인/미승인
-    async findAll(confirm: number, limit: number, offset: number) {
-        return await this.wishesRepository.findAll(confirm, limit, offset);
+    async findWishes(
+        status: string[],
+        order: 'ASC' | 'DESC',
+        limit: number,
+        offset: number,
+    ) {
+        return await this.wishesRepository.findWishes(
+            status,
+            order,
+            limit,
+            offset,
+        );
     }
 
     // 소원 단일 조회

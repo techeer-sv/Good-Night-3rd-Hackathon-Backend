@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Repository, SelectQueryBuilder } from 'typeorm';
 import { Category, Wish, WishStatus } from '../domain/wish.entity';
 import { CreateWishDto } from '../dto/create-wish.dto';
 
@@ -19,30 +19,29 @@ export class WishesRepository extends Repository<Wish> {
     }
 
     // 소원 목록 조회 - 승인/미승인
-    async findAll(
-        confirm: number,
+    async findWishes(
+        status: string[],
+        order: 'ASC' | 'DESC',
         limit: number,
         offset: number,
     ): Promise<Wish[]> {
         const queryBuilder = this.createQueryBuilder('wish');
-
-        if (confirm) {
-            // 승인된 경우
-            queryBuilder.where('wish.is_confirm = :isConfirm', {
-                isConfirm: '승인됨',
-            });
-        } else {
-            // 미승인된 경우
-            queryBuilder.where('wish.is_confirm IN (:...isConfirm)', {
-                isConfirm: ['보류됨', '거절됨'],
-            });
-        }
-
+        this.applyStatusFilter(queryBuilder, status);
         return queryBuilder
-            .orderBy('wish.createdAt', 'DESC')
+            .orderBy('wish.createdAt', order)
             .limit(limit)
             .offset(offset)
             .getMany();
+    }
+
+    // 상태 필터를 적용하는 메서드
+    private applyStatusFilter(
+        queryBuilder: SelectQueryBuilder<Wish>,
+        status: string[],
+    ): void {
+        if (status.length > 0) {
+            queryBuilder.where('wish.is_confirm IN (:...status)', { status });
+        }
     }
 
     // 소원 단일 조회
