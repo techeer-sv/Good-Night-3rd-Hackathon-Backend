@@ -28,7 +28,7 @@ public class Wish extends BaseEntity {
     private Category category;
 
     @Enumerated(EnumType.STRING)
-    private WishStatus isConfirm = WishStatus.PENDING;
+    private WishStatus wishStatus = WishStatus.PENDING;
 
     @OneToMany(mappedBy = "wish", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
@@ -51,6 +51,6 @@ public class Wish extends BaseEntity {
     }
 
     public void changeStatus(WishStatus newStatus) {
-        this.isConfirm = newStatus;
+        this.wishStatus = newStatus;
     }
 }

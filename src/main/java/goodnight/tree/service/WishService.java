@@ -52,7 +52,7 @@ public class WishService {
         Wish wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new RuntimeException("Wish not found"));
 
-        if (wish.getIsConfirm() != Wish.WishStatus.APPROVED) {
+        if (wish.getWishStatus() != Wish.WishStatus.APPROVED) {
             throw new RuntimeException("Only approved wishes can be viewed.");
         }
 
@@ -61,7 +61,7 @@ public class WishService {
 
     // 소원 리스트 조회(페이지네이션)
     public List<WishResponse> findWishList(Pageable pageable, Wish.WishStatus status) {
-        Page<Wish> wishes = wishRepository.findAllByIsConfirm(status, pageable);
+        Page<Wish> wishes = wishRepository.findAllByWishStatus(status, pageable);
         return wishes.stream()
                 .map(WishResponse::from)
                 .collect(Collectors.toList());
