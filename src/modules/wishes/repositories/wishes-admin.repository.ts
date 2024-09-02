@@ -3,7 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { Wish } from '../domain/wish.entity';
 
 @Injectable()
-export class WishesConfirmRepository extends Repository<Wish> {
+export class WishesAdminRepository extends Repository<Wish> {
     constructor(private readonly dataSource: DataSource) {
         super(Wish, dataSource.createEntityManager());
     }

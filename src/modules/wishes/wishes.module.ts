@@ -4,18 +4,18 @@ import { WishesController } from './controllers/wishes.controller';
 import { WishesRepository } from './repositories/wishes.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Wish } from './domain/wish.entity';
-import { WishesConfirmController } from './controllers/wishes-confirm.controller';
-import { WishesConfirmService } from './services/wishes-confirm.service';
-import { WishesConfirmRepository } from './repositories/wishes-confirm.repository';
+import { WishesAdminController } from './controllers/wishes-admin.controller';
+import { WishesAdminService } from './services/wishes-admin.service';
+import { WishesAdminRepository } from './repositories/wishes-admin.repository';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Wish])],
-    controllers: [WishesController, WishesConfirmController],
+    controllers: [WishesController, WishesAdminController],
     providers: [
         WishesService,
-        WishesConfirmService,
+        WishesAdminService,
         WishesRepository,
-        WishesConfirmRepository,
+        WishesAdminRepository,
     ],
 })
 export class WishesModule {}
