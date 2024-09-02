@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 @Service @Transactional
 public class CommentService {
 
-    @Autowired
     private final CommentRepository commentRepository;
     private final WishRepository wishRepository;
 

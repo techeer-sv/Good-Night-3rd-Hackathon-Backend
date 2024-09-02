@@ -23,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
 
-    @Autowired
     private final CommentService commentService;
 
     @PostMapping

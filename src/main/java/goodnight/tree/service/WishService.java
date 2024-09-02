@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Service @Transactional
 public class WishService {
 
-    @Autowired
     private final WishRepository wishRepository;
 
     // 소원 등록
