@@ -5,8 +5,6 @@ import {
     Body,
     Param,
     Delete,
-    UsePipes,
-    ValidationPipe,
     Query,
 } from '@nestjs/common';
 import { WishesService } from '../services/wishes.service';
@@ -20,7 +18,6 @@ export class WishesController {
 
     // 소원 등록
     @Post()
-    @UsePipes(ValidationPipe)
     async create(@Body() createWishDto: CreateWishDto): Promise<any> {
         return await this.wishesService.create(createWishDto);
     }

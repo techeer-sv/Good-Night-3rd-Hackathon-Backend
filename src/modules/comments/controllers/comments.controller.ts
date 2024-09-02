@@ -5,8 +5,6 @@ import {
     Body,
     Param,
     Delete,
-    UsePipes,
-    ValidationPipe,
     Query,
 } from '@nestjs/common';
 import { CommentsService } from '../services/comments.service';
@@ -20,7 +18,6 @@ export class CommentsController {
 
     // 댓글 등록
     @Post()
-    @UsePipes(ValidationPipe)
     async create(@Body() createCommentDto: CreateCommentDto) {
         return await this.commentsService.create(createCommentDto);
     }
