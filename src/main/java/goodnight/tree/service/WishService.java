@@ -61,8 +61,7 @@ public class WishService {
     }
 
     // 소원 리스트 조회(페이지네이션)
-    public List<WishResponse> findWishList(int page, int pageSize, Wish.WishStatus status) {
-        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Order.desc("createdAt")));
+    public List<WishResponse> findWishList(Pageable pageable, Wish.WishStatus status) {
         Page<Wish> wishes = wishRepository.findAllByIsConfirm(status, pageable);
         return wishes.stream()
                 .map(WishResponse::from)

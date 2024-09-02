@@ -42,8 +42,7 @@ public class CommentService {
     }
 
     // 댓글 조회(페이지네이션)
-    public List<CommentResponse> findCommentList(int page, int pageSize, Long wishId) {
-        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Order.asc("createdAt")));
+    public List<CommentResponse> findCommentList(Pageable pageable, Long wishId) {
         Page<Comment> CommentList = commentRepository.findAllByWishId(wishId,pageable);
         return CommentList.stream()
                 .map(CommentResponse::from)

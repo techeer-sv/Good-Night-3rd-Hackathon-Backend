@@ -12,6 +12,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,10 +62,9 @@ public class WishController {
 
     // 소원 목록 조회
     @GetMapping
-    public List<WishResponse> getWishList(@RequestParam(value = "page", defaultValue = "0") int page,
-                                          @RequestParam(value = "size", defaultValue = "10") int size,
+    public List<WishResponse> getWishList(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                           @RequestParam(value = "status", defaultValue = "PENDING") Wish.WishStatus status) {
-        return wishService.findWishList(page, size, status);
+        return wishService.findWishList(pageable, status);
     }
 
     @GetMapping("/wishes/search")
