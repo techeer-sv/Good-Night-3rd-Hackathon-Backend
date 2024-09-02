@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { Wish } from '../domain/wish.entity';
+import { Wish, WishStatus } from '../domain/wish.entity';
 
 @Injectable()
 export class WishesAdminRepository extends Repository<Wish> {
@@ -11,8 +11,10 @@ export class WishesAdminRepository extends Repository<Wish> {
     // 보류됨 소원 목록 조회
     async confirmList(limit: number, offset: number) {
         return await this.createQueryBuilder('wish')
-            .where('wish.is_confirm = :isConfirm', { isConfirm: '보류됨' })
-            .orderBy('wish.createdAt', 'ASC') // 오래된 순으로 정렬 (ASC)
+            .where('wish.is_confirm = :isConfirm', {
+                isConfirm: WishStatus['PENDING'],
+            })
+            .orderBy('wish.createdAt', 'ASC')
             .limit(limit)
             .offset(offset)
             .getMany();
@@ -20,6 +22,6 @@ export class WishesAdminRepository extends Repository<Wish> {
 
     // 소원 승인/거절
     confirmWish(id: number, isConfirm: string) {
-        return this.update({ id: id }, { isConfirm: isConfirm });
+        return this.update({ id: id }, { isConfirm: WishStatus[isConfirm] });
     }
 }

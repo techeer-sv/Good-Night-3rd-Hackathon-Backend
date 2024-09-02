@@ -1,15 +1,11 @@
 import { IsEnum, IsNotEmpty } from 'class-validator';
-enum Confirm {
-    승인됨 = '승인됨',
-    보류됨 = '보류됨',
-    거절됨 = '거절됨',
-}
+import { WishStatus } from '../domain/wish.entity';
 
 export class ConfirmWishDto {
     @IsNotEmpty()
     readonly id: number;
 
     @IsNotEmpty()
-    @IsEnum(Object.values(Confirm))
+    @IsEnum(WishStatus)
     readonly isConfirm: string;
 }

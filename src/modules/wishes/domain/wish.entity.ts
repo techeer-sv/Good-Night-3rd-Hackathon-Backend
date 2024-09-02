@@ -9,6 +9,22 @@ import {
     OneToMany,
 } from 'typeorm';
 
+export enum WishStatus {
+    APPROVED = 'APPROVED', // 소원이 승인된 상태
+    PENDING = 'PENDING', // 소원이 아직 검토 중인 상태
+    REJECTED = 'REJECTED', // 소원이 거절된 상태
+}
+
+export enum Category {
+    CAREER = 'CAREER', // 진로
+    HEALTH = 'HEALTH', // 건강
+    RELATIONSHIPS = 'RELATIONSHIPS', // 인간관계
+    MONEY = 'MONEY', // 돈
+    GOALS = 'GOALS', // 목표
+    ACADEMICS = 'ACADEMICS', // 학업/성적
+    OTHER = 'OTHER', // 기타
+}
+
 @Entity('wish')
 export class Wish {
     @PrimaryGeneratedColumn()
@@ -21,15 +37,16 @@ export class Wish {
     content: string;
 
     @Column({ type: 'varchar', length: 30, comment: '카테고리' })
-    category: string;
+    category: Category;
 
     @Column({
         type: 'varchar',
         length: 10,
         name: 'is_confirm',
         comment: '승인 상태',
+        default: WishStatus.PENDING,
     })
-    isConfirm: string;
+    isConfirm: WishStatus;
 
     @CreateDateColumn({ name: 'create_at', comment: '등록일' })
     createdAt: Date;

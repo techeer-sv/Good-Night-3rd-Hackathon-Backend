@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { Wish } from '../domain/wish.entity';
+import { Category, Wish, WishStatus } from '../domain/wish.entity';
 import { CreateWishDto } from '../dto/create-wish.dto';
 
 @Injectable()
@@ -11,7 +11,10 @@ export class WishesRepository extends Repository<Wish> {
 
     // 소원 등록
     createWish(createWishDto: CreateWishDto) {
-        const wish = this.create({ ...createWishDto, isConfirm: '보류됨' });
+        const wish = this.create({
+            ...createWishDto,
+            category: Category[createWishDto.category],
+        });
         return this.save(wish);
     }
 

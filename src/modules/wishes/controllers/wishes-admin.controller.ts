@@ -1,12 +1,4 @@
-import {
-    Controller,
-    Body,
-    UsePipes,
-    ValidationPipe,
-    Patch,
-    Get,
-    Query,
-} from '@nestjs/common';
+import { Controller, Body, Patch, Get, Query } from '@nestjs/common';
 import { WishesAdminService } from '../services/wishes-admin.service';
 import { ConfirmWishDto } from '../dto/confirm-wish.dto';
 import { ApiTags, ApiQuery } from '@nestjs/swagger';
@@ -29,7 +21,6 @@ export class WishesAdminController {
 
     // 소원 승인/거절
     @Patch('wishes')
-    @UsePipes(ValidationPipe)
     confirm(@Body() confirmWishDto: ConfirmWishDto) {
         return this.wishesAdminService.confirm(confirmWishDto);
     }
