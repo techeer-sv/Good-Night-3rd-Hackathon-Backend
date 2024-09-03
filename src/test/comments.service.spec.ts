@@ -6,7 +6,7 @@ import { Comment } from '../comments/entities/comment.entity';
 import { Wish } from '../wishes/entities/wish.entity';
 import { CreateCommentDto } from '../comments/dtos/create-comment.dto';
 import { NotFoundException } from '@nestjs/common';
-import { dummyWish } from '../utils/fixtures';
+import { createDummyComments, dummyWish } from '../utils/fixtures';
 
 describe('CommentsService', () => {
   let service: CommentsService;
@@ -82,7 +82,7 @@ describe('CommentsService', () => {
     });
 
     it('소원을 찾을 수 없을 때 예외처리 테스트', async () => {
-      const createCommentDto: CreateCommentDto = {
+      const createCommentDto = {
         content: '첫번째 댓글',
         wishId: 1,
       };
@@ -124,16 +124,7 @@ describe('CommentsService', () => {
     });
 
     it('페이지네이션 테스트', async () => {
-      const comments = [
-        {
-          id: 1,
-          content: 'First comment',
-          wish: { id: 1 } as Wish,
-          deleted_at: null,
-          createdAt: new Date(),
-        },
-      ];
-
+      const comments = createDummyComments(10);
       const queryBuilder = commentRepository.createQueryBuilder();
       jest.spyOn(queryBuilder, 'getMany').mockResolvedValue(comments);
       jest.spyOn(queryBuilder, 'skip').mockReturnThis();
