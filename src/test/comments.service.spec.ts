@@ -126,14 +126,20 @@ describe('CommentsService', () => {
     it('페이지네이션 테스트', async () => {
       const comments = createDummyComments(10);
       const queryBuilder = commentRepository.createQueryBuilder();
-      jest.spyOn(queryBuilder, 'getMany').mockResolvedValue(comments);
+
       jest.spyOn(queryBuilder, 'skip').mockReturnThis();
       jest.spyOn(queryBuilder, 'take').mockReturnThis();
 
-      await service.findAll(1, { page: 2, limit: 5 });
+      jest
+        .spyOn(queryBuilder, 'getMany')
+        .mockResolvedValue(comments.slice(5, 10));
+
+      const result = await service.findAll(1, { page: 2, limit: 5 });
 
       expect(queryBuilder.skip).toHaveBeenCalledWith(5);
       expect(queryBuilder.take).toHaveBeenCalledWith(5);
+
+      expect(result).toEqual(comments.slice(5, 10));
     });
   });
 
