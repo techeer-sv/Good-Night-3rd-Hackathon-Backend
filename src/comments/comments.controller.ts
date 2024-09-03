@@ -25,7 +25,7 @@ export class CommentsController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.commentsService.findAll(wishId, page, limit);
+    return this.commentsService.findAll(wishId, { page, limit });
   }
 
   @Delete(':id')

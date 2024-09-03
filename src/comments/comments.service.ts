@@ -33,8 +33,10 @@ export class CommentsService {
   // 소원의 모든 댓글 조회
   async findAll(
     wishId: number,
-    page: number = 1,
-    limit: number = 10,
+    { page, limit }: { page?: number; limit?: number } = {
+      page: 1,
+      limit: 10,
+    },
   ): Promise<Comment[]> {
     const query = this.commentRepository.createQueryBuilder('comment');
 
