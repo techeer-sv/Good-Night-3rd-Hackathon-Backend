@@ -29,28 +29,28 @@ public class WishService {
         wish.setTitle(wishDto.getTitle());
         wish.setContent(wishDto.getContent());
         wish.setCategory(wishDto.getCategory());
-        wish.setCreated_at(LocalDate.now());
+        wish.setCreatedAt(LocalDate.now());
         wishRepository.save(wish);
     }
 
     public void deleteWishById(Long id) {
         Wish targetWish = wishRepository.findById(id);
-        targetWish.set_deleted(true);
+        targetWish.setDeleted(true);
         wishRepository.updateById(id, targetWish);
     }
 
     public void confirmWishById(Long id, WishDto.ConfirmDto wishDto) {
         Wish targetWish = wishRepository.findById(id);
-        targetWish.setIs_confirm(wishDto.getIs_confirm());
+        targetWish.setIsConfirm(wishDto.getIsConfirm());
         wishRepository.updateById(id, targetWish);
     }
 
     public WishDto.FindDto findWishById(Long id) {
         Wish targetWish = wishRepository.findById(id);
-        if (targetWish.is_deleted()) {
+        if (targetWish.isDeleted()) {
             throw new NotFoundWishException(ErrorCode.NOT_EXIST_WISH);
         }
-        if (targetWish.getIs_confirm() != WishConfirmState.APPROVED.getKorean()) {
+        if (targetWish.getIsConfirm() != WishConfirmState.APPROVED.getKorean()) {
             throw new NotApprovedWishException(ErrorCode.NOT_APPROVED_WISH);
         }
 
@@ -69,13 +69,13 @@ public class WishService {
                 .stream()
                 .filter(wish -> {
                     if(wishState == WishConfirmState.APPROVED.getEnglish()) {
-                        return WishConfirmState.APPROVED.getKorean().equals(wish.getIs_confirm());
+                        return WishConfirmState.APPROVED.getKorean().equals(wish.getIsConfirm());
                     }
                     if(wishState == WishConfirmState.PENDING.getEnglish()) {
-                        return WishConfirmState.PENDING.getKorean().equals(wish.getIs_confirm());
+                        return WishConfirmState.PENDING.getKorean().equals(wish.getIsConfirm());
                     }
                     if(wishState == WishConfirmState.REJECTED.getEnglish()) {
-                        return WishConfirmState.REJECTED.getKorean().equals(wish.getIs_confirm());
+                        return WishConfirmState.REJECTED.getKorean().equals(wish.getIsConfirm());
                     }
                     return true;
                 })
@@ -83,7 +83,7 @@ public class WishService {
                     WishDto.FindAllDto wishDto = new WishDto.FindAllDto();
                     wishDto.setTitle(wish.getTitle());
                     wishDto.setCategory(wish.getCategory());
-                    wishDto.setCreated_at(wish.getCreated_at());
+                    wishDto.setCreatedAt(wish.getCreatedAt());
                     return wishDto;
                 })
                 .toList();

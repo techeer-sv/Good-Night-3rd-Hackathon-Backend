@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 @Data
 public class CommentDto {
+    private Long wishId;
     private String content;
-    private LocalDate created_at;
+    private LocalDate createdAt;
 }

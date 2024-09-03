@@ -19,11 +19,11 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public void saveComment(CommentDto commentDto, Long wishId) {
+    public void saveComment(CommentDto commentDto) {
         Comment comment = new Comment();
-        comment.setWish_id(wishId);
+        comment.setWishId(commentDto.getWishId());
         comment.setContent(commentDto.getContent());
-        comment.setCreated_at(LocalDate.now());
+        comment.setCreatedAt(LocalDate.now());
         commentRepository.save(comment);
     }
 
@@ -32,11 +32,11 @@ public class CommentService {
         Pageable pageable = PageRequest.of(page, 5);
         return commentRepository.findAll(pageable)
                 .stream()
-                .filter(comment -> wishId.equals(comment.getWish_id()))
+                .filter(comment -> wishId.equals(comment.getWishId()))
                 .map(comment -> {
                     CommentDto commentDto = new CommentDto();
                     commentDto.setContent(comment.getContent());
-                    commentDto.setCreated_at(comment.getCreated_at());
+                    commentDto.setCreatedAt(comment.getCreatedAt());
                     return commentDto;
                 })
                 .toList();
@@ -44,7 +44,7 @@ public class CommentService {
 
     public void deleteCommentById(Long commentId) {
         Comment targetComment = commentRepository.findById(commentId);
-        targetComment.set_deleted(true);
+        targetComment.setDeleted(true);
         commentRepository.updateById(commentId, targetComment);
     }
 

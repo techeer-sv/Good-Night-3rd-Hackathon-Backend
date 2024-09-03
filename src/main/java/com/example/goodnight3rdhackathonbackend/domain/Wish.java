@@ -13,7 +13,7 @@ public class Wish {
     private String title;
     private String content;
     private String category;
-    private LocalDate created_at;
-    private String is_confirm = WishConfirmState.PENDING.getKorean();
-    private boolean is_deleted = false;
+    private LocalDate createdAt;
+    private String isConfirm = WishConfirmState.PENDING.getKorean();
+    private boolean isDeleted = false;
 }

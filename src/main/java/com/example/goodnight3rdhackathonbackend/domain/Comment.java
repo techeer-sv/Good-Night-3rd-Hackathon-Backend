@@ -8,10 +8,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class Comment {
-    private Long comment_id;
-    private Long wish_id;
+    private Long commentId;
+    private Long wishId;
     private String content;
-    private LocalDate created_at;
-    private boolean is_deleted = false;
+    private LocalDate createdAt;
+    private boolean isDeleted = false;
 
 }

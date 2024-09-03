@@ -14,14 +14,13 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/comments/{wishId}")
-    public void saveComment(@RequestBody CommentDto commentDto, @PathVariable Long wishId) {
-        commentService.saveComment(commentDto, wishId);
+    @PostMapping("/comments")
+    public void saveComment(@RequestBody CommentDto commentDto) {
+        commentService.saveComment(commentDto);
     }
 
-    @GetMapping("/comments/{wishId}")
-    public List<CommentDto> findAllCommentByWishId(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                   @PathVariable Long wishId) {
+    @GetMapping("/comments")
+    public List<CommentDto> findAllCommentByWishId(@RequestParam(value = "page", defaultValue = "0") int page, Long wishId) {
         return commentService.findAllCommentByWishId(wishId, page);
     }
 

@@ -11,7 +11,7 @@ public class WishDto {
         private String title;
         private String content;
         private String category;
-        private LocalDate created_at;
+        private LocalDate createdAt;
     }
 
 
@@ -26,11 +26,11 @@ public class WishDto {
     public static class FindAllDto {
         private String title;
         private String category;
-        private LocalDate created_at;
+        private LocalDate createdAt;
     }
 
     @Data
     public static class ConfirmDto {
-        private String is_confirm;
+        private String isConfirm;
     }
 }

@@ -18,7 +18,7 @@ public class MemoryCommentRepository implements CommentRepository {
 
     @Override
     public void save(Comment comment) {
-        comment.setComment_id(++index);
+        comment.setCommentId(++index);
         memory.put(index, comment);
     }
 
@@ -31,7 +31,7 @@ public class MemoryCommentRepository implements CommentRepository {
     @Override
     public List<Comment> findAll(Pageable pageable) {
         return memory.values().stream()
-                .sorted(Comparator.comparing(Comment::getComment_id).reversed())
+                .sorted(Comparator.comparing(Comment::getCommentId).reversed())
                 .skip((long) pageable.getPageNumber() * pageable.getPageSize())
                 .limit(pageable.getPageSize())
                 .collect(Collectors.toList());
