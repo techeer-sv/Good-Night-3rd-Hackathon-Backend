@@ -28,13 +28,13 @@ export class WishesController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ) {
-    return this.wishesService.findAll(
+    return this.wishesService.findAll({
       isConfirmed,
       keyword,
       category,
       page,
       limit,
-    );
+    });
   }
 
   @Get(':id')

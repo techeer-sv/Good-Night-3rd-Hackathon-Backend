@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Wish } from './entities/wish.entity';
 import { CreateWishDto } from './dtos/create-wish.dto';
+import { mapCategoryToKorean } from '../utils/category-mapping';
 
 @Injectable()
 export class WishesService {
@@ -17,7 +18,10 @@ export class WishesService {
 
   // 소원 생성
   async create(createWishDto: CreateWishDto): Promise<Wish> {
-    const wish = this.wishRepository.create(createWishDto);
+    const wish = this.wishRepository.create({
+      ...createWishDto,
+      category: mapCategoryToKorean(createWishDto.category), // 영어 카테고리를 한글로 변환
+    });
     return this.wishRepository.save(wish);
   }
 
