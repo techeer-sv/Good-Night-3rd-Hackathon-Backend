@@ -6,6 +6,7 @@ import com.example.TecheerTreeBackend.dto.WishForm;
 import com.example.TecheerTreeBackend.dto.WishListResponse;
 import com.example.TecheerTreeBackend.dto.WishResponse;
 import com.example.TecheerTreeBackend.repository.WishRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class WishService {
 
-    @Autowired
-    private WishRepository wishRepository;
-
+    private final WishRepository wishRepository;
 
     public String createWish(WishForm wishForm) {
         // 소원 엔티티 생성

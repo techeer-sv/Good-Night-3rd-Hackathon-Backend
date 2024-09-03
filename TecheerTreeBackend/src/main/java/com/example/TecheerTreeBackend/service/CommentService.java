@@ -6,6 +6,7 @@ import com.example.TecheerTreeBackend.dto.CommentForm;
 import com.example.TecheerTreeBackend.dto.CommentListResponse;
 import com.example.TecheerTreeBackend.repository.CommentRepository;
 import com.example.TecheerTreeBackend.repository.WishRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentService {
-    @Autowired
-    private WishRepository wishRepository;
-    @Autowired
-    private CommentRepository commentRepository;
+
+    private final WishRepository wishRepository;
+
+    private final CommentRepository commentRepository;
     public String createComment(Long wishId, CommentForm commentForm) {
 
         // 소원 조회 및 예외처리
