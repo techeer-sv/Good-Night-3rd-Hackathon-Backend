@@ -23,11 +23,22 @@ export class WishesService {
 
   // 모든 소원 조회
   async findAll(
-    isConfirmed?: string,
-    keyword?: string,
-    category?: string,
-    page: number = 1,
-    limit: number = 10,
+    {
+      isConfirmed,
+      keyword,
+      category,
+      page,
+      limit,
+    }: {
+      isConfirmed?: string;
+      keyword?: string;
+      category?: string;
+      page?: number;
+      limit?: number;
+    } = {
+      page: 1,
+      limit: 10,
+    },
   ): Promise<Wish[]> {
     const query = this.wishRepository.createQueryBuilder('wish');
 

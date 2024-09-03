@@ -7,7 +7,6 @@ import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('WishesService', () => {
   let service: WishesService;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let repository: Repository<Wish>;
 
   // WishesService 에서 사용하는 Wish 리포지토리를 모킹
@@ -67,9 +66,7 @@ describe('WishesService', () => {
 
       mockWishRepository.getMany.mockResolvedValue(result);
 
-      expect(
-        await service.findAll(undefined, undefined, undefined, 1, 10),
-      ).toEqual(result);
+      expect(await service.findAll()).toEqual(result);
     });
 
     it('승인 여부에 따른 필터링 테스트', async () => {
@@ -87,7 +84,7 @@ describe('WishesService', () => {
       mockWishRepository.andWhere.mockReturnThis();
       mockWishRepository.getMany.mockResolvedValue(result);
 
-      expect(await service.findAll('true')).toEqual(result);
+      expect(await service.findAll({ isConfirmed: 'true' })).toEqual(result);
       expect(mockWishRepository.andWhere).toHaveBeenCalledWith(
         'wish.is_confirm = :isConfirmed',
         { isConfirmed: '승인됨' },
@@ -108,9 +105,7 @@ describe('WishesService', () => {
 
       mockWishRepository.getMany.mockResolvedValue(result);
 
-      expect(
-        await service.findAll(undefined, undefined, undefined, 2, 5),
-      ).toEqual(result);
+      expect(await service.findAll({ page: 2, limit: 5 })).toEqual(result);
       expect(mockWishRepository.skip).toHaveBeenCalledWith(5);
       expect(mockWishRepository.take).toHaveBeenCalledWith(5);
     });
@@ -130,7 +125,7 @@ describe('WishesService', () => {
       mockWishRepository.andWhere.mockReturnThis();
       mockWishRepository.getMany.mockResolvedValue(result);
 
-      expect(await service.findAll(undefined, 'hackathon')).toEqual(result);
+      expect(await service.findAll({ keyword: 'hackathon' })).toEqual(result);
       expect(mockWishRepository.andWhere).toHaveBeenCalledWith(
         '(wish.title LIKE :keyword OR wish.content LIKE :keyword)',
         { keyword: '%hackathon%' },
@@ -138,7 +133,7 @@ describe('WishesService', () => {
     });
 
     it('예상치 못한 승인 여부 요청시 예외 처리 테스트', async () => {
-      await expect(service.findAll('invalid')).rejects.toThrow(
+      await expect(service.findAll({ isConfirmed: 'invalid' })).rejects.toThrow(
         BadRequestException,
       );
     });
