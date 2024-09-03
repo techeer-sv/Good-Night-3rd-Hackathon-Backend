@@ -24,14 +24,12 @@ public class WishController {
     // 소원 등록
     @PostMapping("")
     public String createWish(@RequestBody WishForm wishForm){
-        // 서비스 위임
         return wishService.createWish(wishForm);
     }
 
     // 소원 삭제(soft delete)
     @PatchMapping("/delete/{wishId}")
     public String deleteWish(@PathVariable Long wishId){
-        // 서비스 위임
         return wishService.deleteWish(wishId);
     }
 
@@ -41,14 +39,12 @@ public class WishController {
         // "승인" 또는 "거절" 문자열을 WishStatus Enum으로 변환
         WishStatus wishStatus = WishStatus.stringToEnum(wishConfirmForm);
 
-        // 서비스 위임
         return wishService.confirmWish(wishId, wishStatus);
     }
 
     // 소원 단일 조회
     @GetMapping("/{wishId}")
     public ResponseEntity<?> viewWish(@PathVariable Long wishId){
-        // 서비스 위임
         WishResponse viewWish = wishService.viewService(wishId);
 
         // 만약 viewWish가 null이라면 BAD_REQUEST 반환
@@ -65,7 +61,6 @@ public class WishController {
         // "승인" 또는 "미승인" 문자열을 WishStatus Enum으로 변환
         WishStatus wishStatus = WishStatus.fromClientString(status);
 
-        // 서비스 위임
         List<WishListResponse> viewWishList = wishService.viewWishList(wishStatus);
 
         return ResponseEntity.status(HttpStatus.OK).body(viewWishList);
