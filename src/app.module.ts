@@ -5,6 +5,13 @@ import { WishesModule } from './wishes/wishes.module';
 import { CommentsModule } from './comments/comments.module';
 import { Wish } from './wishes/entities/wish.entity';
 import { Comment } from './comments/entities/comment.entity';
+import {
+  DB_DATABASE,
+  DB_HOST,
+  DB_PASSWORD,
+  DB_PORT,
+  DB_USERNAME,
+} from './config';
 
 @Module({
   imports: [
@@ -13,11 +20,11 @@ import { Comment } from './comments/entities/comment.entity';
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT, 10),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+      host: DB_HOST,
+      port: parseInt(DB_PORT, 10),
+      username: DB_USERNAME,
+      password: DB_PASSWORD,
+      database: DB_DATABASE,
       entities: [Wish, Comment],
       synchronize: true,
       logging: true,
