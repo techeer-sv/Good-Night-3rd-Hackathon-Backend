@@ -6,6 +6,7 @@ import { Comment } from '../comments/entities/comment.entity';
 import { Wish } from '../wishes/entities/wish.entity';
 import { CreateCommentDto } from '../comments/dtos/create-comment.dto';
 import { NotFoundException } from '@nestjs/common';
+import { dummyWish } from '../utils/fixtures';
 
 describe('CommentsService', () => {
   let service: CommentsService;
@@ -64,7 +65,7 @@ describe('CommentsService', () => {
         content: '첫번째 댓글',
         wishId: 1,
       };
-      const wish = { id: 1 } as Wish;
+      const wish = dummyWish({ id: 1 });
       const newComment = {
         id: 1,
         ...createCommentDto,
@@ -119,7 +120,7 @@ describe('CommentsService', () => {
         .spyOn(commentRepository.createQueryBuilder(), 'getMany')
         .mockResolvedValue(comments);
 
-      expect(await service.findAll(1, 1, 10)).toEqual(comments);
+      expect(await service.findAll(1)).toEqual(comments);
     });
 
     it('페이지네이션 테스트', async () => {
@@ -138,7 +139,7 @@ describe('CommentsService', () => {
       jest.spyOn(queryBuilder, 'skip').mockReturnThis();
       jest.spyOn(queryBuilder, 'take').mockReturnThis();
 
-      await service.findAll(1, 2, 5);
+      await service.findAll(1, { page: 2, limit: 5 });
 
       expect(queryBuilder.skip).toHaveBeenCalledWith(5);
       expect(queryBuilder.take).toHaveBeenCalledWith(5);
