@@ -12,20 +12,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/comments")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
 
     // 댓글 생성
-    @PostMapping("/comments/{wishId}")
+    @PostMapping("/{wishId}")
     public String createComment(@PathVariable Long wishId, @RequestBody CommentForm commentForm){
         // 서비스 위임
         return commentService.createComment(wishId, commentForm);
     }
 
     // 댓글 리스트 조회
-    @GetMapping("/comments/{wishId}")
+    @GetMapping("/{wishId}")
     public ResponseEntity<List<CommentListResponse>> viewCommentList(@PathVariable Long wishId){
         // 서비스 위임
         List<CommentListResponse> viewCommentList = commentService.viewCommentList(wishId);
@@ -35,7 +36,7 @@ public class CommentController {
     }
 
     // 댓글 삭제(soft delete)
-    @PatchMapping("/comments/{commentId}")
+    @PatchMapping("/{commentId}")
     public String deleteComment(@PathVariable Long commentId){
         // 서비스 위임
         return commentService.deleteComment(commentId);
