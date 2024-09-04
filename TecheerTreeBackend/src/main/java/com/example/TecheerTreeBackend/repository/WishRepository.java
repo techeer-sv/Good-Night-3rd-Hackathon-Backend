@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface WishRepository extends JpaRepository<Wishes, Long> {
 
-    @Query(value = "SELECT * FROM wishes WHERE  ((:wishStatus = 'APPROVED' AND is_confirm = 'APPROVED') AND is_deleted = FALSE) OR ((:wishStatus != 'APPROVED' AND is_confirm != 'APPROVED') AND is_deleted = FALSE)  ORDER BY created_at DESC", nativeQuery = true)
+    @Query(value = "SELECT * FROM wishes WHERE  ((:wishStatus = 'APPROVED' AND wish_status = 'APPROVED') AND is_deleted = FALSE) OR ((:wishStatus != 'APPROVED' AND wish_status != 'APPROVED') AND is_deleted = FALSE)  ORDER BY created_at DESC", nativeQuery = true)
     List<Wishes> findByWishStatus(WishStatus wishStatus);
 }
