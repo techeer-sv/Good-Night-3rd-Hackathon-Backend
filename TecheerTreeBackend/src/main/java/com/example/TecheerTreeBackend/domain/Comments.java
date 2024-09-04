@@ -29,7 +29,7 @@ public class Comments {
         this.createdAt = createdAt;
     }
 
-    public static Comments createComment(Wishes wishes, CommentRequest commentRequest) {
+    public static Comments from(Wishes wishes, CommentRequest commentRequest) {
         return new Comments(
                 wishes,
                 commentRequest.getContent(),

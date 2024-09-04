@@ -32,7 +32,7 @@ public class Wishes {
         this.createdAt = createAt;
     }
 
-    public static Wishes createWish(WishRequest wishRequest) {
+    public static Wishes from(WishRequest wishRequest) {
         if (wishRequest.getTitle() == null || wishRequest.getContent() == null || wishRequest.getCategory() == null || wishRequest.getCreateAt() == null) {
             throw new IllegalArgumentException("Title, Content, Category, and createdAt cannot be null.");
         }

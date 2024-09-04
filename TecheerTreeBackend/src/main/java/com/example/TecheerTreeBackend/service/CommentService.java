@@ -27,7 +27,7 @@ public class CommentService {
 
 
         // 댓글 엔티티 생성
-        Comments comments = Comments.createComment(wishes, commentRequest);
+        Comments comments = Comments.from(wishes, commentRequest);
 
         // 엔티티를 DB에 저장
         commentRepository.save(comments);

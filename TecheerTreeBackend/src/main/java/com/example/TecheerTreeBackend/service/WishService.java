@@ -20,7 +20,7 @@ public class WishService {
 
     public String createWish(WishRequest wishRequest) {
         // 소원 엔티티 생성
-        Wishes wishes = Wishes.createWish(wishRequest);
+        Wishes wishes = Wishes.from(wishRequest);
 
         // 생성 된 소원 엔티티를 레포지토리 DB에 저장
         wishRepository.save(wishes);
