@@ -27,13 +27,4 @@ public enum WishStatus {
         }
     }
 
-    public static WishStatus stringToEnum(WishConfirmRequest wishConfirmRequest) {
-        if ("승인".equals(wishConfirmRequest.getConfirm())) {
-            return WishStatus.APPROVED;
-        } else if ("거절".equals(wishConfirmRequest.getConfirm())) {
-            return WishStatus.REJECTED;
-        }
-        return null;
-    }
-
 }
