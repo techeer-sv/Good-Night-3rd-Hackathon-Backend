@@ -4,9 +4,11 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
-public class SwaggerConfig {
+@EnableJpaAuditing  // JPA Auditing 기능 활성화
+public class Config {
 
     @Bean
     public OpenAPI openAPI() {

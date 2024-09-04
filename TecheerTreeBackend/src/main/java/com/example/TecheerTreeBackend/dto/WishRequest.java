@@ -12,5 +12,4 @@ public class WishRequest {
     private String content;
     private Category category;
     private WishStatus wishStatus;
-    private Date createAt;
 }
