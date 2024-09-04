@@ -23,7 +23,7 @@ public class Comments {
     private Date createdAt;
     private Boolean isDeleted = Boolean.FALSE;
 
-    public Comments(Wishes wishes, String content, Date createdAt) {
+    private Comments(Wishes wishes, String content, Date createdAt) {
         this.wishes = wishes;
         this.content = content;
         this.createdAt = createdAt;

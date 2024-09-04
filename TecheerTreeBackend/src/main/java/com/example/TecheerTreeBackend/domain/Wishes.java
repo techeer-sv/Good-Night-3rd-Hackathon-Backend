@@ -25,7 +25,7 @@ public class Wishes {
     private WishStatus wishStatus = WishStatus.PENDING; // 초기값 = "보류중"
     private Boolean isDeleted = Boolean.FALSE;
 
-    public Wishes(String title, String content, Category category, Date createAt) {
+    private Wishes(String title, String content, Category category, Date createAt) {
         this.title = title;
         this.content = content;
         this.category = category;
