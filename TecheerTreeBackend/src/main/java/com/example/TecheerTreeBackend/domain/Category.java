@@ -1,5 +1,9 @@
 package com.example.TecheerTreeBackend.domain;
 
+
+import lombok.Getter;
+
+@Getter
 public enum Category {
     CAREER("진로"),
     HEALTH("건강"),
@@ -9,23 +13,11 @@ public enum Category {
     ACADEMICS("학업/성적"),
     OTHERS("기타");
 
-    private final String description;
+    // 한글 이름을 반환하는 메소드
+    private final String koreanName;
 
-    Category(String description) {
-        this.description = description;
+    Category(String koreanName){
+        this.koreanName = koreanName;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    // 한글 이름을 기반으로 Enum 변환
-    public static Category fromKoreanName(String description) {
-        for (Category category : Category.values()) {
-            if (category.getDescription().equals(description)) {
-                return category;
-            }
-        }
-        throw new IllegalArgumentException("Invalid category: " + description);
-    }
 }
