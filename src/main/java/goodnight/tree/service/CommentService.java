@@ -7,6 +7,7 @@ import goodnight.tree.domain.dto.response.CommentResponse;
 import goodnight.tree.domain.dto.response.WishResponse;
 import goodnight.tree.repository.CommentRepository;
 import goodnight.tree.repository.WishRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,8 +29,8 @@ public class CommentService {
 
     // 댓글 저장
     public void saveComment(CommentSaveRequest request) {
-        Wish wish = wishRepository.findById(request.getWishId()).orElseThrow(
-                () -> new RuntimeException("존재하지 않는 게시글입니다.")
+        Wish wish = wishRepository.findByIdAndDeletedAtIsNull(request.getWishId())
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 게시글입니다.")
         );
         Comment comment = request.toEntity(wish);
         commentRepository.save(comment);
@@ -37,12 +38,14 @@ public class CommentService {
 
     // 댓글 삭제
     public void deleteComment(Long commentId) {
-        commentRepository.deleteById(commentId);
+        Comment comment = commentRepository.findByIdAndDeletedAtIsNull(commentId)
+                        .orElseThrow(() -> new EntityNotFoundException("Comment not found"));
+        comment.softDelete();
     }
 
     // 댓글 조회(페이지네이션)
     public List<CommentResponse> findCommentList(Pageable pageable, Long wishId) {
-        Page<Comment> CommentList = commentRepository.findAllByWishId(wishId,pageable);
+        Page<Comment> CommentList = commentRepository.findAllByWishIdAndDeletedAtIsNull(wishId,pageable);
         return CommentList.stream()
                 .map(CommentResponse::from)
                 .collect(Collectors.toList());

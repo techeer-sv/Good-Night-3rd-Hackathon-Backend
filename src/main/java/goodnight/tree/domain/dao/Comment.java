@@ -12,9 +12,9 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @Entity @Getter
 // 소프트 삭제 구현 delete 메소드 사용 시 실제 삭제가 아닌 소프트 삭제로 구동
-@SQLDelete(sql = "UPDATE comment SET deleted_at = NOW() WHERE id = ?")
+//@SQLDelete(sql = "UPDATE comment SET deleted_at = NOW() WHERE id = ?")
 // 매 조회 시 deleted at이 null인 값만
-@Where(clause = "deleted_at IS NULL")
+//@Where(clause = "deleted_at IS NULL")
 public class Comment extends BaseEntity {
 
     @Id

@@ -6,6 +6,7 @@ import goodnight.tree.domain.dto.request.WishUpdateRequest;
 import goodnight.tree.domain.dto.response.WishDetailResponse;
 import goodnight.tree.domain.dto.response.WishResponse;
 import goodnight.tree.repository.WishRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,27 +34,26 @@ public class WishService {
 
     // 소원 삭제(소프트)
     public void deleteWish(Long wishId) {
-        Wish wish = wishRepository.findById(wishId)
-                .orElseThrow(() -> new RuntimeException("Wish not found"));
-        wishRepository.delete(wish);  // Soft delete occurs here
+        Wish wish = wishRepository.findByIdAndDeletedAtIsNull(wishId)
+                .orElseThrow(() -> new EntityNotFoundException("Wish not found"));
+        wish.softDelete();  // Soft delete occurs here
     }
 
     // 소원 승인/거절
     public void updateWish(WishUpdateRequest request, Long wishId) {
-        Wish wish = wishRepository.findById(wishId)
-                .orElseThrow(() -> new RuntimeException("Wish not found"));
+        Wish wish = wishRepository.findByIdAndDeletedAtIsNull(wishId)
+                .orElseThrow(() -> new EntityNotFoundException("Wish not found"));
 
         wish.changeStatus(request.getStatus()); // 제약 없이 상태 변경
-        wishRepository.save(wish);
     }
 
     // 소원 개별 조회
     public WishDetailResponse findWish(Long wishId) {
-        Wish wish = wishRepository.findById(wishId)
-                .orElseThrow(() -> new RuntimeException("Wish not found"));
+        Wish wish = wishRepository.findByIdAndDeletedAtIsNull(wishId)
+                .orElseThrow(() -> new EntityNotFoundException("Wish not found"));
 
         if (wish.getWishStatus() != Wish.WishStatus.APPROVED) {
-            throw new RuntimeException("Only approved wishes can be viewed.");
+            throw new IllegalStateException("Only approved wishes can be viewed.");
         }
 
         return WishDetailResponse.from(wish);
@@ -61,7 +61,7 @@ public class WishService {
 
     // 소원 리스트 조회(페이지네이션)
     public List<WishResponse> findWishList(Pageable pageable, Wish.WishStatus status) {
-        Page<Wish> wishes = wishRepository.findAllByWishStatus(status, pageable);
+        Page<Wish> wishes = wishRepository.findAllByWishStatusAndDeletedAtIsNull(status, pageable);
         return wishes.stream()
                 .map(WishResponse::from)
                 .collect(Collectors.toList());
@@ -70,7 +70,7 @@ public class WishService {
 
     // 소원 키워드 조회
     public List<WishResponse> searchWishes(Wish.Category category, String keyword, Wish.WishStatus status) {
-        List<Wish> wishes = wishRepository.searchWishes(category, keyword, status);
+        List<Wish> wishes = wishRepository.searchWishesAndDeletedAtIsNull(category, keyword, status);
         return wishes.stream()
                 .map(WishResponse::from)
                 .collect(Collectors.toList());

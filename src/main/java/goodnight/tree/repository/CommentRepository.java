@@ -5,7 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     // Custom query methods can be added here
-    Page<Comment> findAllByWishId(Long wishId, Pageable pageable);
+    Page<Comment> findAllByWishIdAndDeletedAtIsNull(Long wishId, Pageable pageable);
+
+    Optional<Comment> findByIdAndDeletedAtIsNull(Long commentId);
 }

@@ -12,8 +12,10 @@ import java.util.List;
 
 @NoArgsConstructor
 @Entity @Getter
-@SQLDelete(sql = "UPDATE wish SET deleted_at = NOW() WHERE id = ?")
-@Where(clause = "deleted_at IS NULL")
+// 소프트 삭제 구현 delete 메소드 사용 시 실제 삭제가 아닌 소프트 삭제로 구동
+//@SQLDelete(sql = "UPDATE wish SET deleted_at = NOW() WHERE id = ?")
+// 매 조회 시 deleted at이 null인 값만
+//@Where(clause = "deleted_at IS NULL")
 public class Wish extends BaseEntity {
 
     @Id

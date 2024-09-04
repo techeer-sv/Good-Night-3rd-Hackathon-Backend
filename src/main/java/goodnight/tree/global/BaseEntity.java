@@ -25,4 +25,7 @@ public class BaseEntity {
     @JsonFormat(timezone = "Asia/Seoul")
     private LocalDateTime deletedAt;
 
+    public void softDelete() {
+        this.deletedAt = LocalDateTime.now();
+    }
 }
