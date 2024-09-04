@@ -27,7 +27,7 @@ public class WishController {
     }
 
     // 소원 삭제(soft delete)
-    @PatchMapping("/delete/{wishId}")
+    @DeleteMapping("/delete/{wishId}")
     public String deleteWish(@PathVariable Long wishId){
         return wishService.deleteWish(wishId);
     }

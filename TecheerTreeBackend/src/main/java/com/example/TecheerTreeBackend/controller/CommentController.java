@@ -34,7 +34,7 @@ public class CommentController {
     }
 
     // 댓글 삭제(soft delete)
-    @PatchMapping("/{commentId}")
+    @DeleteMapping("/{commentId}")
     public String deleteComment(@PathVariable Long commentId){
         return commentService.deleteComment(commentId);
     }
