@@ -46,16 +46,16 @@ public class WishService {
 
     public String confirmWish(Long wishId, WishStatus wishStatus) {
         // 소원 조회
-        Wishes wishes = wishRepository.findById(wishId)
+        Wishes wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 wishId의 소원을 찾을 수 없습니다."));
 
         // 승인 여부 결정
-        String result = wishes.confirm(wishStatus);
+        wish.confirm(wishStatus);
 
         // 처리후 DB 저장
-        wishRepository.save(wishes);
+        wishRepository.save(wish);
 
-        return result + " 처리가 되었습니다.";
+        return wish.getWishStatus().getDescription() + " 처리가 되었습니다.";
     }
 
     public WishResponse viewService(Long wishId) {

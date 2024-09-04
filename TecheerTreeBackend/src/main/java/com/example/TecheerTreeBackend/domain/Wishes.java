@@ -49,9 +49,8 @@ public class Wishes {
         this.isDeleted = Boolean.TRUE;
     }
 
-    public String confirm(WishStatus wishStatus) {
+    public void confirm(WishStatus wishStatus) {
         this.wishStatus = wishStatus;
-        return this.wishStatus.getDescription(); // 상태의 설명을 반환
     }
 
     public Boolean checkConfirm() {
