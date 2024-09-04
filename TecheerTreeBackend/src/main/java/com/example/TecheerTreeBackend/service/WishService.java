@@ -2,12 +2,11 @@ package com.example.TecheerTreeBackend.service;
 
 import com.example.TecheerTreeBackend.domain.Wishes;
 import com.example.TecheerTreeBackend.domain.WishStatus;
-import com.example.TecheerTreeBackend.dto.WishForm;
+import com.example.TecheerTreeBackend.dto.WishRequest;
 import com.example.TecheerTreeBackend.dto.WishListResponse;
 import com.example.TecheerTreeBackend.dto.WishResponse;
 import com.example.TecheerTreeBackend.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,9 +18,9 @@ public class WishService {
 
     private final WishRepository wishRepository;
 
-    public String createWish(WishForm wishForm) {
+    public String createWish(WishRequest wishRequest) {
         // 소원 엔티티 생성
-        Wishes wishes = Wishes.createWish(wishForm);
+        Wishes wishes = Wishes.createWish(wishRequest);
 
         // 생성 된 소원 엔티티를 레포지토리 DB에 저장
         wishRepository.save(wishes);

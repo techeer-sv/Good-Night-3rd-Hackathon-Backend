@@ -2,12 +2,11 @@ package com.example.TecheerTreeBackend.service;
 
 import com.example.TecheerTreeBackend.domain.Comments;
 import com.example.TecheerTreeBackend.domain.Wishes;
-import com.example.TecheerTreeBackend.dto.CommentForm;
+import com.example.TecheerTreeBackend.dto.CommentRequest;
 import com.example.TecheerTreeBackend.dto.CommentListResponse;
 import com.example.TecheerTreeBackend.repository.CommentRepository;
 import com.example.TecheerTreeBackend.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class CommentService {
     private final WishRepository wishRepository;
 
     private final CommentRepository commentRepository;
-    public String createComment(Long wishId, CommentForm commentForm) {
+    public String createComment(Long wishId, CommentRequest commentRequest) {
 
         // 소원 조회 및 예외처리
         Wishes wishes = wishRepository.findById(wishId)
@@ -28,7 +27,7 @@ public class CommentService {
 
 
         // 댓글 엔티티 생성
-        Comments comments = Comments.createComment(wishes, commentForm);
+        Comments comments = Comments.createComment(wishes, commentRequest);
 
         // 엔티티를 DB에 저장
         commentRepository.save(comments);

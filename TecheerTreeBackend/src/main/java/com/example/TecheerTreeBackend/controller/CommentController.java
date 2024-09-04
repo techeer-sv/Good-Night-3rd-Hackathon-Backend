@@ -1,11 +1,10 @@
 package com.example.TecheerTreeBackend.controller;
 
 
-import com.example.TecheerTreeBackend.dto.CommentForm;
+import com.example.TecheerTreeBackend.dto.CommentRequest;
 import com.example.TecheerTreeBackend.dto.CommentListResponse;
 import com.example.TecheerTreeBackend.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +20,8 @@ public class CommentController {
 
     // 댓글 생성
     @PostMapping("/{wishId}")
-    public String createComment(@PathVariable Long wishId, @RequestBody CommentForm commentForm){
-        return commentService.createComment(wishId, commentForm);
+    public String createComment(@PathVariable Long wishId, @RequestBody CommentRequest commentRequest){
+        return commentService.createComment(wishId, commentRequest);
     }
 
     // 댓글 리스트 조회

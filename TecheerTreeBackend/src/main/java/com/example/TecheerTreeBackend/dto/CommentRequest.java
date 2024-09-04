@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Getter
 @AllArgsConstructor
-public class CommentForm {
+public class CommentRequest {
     private String content;
     private Date created_at;
 }

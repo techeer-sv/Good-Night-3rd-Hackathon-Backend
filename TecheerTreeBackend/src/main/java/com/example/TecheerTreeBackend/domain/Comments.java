@@ -1,7 +1,7 @@
 package com.example.TecheerTreeBackend.domain;
 
 
-import com.example.TecheerTreeBackend.dto.CommentForm;
+import com.example.TecheerTreeBackend.dto.CommentRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,11 +29,11 @@ public class Comments {
         this.created_at = createdAt;
     }
 
-    public static Comments createComment(Wishes wishes, CommentForm commentForm) {
+    public static Comments createComment(Wishes wishes, CommentRequest commentRequest) {
         return new Comments(
                 wishes,
-                commentForm.getContent(),
-                commentForm.getCreated_at()
+                commentRequest.getContent(),
+                commentRequest.getCreated_at()
         );
     }
 

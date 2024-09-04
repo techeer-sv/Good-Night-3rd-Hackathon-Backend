@@ -1,13 +1,12 @@
 package com.example.TecheerTreeBackend.controller;
 
 import com.example.TecheerTreeBackend.domain.WishStatus;
-import com.example.TecheerTreeBackend.dto.WishConfirmForm;
-import com.example.TecheerTreeBackend.dto.WishForm;
+import com.example.TecheerTreeBackend.dto.WishConfirmRequest;
+import com.example.TecheerTreeBackend.dto.WishRequest;
 import com.example.TecheerTreeBackend.dto.WishListResponse;
 import com.example.TecheerTreeBackend.dto.WishResponse;
 import com.example.TecheerTreeBackend.service.WishService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +22,8 @@ public class WishController {
 
     // 소원 등록
     @PostMapping("")
-    public String createWish(@RequestBody WishForm wishForm){
-        return wishService.createWish(wishForm);
+    public String createWish(@RequestBody WishRequest wishRequest){
+        return wishService.createWish(wishRequest);
     }
 
     // 소원 삭제(soft delete)
@@ -35,9 +34,9 @@ public class WishController {
 
     // 소원 승인 or 거절 처리
     @PatchMapping("/confirm/{wishId}")
-    public String confirmWish(@PathVariable Long wishId, @RequestBody WishConfirmForm wishConfirmForm){
+    public String confirmWish(@PathVariable Long wishId, @RequestBody WishConfirmRequest wishConfirmRequest){
         // "승인" 또는 "거절" 문자열을 WishStatus Enum으로 변환
-        WishStatus wishStatus = WishStatus.stringToEnum(wishConfirmForm);
+        WishStatus wishStatus = WishStatus.stringToEnum(wishConfirmRequest);
 
         return wishService.confirmWish(wishId, wishStatus);
     }

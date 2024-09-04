@@ -1,6 +1,6 @@
 package com.example.TecheerTreeBackend.domain;
 
-import com.example.TecheerTreeBackend.dto.WishConfirmForm;
+import com.example.TecheerTreeBackend.dto.WishConfirmRequest;
 
 public enum WishStatus {
     APPROVED("승인됨"),
@@ -27,10 +27,10 @@ public enum WishStatus {
         }
     }
 
-    public static WishStatus stringToEnum(WishConfirmForm wishConfirmForm) {
-        if ("승인".equals(wishConfirmForm.getConfirm())) {
+    public static WishStatus stringToEnum(WishConfirmRequest wishConfirmRequest) {
+        if ("승인".equals(wishConfirmRequest.getConfirm())) {
             return WishStatus.APPROVED;
-        } else if ("거절".equals(wishConfirmForm.getConfirm())) {
+        } else if ("거절".equals(wishConfirmRequest.getConfirm())) {
             return WishStatus.REJECTED;
         }
         return null;

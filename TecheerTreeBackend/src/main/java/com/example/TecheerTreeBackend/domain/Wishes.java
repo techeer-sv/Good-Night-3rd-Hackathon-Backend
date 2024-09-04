@@ -1,6 +1,6 @@
 package com.example.TecheerTreeBackend.domain;
 
-import com.example.TecheerTreeBackend.dto.WishForm;
+import com.example.TecheerTreeBackend.dto.WishRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,19 +32,19 @@ public class Wishes {
         this.created_at = createAt;
     }
 
-    public static Wishes createWish(WishForm wishForm) {
-        if (wishForm.getTitle() == null || wishForm.getContent() == null || wishForm.getCategory() == null || wishForm.getCreate_at() == null) {
+    public static Wishes createWish(WishRequest wishRequest) {
+        if (wishRequest.getTitle() == null || wishRequest.getContent() == null || wishRequest.getCategory() == null || wishRequest.getCreate_at() == null) {
             throw new IllegalArgumentException("Title, Content, Category, and Created_at cannot be null.");
         }
 
         // 클라이언트에서 받은 category 한글 문자열을 Category Enum으로 변환
-        Category category = Category.fromKoreanName(wishForm.getCategory());
+        Category category = Category.fromKoreanName(wishRequest.getCategory());
 
         return new Wishes(
-                wishForm.getTitle(),
-                wishForm.getContent(),
+                wishRequest.getTitle(),
+                wishRequest.getContent(),
                 category,
-                wishForm.getCreate_at()
+                wishRequest.getCreate_at()
         );
     }
 
