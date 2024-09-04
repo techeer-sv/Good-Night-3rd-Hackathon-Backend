@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,17 +74,21 @@ public class WishService {
     }
 
     public List<WishListResponse> viewWishList(WishStatus wishStatus) {
-        // 해당 상태에 따른 소원 리스트 가져오기
-        List<Wishes> wishes = wishRepository.findByWishStatus(wishStatus);
-
-        // 엔티티 -> dto 변환
-        List<WishListResponse> dtos = new ArrayList<WishListResponse>();
-        for (int i = 0; i < wishes.size(); i++) {
-            Wishes w = wishes.get(i);
-            WishListResponse dto = WishListResponse.createWishListDto(w);
-            dtos.add(dto);
-        }
-
-        return dtos;
+//        // 해당 상태에 따른 소원 리스트 가져오기
+//        List<Wishes> wishes = wishRepository.findByWishStatus(wishStatus);
+//
+//        // 엔티티 -> dto 변환
+//        List<WishListResponse> dtos = new ArrayList<WishListResponse>();
+//        for (int i = 0; i < wishes.size(); i++) {
+//            Wishes w = wishes.get(i);
+//            WishListResponse dto = WishListResponse.createWishListDto(w);
+//            dtos.add(dto);
+//        }
+//
+//        return dtos;
+        // 해당 상태에 따른 소원 리스트 가져오기 & 엔티티 -> dto 변환
+        return wishRepository.findByWishStatus(wishStatus).stream()
+                .map(WishListResponse :: createWishListDto)
+                .collect(Collectors.toList());
     }
 }

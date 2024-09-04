@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,18 +41,10 @@ public class CommentService {
         Wishes wishes = wishRepository.findById(wishId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 소원입니다."));
 
-        // 댓글 리스트 조회
-        List<Comments> comments = commentRepository.findByWishId(wishId);
-
-        // 엔티티 -> DTO 변환
-        List<CommentListResponse> dtos = new ArrayList<CommentListResponse>();
-        for (int i = 0; i < comments.size(); i++){          // 조회한 일정 엔티티 수 만큼 반복
-            Comments c = comments.get(i);                    // 조회한 일정 엔티티 하나씩 가져오기
-            CommentListResponse dto = CommentListResponse.createComment(c); // 엔티티를 DTO로 변환
-            dtos.add(dto);
-        }
-
-        return dtos;
+        // 댓글 리스트 조회 및 엔티티 -> DTO 변환
+        return commentRepository.findByWishId(wishId).stream()
+                .map(CommentListResponse :: createComment)
+                .collect(Collectors.toList());
     }
 
     public String deleteComment(Long commentId) {
