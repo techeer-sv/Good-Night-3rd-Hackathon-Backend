@@ -61,12 +61,11 @@ public class WishService {
     public WishResponse viewService(Long wishId) {
         // 소원 조회
         Wishes wishes = wishRepository.findById(wishId)
+                .filter(wish -> !wish.getIsDeleted())
                 .orElseThrow(() -> new IllegalArgumentException("해당 wishId의 소원을 찾을 수 없습니다."));
-        // 승인 처리 확인
-        Boolean check = wishes.checkConfirm();
 
-        // 승인 처리가 되었고, 삭제 처리가 되지 않았다면 정상 반환
-        if (check && !wishes.getIsDeleted()) {
+        // 승인 처리가 되었다면, 정상 반환
+        if (wishes.checkConfirm()) {
             return WishResponse.createWishDto(wishes);
         } else { // 이 외의 경우 null 반환
             return null;

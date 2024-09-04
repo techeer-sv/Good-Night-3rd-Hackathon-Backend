@@ -47,7 +47,7 @@ public class WishController {
 
         // 만약 viewWish가 null이라면 BAD_REQUEST 반환
         if (viewWish == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("승인 된 소원이 아니거나 삭제 된 소원입니다..");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("승인 된 소원이 아닙니다..");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(viewWish);
