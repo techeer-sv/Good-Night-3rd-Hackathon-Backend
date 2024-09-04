@@ -55,9 +55,7 @@ public class WishController {
 
     // 소원 목록 조회
     @GetMapping("")
-    public ResponseEntity<List<WishListResponse>> viewWishList(@RequestParam String status){
-        // "승인" 또는 "미승인" 문자열을 WishStatus Enum으로 변환
-        WishStatus wishStatus = WishStatus.fromClientString(status);
+    public ResponseEntity<List<WishListResponse>> viewWishList(@RequestParam WishStatus wishStatus){
 
         List<WishListResponse> viewWishList = wishService.viewWishList(wishStatus);
 
