@@ -1,5 +1,7 @@
 package com.example.TecheerTreeBackend.dto;
 
+import com.example.TecheerTreeBackend.domain.Category;
+import com.example.TecheerTreeBackend.domain.WishStatus;
 import lombok.Getter;
 
 import java.util.Date;
@@ -8,7 +10,7 @@ import java.util.Date;
 public class WishRequest {
     private String title;
     private String content;
-    private String category;
-    private String wishStatus;
+    private Category category;
+    private WishStatus wishStatus;
     private Date createAt;
 }

@@ -37,13 +37,10 @@ public class Wishes {
             throw new IllegalArgumentException("Title, Content, Category, and createdAt cannot be null.");
         }
 
-        // 클라이언트에서 받은 category 한글 문자열을 Category Enum으로 변환
-        Category category = Category.fromKoreanName(wishRequest.getCategory());
-
         return new Wishes(
                 wishRequest.getTitle(),
                 wishRequest.getContent(),
-                category,
+                wishRequest.getCategory(),
                 wishRequest.getCreateAt()
         );
     }
