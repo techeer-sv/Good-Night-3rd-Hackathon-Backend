@@ -11,13 +11,13 @@ import java.util.Date;
 public class CommentListResponse {
     private Long id;
     private String content;
-    private Date created_at;
+    private Date createdAt;
 
     public static CommentListResponse createComment(Comments comments) {
         return new CommentListResponse(
                 comments.getId(),
                 comments.getContent(),
-                comments.getCreated_at()
+                comments.getCreatedAt()
         );
 
     }

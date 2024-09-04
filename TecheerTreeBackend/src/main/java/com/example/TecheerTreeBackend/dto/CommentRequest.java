@@ -9,5 +9,5 @@ import java.util.Date;
 @AllArgsConstructor
 public class CommentRequest {
     private String content;
-    private Date created_at;
+    private Date createdAt;
 }

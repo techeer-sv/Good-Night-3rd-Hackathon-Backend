@@ -9,6 +9,6 @@ public class WishRequest {
     private String title;
     private String content;
     private String category;
-    private String is_confirm;
-    private Date create_at;
+    private String wishStatus;
+    private Date createAt;
 }

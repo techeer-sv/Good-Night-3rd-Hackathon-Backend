@@ -20,24 +20,24 @@ public class Comments {
     @JoinColumn(name = "wish_id")
     private Wishes wishes;
     private String content;
-    private Date created_at;
-    private Boolean is_deleted = Boolean.FALSE;
+    private Date createdAt;
+    private Boolean isDeleted = Boolean.FALSE;
 
     public Comments(Wishes wishes, String content, Date createdAt) {
         this.wishes = wishes;
         this.content = content;
-        this.created_at = createdAt;
+        this.createdAt = createdAt;
     }
 
     public static Comments createComment(Wishes wishes, CommentRequest commentRequest) {
         return new Comments(
                 wishes,
                 commentRequest.getContent(),
-                commentRequest.getCreated_at()
+                commentRequest.getCreatedAt()
         );
     }
 
     public void softDelete() {
-        this.is_deleted = Boolean.TRUE;
+        this.isDeleted = Boolean.TRUE;
     }
 }

@@ -66,7 +66,7 @@ public class WishService {
         Boolean check = wishes.checkConfirm();
 
         // 승인 처리가 되었고, 삭제 처리가 되지 않았다면 정상 반환
-        if (check && !wishes.getIs_deleted()) {
+        if (check && !wishes.getIsDeleted()) {
             return WishResponse.createWishDto(wishes);
         } else { // 이 외의 경우 null 반환
             return null;

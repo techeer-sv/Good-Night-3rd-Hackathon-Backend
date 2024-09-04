@@ -16,6 +16,6 @@ public class WishListResponse {
     private Date createAt;
 
     public static WishListResponse createWishListDto(Wishes wishes) {
-        return new WishListResponse(wishes.getId(), wishes.getTitle(), wishes.getCategory(), wishes.getCreated_at());
+        return new WishListResponse(wishes.getId(), wishes.getTitle(), wishes.getCategory(), wishes.getCreatedAt());
     }
 }
