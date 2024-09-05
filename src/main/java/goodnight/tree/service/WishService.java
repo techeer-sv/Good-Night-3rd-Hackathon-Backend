@@ -7,9 +7,8 @@ import goodnight.tree.domain.dto.response.WishDetailResponse;
 import goodnight.tree.domain.dto.response.WishResponse;
 import goodnight.tree.repository.WishRepository;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,6 +47,7 @@ public class WishService {
     }
 
     // 소원 개별 조회
+    @Transactional(readOnly=true)
     public WishDetailResponse findWish(Long wishId) {
         Wish wish = wishRepository.findByIdAndDeletedAtIsNull(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found"));
@@ -60,6 +60,7 @@ public class WishService {
     }
 
     // 소원 리스트 조회(페이지네이션)
+    @Transactional(readOnly = true)
     public List<WishResponse> findWishList(Pageable pageable, Wish.WishStatus status) {
         Page<Wish> wishes = wishRepository.findAllByWishStatusAndDeletedAtIsNull(status, pageable);
         return wishes.stream()
@@ -69,6 +70,7 @@ public class WishService {
     }
 
     // 소원 키워드 조회
+    @Transactional(readOnly = true)
     public List<WishResponse> searchWishes(Wish.Category category, String keyword, Wish.WishStatus status) {
         List<Wish> wishes = wishRepository.searchWishesAndDeletedAtIsNull(category, keyword, status);
         return wishes.stream()

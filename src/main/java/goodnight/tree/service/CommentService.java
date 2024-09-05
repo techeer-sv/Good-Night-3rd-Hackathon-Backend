@@ -17,7 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -44,6 +44,7 @@ public class CommentService {
     }
 
     // 댓글 조회(페이지네이션)
+    @Transactional(readOnly=true)
     public List<CommentResponse> findCommentList(Pageable pageable, Long wishId) {
         Page<Comment> CommentList = commentRepository.findAllByWishIdAndDeletedAtIsNull(wishId,pageable);
         return CommentList.stream()
