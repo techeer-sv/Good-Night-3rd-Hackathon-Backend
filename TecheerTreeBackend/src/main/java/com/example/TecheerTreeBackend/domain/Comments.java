@@ -3,6 +3,7 @@ package com.example.TecheerTreeBackend.domain;
 
 import com.example.TecheerTreeBackend.dto.CommentRequest;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,11 +25,13 @@ public class Comments {
     @JoinColumn(name = "wish_id")
     private Wishes wishes;
 
+    @NotNull
     private String content;
 
     @CreatedDate
     private Date createdAt;
 
+    @NotNull
     private Boolean isDeleted = Boolean.FALSE;
 
     private Comments(Wishes wishes, String content) {

@@ -2,6 +2,7 @@ package com.example.TecheerTreeBackend.domain;
 
 import com.example.TecheerTreeBackend.dto.WishRequest;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,18 +21,23 @@ public class Wishes {
     @Column(name = "wish_id")
     private Long id;
 
+    @NotNull
     private String title;
+    @NotNull
     private String content;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Category category; // 진로, 건강, 인간 관계, 돈, 목표, 학업/성적, 기타
 
     @CreatedDate
     private Date createdAt;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private WishStatus wishStatus = WishStatus.PENDING; // 초기값 = "보류중"
 
+    @NotNull
     private Boolean isDeleted = Boolean.FALSE;
 
     private Wishes(String title, String content, Category category) {
