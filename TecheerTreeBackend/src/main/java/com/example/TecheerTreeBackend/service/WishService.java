@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.TecheerTreeBackend.domain.WishStatus.APPROVED;
+
 @Service
 @RequiredArgsConstructor
 public class WishService {
@@ -63,14 +65,11 @@ public class WishService {
         // 소원 조회
         Wishes wishes = wishRepository.findById(wishId)
                 .filter(wish -> !wish.getIsDeleted())
+                .filter(wish -> wish.getWishStatus() == APPROVED)
                 .orElseThrow(() -> new IllegalArgumentException("해당 wishId의 소원을 찾을 수 없습니다."));
 
-        // 승인 처리가 되었다면, 정상 반환
-        if (wishes.checkConfirm()) {
-            return WishResponse.createWishDto(wishes);
-        } else { // 이 외의 경우 null 반환
-            return null;
-        }
+        return WishResponse.createWishDto(wishes);
+
     }
 
     public List<WishListResponse> viewWishList(WishStatus wishStatus) {

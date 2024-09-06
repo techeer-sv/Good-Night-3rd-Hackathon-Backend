@@ -66,7 +66,4 @@ public class Wishes {
         this.wishStatus = wishStatus;
     }
 
-    public Boolean checkConfirm() {
-        return this.wishStatus == WishStatus.APPROVED;
-    }
 }
