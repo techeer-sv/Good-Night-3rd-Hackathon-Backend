@@ -90,7 +90,7 @@ public class WishService {
     public Page<WishResponse> getWishesAsResponse(Status status, Pageable pageable) {
         Page<Wish> wishes = getWishes(status, pageable);
         return wishes.map(wish -> new WishResponse(
-                wish.getWishId(),
+                wish.getId(),
                 wish.getTitle(),
                 wish.getCategory(),
                 wish.getCreatedDate()

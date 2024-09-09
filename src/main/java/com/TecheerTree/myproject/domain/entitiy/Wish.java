@@ -15,7 +15,7 @@ public class Wish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long wishId;
+    private Long id;
     private String title;
     private String content;
     private LocalDate createdDate;
