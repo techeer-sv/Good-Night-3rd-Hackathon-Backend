@@ -33,15 +33,9 @@ public class Wishes {
         this.title = title;
         this.content = content;
         this.category = category;
-    }
-
-    public Wishes(String title, String content, Category category, LocalDate createdDate, Status status, boolean deletedAt) {
-        this.title = title;
-        this.content = content;
-        this.category = category;
-        this.createdDate = createdDate;
-        this.status = status;
-        this.deletedAt = deletedAt;
+        this.createdDate = LocalDate.now();  // 생성 시 현재 날짜로 설정
+        this.status = Status.PENDING;
+        this.deletedAt = false;
     }
 
     public static Wishes fromDTO(WishSaveRequest request){
