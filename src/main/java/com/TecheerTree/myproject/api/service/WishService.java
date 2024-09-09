@@ -21,11 +21,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class WishService {
 
     private final WishRepository wishRepository;
 
+    @Transactional
     public Wishes saveWish(Wishes newWish) {
         // DTO에서 Category 변환
         Category category = newWish.getCategory();
@@ -36,6 +36,7 @@ public class WishService {
         return wishRepository.save(newWish);
     }
 
+    @Transactional
     public void wishDelete(Long wishId) {
         // soft delete이기에 실제로 삭제 X
         Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
@@ -46,6 +47,7 @@ public class WishService {
         wishRepository.save(findWish);
     }
 
+    @Transactional
     public Wishes updateWishStatus(Long wishId, String description) {
         // 넘겨받은 문자열이 유효한 승인상태인지 체크
         Status status = Status.fromDescription(description);

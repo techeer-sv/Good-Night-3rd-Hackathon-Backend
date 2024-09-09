@@ -1,7 +1,6 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
-import com.TecheerTree.myproject.domain.dto.request.CommentSaveRequest;
 import com.TecheerTree.myproject.domain.entitiy.Comments;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -10,19 +9,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
+    @Transactional
     public Comments createComment(Comments comment) {
         return commentsRepository.save(comment);
     }
 
+    @Transactional
     public void deleteComment(Long commentId) {
         // soft delete이기에 실제로 삭제 X
         Comments findComment = commentsRepository.findById(commentId).orElseThrow(()
