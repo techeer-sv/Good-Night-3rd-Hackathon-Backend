@@ -21,7 +21,9 @@ public class CommentsController {
     // 댓글 작성
     @PostMapping
     public ResponseEntity<Comments> createComment(@RequestBody CommentSaveRequest commentSaveRequest){
-        Comments comment = commentsService.createComment(commentSaveRequest);
+        //Comments comment = commentsService.createComment(commentSaveRequest);
+        // service로 전달할 때는 요청 객체 -> 도메인 객체로 변환하여 전달
+        Comments comment = commentsService.createComment(Comments.fromDTO(commentSaveRequest));
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 

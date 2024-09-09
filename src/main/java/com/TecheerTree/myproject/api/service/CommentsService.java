@@ -19,12 +19,7 @@ public class CommentsService {
 
     private final CommentsRepository commentsRepository;
 
-    public Comments createComment(CommentSaveRequest commentSaveRequest) {
-        Comments comment = new Comments();
-        comment.setContent(commentSaveRequest.getContent());
-        comment.setWishId(commentSaveRequest.getWishId());
-        comment.setCreatedDate(LocalDate.now());
-
+    public Comments createComment(Comments comment) {
         return commentsRepository.save(comment);
     }
 
