@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:5173") // 프론트엔드 주소를 설정
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/wishes")
