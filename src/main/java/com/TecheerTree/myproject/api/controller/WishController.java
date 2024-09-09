@@ -28,7 +28,10 @@ public class WishController {
     // 소원 등록
     @PostMapping
     public ResponseEntity<Wishes> createWish(@Valid @RequestBody WishSaveRequest wishSaveRequest){
-        Wishes newWish = wishService.saveWish(wishSaveRequest);
+        //Wishes newWish = wishService.saveWish(wishSaveRequest);
+        // service로 전달할 때는 요청 객체 -> 도메인 객체로 변환하여 전달
+        Wishes newWish = wishService.saveWish(Wishes.fromDTO(wishSaveRequest));
+
         return new ResponseEntity<>(newWish, HttpStatus.CREATED);
     }
 

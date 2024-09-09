@@ -43,7 +43,7 @@ class WishServiceTest {
     // 저장 테스트
     @Test
     public void saveWish() {
-        Wishes newWish = wishService.saveWish(wishSaveRequest);
+        Wishes newWish = wishService.saveWish(Wishes.fromDTO(wishSaveRequest));
         assertNotNull(newWish);
     }
 
@@ -52,7 +52,7 @@ class WishServiceTest {
     public void saveInvalidCategoryWish(){
         wishSaveRequest.setCategoryName("모르겠는데요");
         assertThrows(InvalidCategoryWishException.class, () -> {
-            wishService.saveWish(wishSaveRequest);
+            wishService.saveWish(Wishes.fromDTO(wishSaveRequest));
         });
     }
 

@@ -27,20 +27,12 @@ public class WishService {
 
     private final WishRepository wishRepository;
 
-    public Wishes saveWish(WishSaveRequest wishSaveRequest) {
+    public Wishes saveWish(Wishes newWish) {
         // DTO에서 Category 변환
-        Category category = wishSaveRequest.getCategory();
+        Category category = newWish.getCategory();
         if (category == null) {
             throw new InvalidCategoryWishException("유효하지 않은 카테고리입니다.");
         }
-
-        Wishes newWish = new Wishes();
-
-        newWish.setTitle(wishSaveRequest.getTitle());
-        newWish.setCategory(wishSaveRequest.getCategory());
-        newWish.setContent(wishSaveRequest.getContent());
-        newWish.setStatus(Status.PENDING);
-        newWish.setCreatedDate();
 
         return wishRepository.save(newWish);
     }

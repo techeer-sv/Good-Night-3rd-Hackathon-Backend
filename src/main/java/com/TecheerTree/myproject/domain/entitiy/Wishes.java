@@ -1,5 +1,6 @@
 package com.TecheerTree.myproject.domain.entitiy;
 
+import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +29,12 @@ public class Wishes {
     public Wishes(){
     }
 
+    public Wishes(String title, String content, Category category) {
+        this.title = title;
+        this.content = content;
+        this.category = category;
+    }
+
     public Wishes(String title, String content, Category category, LocalDate createdDate, Status status, boolean deleted_at) {
         this.title = title;
         this.content = content;
@@ -37,8 +44,12 @@ public class Wishes {
         this.deleted_at = deleted_at;
     }
 
-    public void setCreatedDate(){
-        this.createdDate = LocalDate.now();
+    public static Wishes fromDTO(WishSaveRequest request){
+        return new Wishes(
+                request.getTitle(),
+                request.getContent(),
+                request.getCategory()
+                );
     }
 }
 

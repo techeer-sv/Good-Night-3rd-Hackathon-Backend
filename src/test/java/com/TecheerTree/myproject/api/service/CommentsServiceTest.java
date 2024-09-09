@@ -36,7 +36,7 @@ class CommentsServiceTest {
     // 댓글 등록 테스트
     @Test
     void createComment() {
-        Comments comment = commentsService.createComment(commentSaveRequest);
+        Comments comment = commentsService.createComment(Comments.fromDTO(commentSaveRequest));
         assertNotNull(comment);
     }
 
