@@ -1,5 +1,6 @@
 package com.TecheerTree.myproject.api.service;
 
+import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
 import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
@@ -24,7 +25,6 @@ class WishServiceTest {
 
     @Autowired
     private WishRepository wishRepository;
-
     private WishSaveRequest wishSaveRequest;
 
 
@@ -68,7 +68,7 @@ class WishServiceTest {
     // status update 테스트
     @Test
     public void updateStatus(){
-        Long wishId = 22L; // 존재하는 wishId로 변경
+        Long wishId = 1L; // 존재하는 wishId로 변경
         wishService.updateWishStatus(wishId, "승인됨");
 
         Wish wish = wishRepository.findById(wishId)
@@ -89,8 +89,8 @@ class WishServiceTest {
     // 소원 단일 조회 성공 테스트
     @Test
     public void getSingleWish(){
-        Long wishId = 13L; // 존재하는 wishId로 변경
-        WishDetailResponse wish = wishService.getWish(wishId);
+        Long wishId = 1L; // 존재하는 wishId로 변경
+        WishDetailResponse wish = WishDetailResponse.ofCreate(wishService.getWish(wishId));
         System.out.println(wish.getTitle());
         System.out.println(wish.getContent());
         System.out.println(wish.getCategory());

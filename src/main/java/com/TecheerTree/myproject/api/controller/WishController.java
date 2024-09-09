@@ -41,15 +41,24 @@ public class WishController {
             @RequestParam(value = "status",required = false) Status status,
             @PageableDefault(sort = "createdDate", direction = org.springframework.data.domain.Sort.Direction.DESC) Pageable pageable ){
         // 상태가 제공된 경우 해당 상태로 필터링, 상태가 제공되지 않은 경우 전체 조회
-        Page<WishResponse> response = wishService.getWishesAsResponse(status, pageable);
+        // Page<WishResponse> response = wishService.getWishesAsResponse(status, pageable);
+        // 요청,응답객체는 컨트롤러 레이어에서만 알고있도로 하자, 서비스 레이어에는 도메인 객체를 넘기도록 하자
+        Page<WishResponse> response = wishService.getWishes(status, pageable).map(wish -> new WishResponse(
+                wish.getId(),
+                wish.getTitle(),
+                wish.getCategory(),
+                wish.getCreatedDate()
+        ));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // 소원 단일 조회
     @GetMapping("/{wishId}")
     public ResponseEntity<WishDetailResponse> getWish(@PathVariable("wishId") Long wishId){
-        WishDetailResponse findWish = wishService.getWish(wishId);
-        return new ResponseEntity<>(findWish, HttpStatus.OK);
+        //WishDetailResponse findWish = wishService.getWish(wishId);
+        // 요청,응답객체는 컨트롤러 레이어에서만 알고있도로 하자, 서비스 레이어에는 도메인 객체를 넘기도록 하자
+        WishDetailResponse response = WishDetailResponse.ofCreate(wishService.getWish(wishId));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // 보류 상태 소원 전체 조회

@@ -63,7 +63,7 @@ public class WishService {
 
     }
 
-    public WishDetailResponse getWish(Long wishId) {
+    public Wish getWish(Long wishId) {
         Wish findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
@@ -71,30 +71,15 @@ public class WishService {
             throw new UnApprovedStatusException("승인된 소원이 아닙니다.");
         }
 
-        WishDetailResponse findWishDto = new WishDetailResponse();
-        findWishDto.setTitle(findWish.getTitle());
-        findWishDto.setContent(findWish.getContent());
-        findWishDto.setCategory(findWish.getCategory().getKoreanName());
-
-        return findWishDto;
+        return findWish;
     }
 
     public Page<Wish> getWishes(Status status, Pageable pageable){
         if (status != null) {
-            return wishRepository.findActiveWishesByStatus(status, pageable);
+            return wishRepository.findActiveWishByStatus(status, pageable);
         } else {
             return wishRepository.findAllActive(pageable);
         }
-    }
-
-    public Page<WishResponse> getWishesAsResponse(Status status, Pageable pageable) {
-        Page<Wish> wishes = getWishes(status, pageable);
-        return wishes.map(wish -> new WishResponse(
-                wish.getId(),
-                wish.getTitle(),
-                wish.getCategory(),
-                wish.getCreatedDate()
-        ));
     }
 
     public List<Wish> searchWishes(WishSearchRequest wishSearchRequest) {
