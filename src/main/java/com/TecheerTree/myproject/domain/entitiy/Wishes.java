@@ -19,7 +19,7 @@ public class Wishes {
     private String title;
     private String content;
     private LocalDate createdDate;
-    private boolean deleted_at;
+    private boolean deletedAt;
 
     private Category category;
 
@@ -35,13 +35,13 @@ public class Wishes {
         this.category = category;
     }
 
-    public Wishes(String title, String content, Category category, LocalDate createdDate, Status status, boolean deleted_at) {
+    public Wishes(String title, String content, Category category, LocalDate createdDate, Status status, boolean deletedAt) {
         this.title = title;
         this.content = content;
         this.category = category;
         this.createdDate = createdDate;
         this.status = status;
-        this.deleted_at = deleted_at;
+        this.deletedAt = deletedAt;
     }
 
     public static Wishes fromDTO(WishSaveRequest request){

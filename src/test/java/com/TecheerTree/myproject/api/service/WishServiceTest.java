@@ -1,6 +1,5 @@
 package com.TecheerTree.myproject.api.service;
 
-import com.TecheerTree.myproject.api.controller.WishController;
 import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
 import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
@@ -62,7 +61,7 @@ class WishServiceTest {
         Wishes wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
-        assertTrue(wish.isDeleted_at()); // true로 저장되었는지 확인
+        assertTrue(wish.isDeletedAt()); // true로 저장되었는지 확인
 
     }
 

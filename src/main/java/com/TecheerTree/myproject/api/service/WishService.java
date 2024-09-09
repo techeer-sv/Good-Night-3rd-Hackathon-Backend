@@ -3,7 +3,6 @@ package com.TecheerTree.myproject.api.service;
 import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.request.WishSearchRequest;
 import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
-import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
 import com.TecheerTree.myproject.domain.dto.response.WishResponse;
 import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
@@ -42,7 +41,7 @@ public class WishService {
         Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
         // deleted_at만 true로 변경
-        findWish.setDeleted_at(true);
+        findWish.setDeletedAt(true);
 
         wishRepository.save(findWish);
     }
