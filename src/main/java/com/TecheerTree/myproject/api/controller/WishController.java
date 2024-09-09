@@ -62,11 +62,12 @@ public class WishController {
     }
 
     // 보류 상태 소원 전체 조회
-    @GetMapping("/pending")
-    public ResponseEntity<List<Wish>> getPendingWishes(){
-        List<Wish> pendingWishes = wishService.getPendingWishes();
-        return new ResponseEntity<>(pendingWishes,HttpStatus.OK);
-    }
+    // 기존에 만들어져있는 전체 조회 메서드에서 이미 status도 @RequestParam으로 받고 그걸 조건으로 반환해주고 있었어서 불필요한 코드라 판단해서 제거
+    //    @GetMapping("/pending")
+    //    public ResponseEntity<List<Wish>> getPendingWishes(){
+    //        List<Wish> pendingWishes = wishService.getPendingWishes();
+    //        return new ResponseEntity<>(pendingWishes,HttpStatus.OK);
+    //    }
 
     // 소원 승인/거절
     @PatchMapping("/{wishId}/status")

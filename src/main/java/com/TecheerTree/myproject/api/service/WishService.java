@@ -108,7 +108,4 @@ public class WishService {
 
     }
 
-    public List<Wish> getPendingWishes() {
-        return wishRepository.findByConfirmStatus(Status.PENDING);
-    }
 }
