@@ -20,14 +20,19 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
 
     @Query("SELECT w FROM Wish w WHERE w.deletedAt = false")
     Page<Wish> findAllActive(Pageable pageable);
-
-    @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND w.category = :category AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
+    // or랑 like %keyword% 풀스캔 탈 수 있기에 수정
+    // 풀 텍스트 검색 적용
+//    @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND w.category = :category AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
+//    List<Wish> findByCategoryAndKeyword(@Param("category") Category category, @Param("keyword") String keyword);
+    @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND w.category = :category AND MATCH(w.title, w.content) AGAINST(:keyword IN BOOLEAN MODE)")
     List<Wish> findByCategoryAndKeyword(@Param("category") Category category, @Param("keyword") String keyword);
 
     @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND w.category = :category")
     List<Wish> findByCategory(@Param("category") Category category);
 
-    @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
+//    @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND (w.title LIKE %:keyword% OR w.content LIKE %:keyword%)")
+//    List<Wish> findByKeyword(@Param("keyword") String keyword);
+    @Query("SELECT w FROM Wish w WHERE w.deletedAt = false AND MATCH(w.title, w.content) AGAINST(:keyword IN BOOLEAN MODE)")
     List<Wish> findByKeyword(@Param("keyword") String keyword);
 
     @Query("SELECT w FROM Wish w WHERE w.status = :status AND w.deletedAt = false")
