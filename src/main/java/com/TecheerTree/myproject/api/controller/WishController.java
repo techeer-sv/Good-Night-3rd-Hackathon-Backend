@@ -6,7 +6,7 @@ import com.TecheerTree.myproject.domain.dto.response.WishResponse;
 import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
 import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
 import com.TecheerTree.myproject.domain.entitiy.Status;
-import com.TecheerTree.myproject.domain.entitiy.Wishes;
+import com.TecheerTree.myproject.domain.entitiy.Wish;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,10 +27,10 @@ public class WishController {
 
     // 소원 등록
     @PostMapping
-    public ResponseEntity<Wishes> createWish(@Valid @RequestBody WishSaveRequest wishSaveRequest){
+    public ResponseEntity<Wish> createWish(@Valid @RequestBody WishSaveRequest wishSaveRequest){
         //Wishes newWish = wishService.saveWish(wishSaveRequest);
         // service로 전달할 때는 요청 객체 -> 도메인 객체로 변환하여 전달
-        Wishes newWish = wishService.saveWish(Wishes.fromDTO(wishSaveRequest));
+        Wish newWish = wishService.saveWish(Wish.fromDTO(wishSaveRequest));
 
         return new ResponseEntity<>(newWish, HttpStatus.CREATED);
     }
@@ -54,16 +54,16 @@ public class WishController {
 
     // 보류 상태 소원 전체 조회
     @GetMapping("/pending")
-    public ResponseEntity<List<Wishes>> getPendingWishes(){
-        List<Wishes> pendingWishes = wishService.getPendingWishes();
+    public ResponseEntity<List<Wish>> getPendingWishes(){
+        List<Wish> pendingWishes = wishService.getPendingWishes();
         return new ResponseEntity<>(pendingWishes,HttpStatus.OK);
     }
 
     // 소원 승인/거절
     @PatchMapping("/{wishId}/status")
-    public ResponseEntity<Wishes> updateWishStatus(@PathVariable("wishId") Long wishId,
-                                                   @RequestParam("description") String description) {
-        Wishes updatedWish = wishService.updateWishStatus(wishId, description);
+    public ResponseEntity<Wish> updateWishStatus(@PathVariable("wishId") Long wishId,
+                                                 @RequestParam("description") String description) {
+        Wish updatedWish = wishService.updateWishStatus(wishId, description);
         return new ResponseEntity<>(updatedWish, HttpStatus.OK);
     }
 
@@ -76,8 +76,8 @@ public class WishController {
 
     // 소원 검색
     @GetMapping("/search")
-    public ResponseEntity<List<Wishes>> searchWish(@RequestBody WishSearchRequest wishSearchRequest){
-        List<Wishes> searchWish = wishService.searchWishes(wishSearchRequest);
+    public ResponseEntity<List<Wish>> searchWish(@RequestBody WishSearchRequest wishSearchRequest){
+        List<Wish> searchWish = wishService.searchWishes(wishSearchRequest);
         return new ResponseEntity<>(searchWish,HttpStatus.OK);
     }
 }
