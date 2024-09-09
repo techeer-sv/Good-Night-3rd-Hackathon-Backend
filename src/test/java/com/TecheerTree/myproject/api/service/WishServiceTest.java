@@ -24,9 +24,6 @@ class WishServiceTest {
     private WishService wishService;
 
     @Autowired
-    private WishController wishController;
-
-    @Autowired
     private WishRepository wishRepository;
 
     private WishSaveRequest wishSaveRequest;
