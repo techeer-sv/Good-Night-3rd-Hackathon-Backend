@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Entity
-public class Wishes {
+public class Wish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class Wishes {
     @Column(name = "is_confirm") // 데이터베이스 컬럼 이름과 매핑
     private Status status;
 
-    public Wishes(){
+    public Wish(){
     }
 
-    public Wishes(String title, String content, Category category) {
+    public Wish(String title, String content, Category category) {
         this.title = title;
         this.content = content;
         this.category = category;
@@ -38,8 +38,8 @@ public class Wishes {
         this.deletedAt = false;
     }
 
-    public static Wishes fromDTO(WishSaveRequest request){
-        return new Wishes(
+    public static Wish fromDTO(WishSaveRequest request){
+        return new Wish(
                 request.getTitle(),
                 request.getContent(),
                 request.getCategory()

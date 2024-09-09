@@ -1,7 +1,7 @@
 package com.TecheerTree.myproject.api.service;
 
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
-import com.TecheerTree.myproject.domain.entitiy.Comments;
+import com.TecheerTree.myproject.domain.entitiy.Comment;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,14 @@ public class CommentsService {
     private final CommentsRepository commentsRepository;
 
     @Transactional
-    public Comments createComment(Comments comment) {
+    public Comment createComment(Comment comment) {
         return commentsRepository.save(comment);
     }
 
     @Transactional
     public void deleteComment(Long commentId) {
         // soft delete이기에 실제로 삭제 X
-        Comments findComment = commentsRepository.findById(commentId).orElseThrow(()
+        Comment findComment = commentsRepository.findById(commentId).orElseThrow(()
                 -> new EntityNotFoundException("comment not found with id: " + commentId));
         // deleted_at만 true로 변경
         findComment.setDeletedAt(true);
@@ -32,7 +32,7 @@ public class CommentsService {
         commentsRepository.save(findComment);
     }
 
-    public Page<Comments> getComments(Long wishId, Pageable pageable) {
+    public Page<Comment> getComments(Long wishId, Pageable pageable) {
         return commentsRepository.findByWishIdAndDeletedAtFalse(wishId,pageable);
     }
 }

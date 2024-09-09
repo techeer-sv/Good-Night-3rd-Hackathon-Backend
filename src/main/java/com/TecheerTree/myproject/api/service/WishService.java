@@ -6,7 +6,7 @@ import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
 import com.TecheerTree.myproject.domain.dto.response.WishResponse;
 import com.TecheerTree.myproject.domain.entitiy.Category;
 import com.TecheerTree.myproject.domain.entitiy.Status;
-import com.TecheerTree.myproject.domain.entitiy.Wishes;
+import com.TecheerTree.myproject.domain.entitiy.Wish;
 import com.TecheerTree.myproject.global.exception.InvalidCategoryWishException;
 import com.TecheerTree.myproject.global.exception.InvalidStatusWishException;
 import com.TecheerTree.myproject.global.exception.UnApprovedStatusException;
@@ -26,7 +26,7 @@ public class WishService {
     private final WishRepository wishRepository;
 
     @Transactional
-    public Wishes saveWish(Wishes newWish) {
+    public Wish saveWish(Wish newWish) {
         // DTO에서 Category 변환
         Category category = newWish.getCategory();
         if (category == null) {
@@ -39,7 +39,7 @@ public class WishService {
     @Transactional
     public void wishDelete(Long wishId) {
         // soft delete이기에 실제로 삭제 X
-        Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
+        Wish findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
         // deleted_at만 true로 변경
         findWish.setDeletedAt(true);
@@ -48,14 +48,14 @@ public class WishService {
     }
 
     @Transactional
-    public Wishes updateWishStatus(Long wishId, String description) {
+    public Wish updateWishStatus(Long wishId, String description) {
         // 넘겨받은 문자열이 유효한 승인상태인지 체크
         Status status = Status.fromDescription(description);
         if (status == null) {
             throw new InvalidStatusWishException("유효하지 않은 승인상태 입니다.");
         }
 
-        Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
+        Wish findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
         findWish.setStatus(status);
 
@@ -64,7 +64,7 @@ public class WishService {
     }
 
     public WishDetailResponse getWish(Long wishId) {
-        Wishes findWish = wishRepository.findById(wishId).orElseThrow(()
+        Wish findWish = wishRepository.findById(wishId).orElseThrow(()
                 -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
         if(findWish.getStatus() != Status.APPROVED){
@@ -79,7 +79,7 @@ public class WishService {
         return findWishDto;
     }
 
-    public Page<Wishes> getWishes(Status status, Pageable pageable){
+    public Page<Wish> getWishes(Status status, Pageable pageable){
         if (status != null) {
             return wishRepository.findActiveWishesByStatus(status, pageable);
         } else {
@@ -88,7 +88,7 @@ public class WishService {
     }
 
     public Page<WishResponse> getWishesAsResponse(Status status, Pageable pageable) {
-        Page<Wishes> wishes = getWishes(status, pageable);
+        Page<Wish> wishes = getWishes(status, pageable);
         return wishes.map(wish -> new WishResponse(
                 wish.getWishId(),
                 wish.getTitle(),
@@ -97,7 +97,7 @@ public class WishService {
         ));
     }
 
-    public List<Wishes> searchWishes(WishSearchRequest wishSearchRequest) {
+    public List<Wish> searchWishes(WishSearchRequest wishSearchRequest) {
         // 카테고리 + 키워드 포함 검색
         if(wishSearchRequest.getCategoryName() != null && wishSearchRequest.getKeyword() != null){
            Category category = Category.fromKoreanName(wishSearchRequest.getCategoryName());
@@ -123,7 +123,7 @@ public class WishService {
 
     }
 
-    public List<Wishes> getPendingWishes() {
+    public List<Wish> getPendingWishes() {
         return wishRepository.findByConfirmStatus(Status.PENDING);
     }
 }

@@ -4,7 +4,7 @@ import com.TecheerTree.myproject.api.repository.WishRepository;
 import com.TecheerTree.myproject.domain.dto.response.WishDetailResponse;
 import com.TecheerTree.myproject.domain.dto.request.WishSaveRequest;
 import com.TecheerTree.myproject.domain.entitiy.Status;
-import com.TecheerTree.myproject.domain.entitiy.Wishes;
+import com.TecheerTree.myproject.domain.entitiy.Wish;
 import com.TecheerTree.myproject.global.exception.InvalidCategoryWishException;
 import com.TecheerTree.myproject.global.exception.InvalidStatusWishException;
 import com.TecheerTree.myproject.global.exception.UnApprovedStatusException;
@@ -39,7 +39,7 @@ class WishServiceTest {
     // 저장 테스트
     @Test
     public void saveWish() {
-        Wishes newWish = wishService.saveWish(Wishes.fromDTO(wishSaveRequest));
+        Wish newWish = wishService.saveWish(Wish.fromDTO(wishSaveRequest));
         assertNotNull(newWish);
     }
 
@@ -48,7 +48,7 @@ class WishServiceTest {
     public void saveInvalidCategoryWish(){
         wishSaveRequest.setCategoryName("모르겠는데요");
         assertThrows(InvalidCategoryWishException.class, () -> {
-            wishService.saveWish(Wishes.fromDTO(wishSaveRequest));
+            wishService.saveWish(Wish.fromDTO(wishSaveRequest));
         });
     }
 
@@ -58,7 +58,7 @@ class WishServiceTest {
         Long wishId = 14L; // 존재하는 wishId로 변경
         wishService.wishDelete(wishId);
 
-        Wishes wish = wishRepository.findById(wishId)
+        Wish wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
         assertTrue(wish.isDeletedAt()); // true로 저장되었는지 확인
@@ -71,7 +71,7 @@ class WishServiceTest {
         Long wishId = 22L; // 존재하는 wishId로 변경
         wishService.updateWishStatus(wishId, "승인됨");
 
-        Wishes wish = wishRepository.findById(wishId)
+        Wish wish = wishRepository.findById(wishId)
                 .orElseThrow(() -> new EntityNotFoundException("Wish not found with id: " + wishId));
 
         assertEquals(Status.REJECTED, wish.getStatus()); // REJECTED로 변경되었는지 확인
@@ -94,7 +94,7 @@ class WishServiceTest {
         System.out.println(wish.getTitle());
         System.out.println(wish.getContent());
         System.out.println(wish.getCategory());
-        Wishes checkWish = wishRepository.findById(wishId).orElseThrow();
+        Wish checkWish = wishRepository.findById(wishId).orElseThrow();
         assertEquals(checkWish.getTitle(), wish.getTitle());
         assertEquals(checkWish.getContent(), wish.getContent());
         assertEquals(checkWish.getCategory().getKoreanName(), wish.getCategory());

@@ -3,7 +3,7 @@ package com.TecheerTree.myproject.api.service;
 import com.TecheerTree.myproject.api.controller.CommentsController;
 import com.TecheerTree.myproject.api.repository.CommentsRepository;
 import com.TecheerTree.myproject.domain.dto.request.CommentSaveRequest;
-import com.TecheerTree.myproject.domain.entitiy.Comments;
+import com.TecheerTree.myproject.domain.entitiy.Comment;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CommentsServiceTest {
+class CommentServiceTest {
 
     @Autowired
     private CommentsService commentsService;
@@ -36,7 +36,7 @@ class CommentsServiceTest {
     // 댓글 등록 테스트
     @Test
     void createComment() {
-        Comments comment = commentsService.createComment(Comments.fromDTO(commentSaveRequest));
+        Comment comment = commentsService.createComment(Comment.fromDTO(commentSaveRequest));
         assertNotNull(comment);
     }
 
@@ -46,7 +46,7 @@ class CommentsServiceTest {
         Long commentId = 1L; // 존재하는 wishId로 변경
         commentsService.deleteComment(commentId);
 
-        Comments comment = commentsRepository.findById(commentId)
+        Comment comment = commentsRepository.findById(commentId)
                 .orElseThrow(() -> new EntityNotFoundException("comment not found with id: " + commentId));
 
         assertTrue(comment.isDeletedAt()); // true로 저장되었는지 확인
