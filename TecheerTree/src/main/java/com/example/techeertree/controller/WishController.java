@@ -43,17 +43,13 @@ public class WishController {
     @Operation(summary = "'보류됨'상태의 소원 조회")
     @GetMapping("/pending")
     public ResponseEntity<List<WishInfoResponseDto>> getPendingWishes() {
-        List<WishEntity> pendingWishEntities = wishService.getPendingWishes();
-        List<WishInfoResponseDto> responseDtos= new ArrayList<>();
-        for(WishEntity wishEntity : pendingWishEntities){
-            WishInfoResponseDto responseDto = WishInfoResponseDto.builder()
-                    .id(wishEntity.getId())
-                    .title(wishEntity.getTitle())
-                    .content(wishEntity.getContent())
-                    .category(wishEntity.getCategory())
-                    .build();
-            responseDtos.add(responseDto);
-        }
+        List<WishEntity> pendingWishes = wishService.getPendingWishes();
+        List<WishInfoResponseDto> responseDtos= pendingWishes.
+                stream().map(w -> WishInfoResponseDto.ofCreate(
+                                                            w.getId(),
+                                                            w.getTitle(),
+                                                            w.getContent(),
+                                                            w.getCategory())).toList();
 
         return ResponseEntity.status(HttpStatus.OK).body(responseDtos);
     }

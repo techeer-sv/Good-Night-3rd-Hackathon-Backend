@@ -17,6 +17,10 @@ public class WishResponseDto {
         private String title;
         private String content;
         private Category category;
+
+        public static WishInfoResponseDto ofCreate(Long id, String title, String content, Category category) {
+            return new WishInfoResponseDto(id, title, content, category);
+        }
     }
 
     @Getter
