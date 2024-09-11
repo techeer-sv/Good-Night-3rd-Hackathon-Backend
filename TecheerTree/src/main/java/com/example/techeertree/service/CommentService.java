@@ -29,14 +29,11 @@ public class CommentService {
 
     public CommentInfoResponseDto create(Long id, CommentCreateRequestDto commentCreateRequestDto) {
         // 소원 존재 유무 조회
-        WishEntity wish = wishRepository.findById(id)
-                        .filter(w -> {
-                            if (w.getIsConfirm() != Confirm.CONFIRM) {
-                                throw new BaseException(ErrorCode.NOT_CONFIRMED);
-                            }
-                            return true;
-                        })
-                        .orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_WISH));
+        WishEntity wish = wishRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_WISH));
+
+        if(wish.getIsConfirm() != Confirm.CONFIRM)
+            throw new BaseException(ErrorCode.NOT_EXIST_WISH);
+
 
         // 댓글 객체 생성
         Comment comment = CommentCreateMapper.INSTANCE.toEntity(commentCreateRequestDto);
