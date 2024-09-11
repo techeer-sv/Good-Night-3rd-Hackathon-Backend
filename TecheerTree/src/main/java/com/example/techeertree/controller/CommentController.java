@@ -18,19 +18,19 @@ public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글 등록")
-    @PostMapping("/{wishId}")
-    public ResponseEntity<CommentInfoResponseDto> createComment(@PathVariable Long wishId, @Valid @RequestBody CommentCreateRequestDto commentCreateRequestDto){
-        CommentInfoResponseDto responseDto = commentService.create(wishId, commentCreateRequestDto);
+    @PostMapping("/{id}")
+    public ResponseEntity<CommentInfoResponseDto> createComment(@PathVariable Long id, @Valid @RequestBody CommentCreateRequestDto commentCreateRequestDto){
+        CommentInfoResponseDto responseDto = commentService.create(id, commentCreateRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @Operation(summary = "댓글 조회")
-    @GetMapping("/{wishId}")
-    public ResponseEntity<Page<CommentInfoResponseDto>> getComments(@PathVariable Long wishId,
+    @GetMapping("/{id}")
+    public ResponseEntity<Page<CommentInfoResponseDto>> getComments(@PathVariable Long id,
                                                                    @RequestParam(defaultValue = "0") int page,
                                                                    @RequestParam(defaultValue = "10") int size){
 
-        Page<CommentInfoResponseDto> comments = commentService.getComments(wishId, page, size);
+        Page<CommentInfoResponseDto> comments = commentService.getComments(id, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(comments);
     }
 
