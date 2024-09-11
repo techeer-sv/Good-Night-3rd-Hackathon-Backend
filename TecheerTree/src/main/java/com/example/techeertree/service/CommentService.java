@@ -27,13 +27,12 @@ public class CommentService {
     private final WishEntityRepository wishRepository;
 
 
-    public CommentInfoResponseDto create(Long id, CommentCreateRequestDto commentCreateRequestDto) {
+    public Comment create(Long id, CommentCreateRequestDto commentCreateRequestDto) {
         // 소원 존재 유무 조회
         WishEntity wish = wishRepository.findById(id).orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_WISH));
 
         if(wish.getIsConfirm() != Confirm.CONFIRM)
             throw new BaseException(ErrorCode.NOT_EXIST_WISH);
-
 
         // 댓글 객체 생성
         Comment comment = CommentCreateMapper.INSTANCE.toEntity(commentCreateRequestDto);
@@ -44,7 +43,7 @@ public class CommentService {
         wish.getComments().add(comment);
         wishRepository.save(wish);
 
-        return CommentCreateMapper.INSTANCE.toDto(comment);
+        return comment;
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,7 @@
 package com.example.techeertree.controller;
 
+import com.example.techeertree.domain.Comment;
+import com.example.techeertree.dto.comment.CommentMapper.*;
 import com.example.techeertree.dto.comment.CommentRequestDto.*;
 import com.example.techeertree.dto.comment.CommentResponseDto.*;
 import com.example.techeertree.service.CommentService;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/comments")
@@ -20,7 +23,8 @@ public class CommentController {
     @Operation(summary = "댓글 등록")
     @PostMapping("/{id}")
     public ResponseEntity<CommentInfoResponseDto> createComment(@PathVariable Long id, @Valid @RequestBody CommentCreateRequestDto commentCreateRequestDto){
-        CommentInfoResponseDto responseDto = commentService.create(id, commentCreateRequestDto);
+        Comment comment =  commentService.create(id, commentCreateRequestDto);
+        CommentInfoResponseDto responseDto = CommentCreateMapper.INSTANCE.toDto(comment);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
