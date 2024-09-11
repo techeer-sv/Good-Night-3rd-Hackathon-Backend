@@ -3,6 +3,8 @@ package com.example.techeertree.controller;
 import com.example.techeertree.domain.Category;
 import com.example.techeertree.domain.Confirm;
 import com.example.techeertree.domain.WishEntity;
+import com.example.techeertree.dto.wish.WishMapper;
+import com.example.techeertree.dto.wish.WishMapper.WishCreateMapper;
 import com.example.techeertree.dto.wish.WishRequestDto.*;
 import com.example.techeertree.dto.wish.WishResponseDto.*;
 import com.example.techeertree.service.WishService;
@@ -67,7 +69,8 @@ public class WishController {
     @Operation(summary = "소원 단일 조회")
     @GetMapping("/{id}")
     public ResponseEntity<WishInfoResponseDto> findOne(@PathVariable Long id){
-        WishInfoResponseDto responseDto = wishService.findOne(id);
+        WishEntity wish = wishService.findOne(id);
+        WishInfoResponseDto responseDto = WishCreateMapper.INSTANCE.toDto(wish);
         return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
 

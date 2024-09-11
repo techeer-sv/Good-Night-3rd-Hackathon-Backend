@@ -49,7 +49,7 @@ public class WishService {
     }
 
     @Transactional(readOnly = true)
-    public WishInfoResponseDto findOne(Long id){
+    public WishEntity findOne(Long id){
         WishEntity wish = wishRepository.findById(id)
                 .filter(w -> {
                     if(w.getIsConfirm() != Confirm.CONFIRM) {
@@ -65,7 +65,7 @@ public class WishService {
                 })
                 .orElseThrow(()-> new BaseException(ErrorCode.NOT_EXIST_WISH));
 
-        return WishCreateMapper.INSTANCE.toDto(wish);
+        return wish;
     }
 
     @Transactional(readOnly = true)
