@@ -28,7 +28,7 @@ public class CommentController {
     @GetMapping("/{wishId}")
     public ResponseEntity<Page<CommentInfoResponseDto>> getComments(@PathVariable Long wishId,
                                                                    @RequestParam(defaultValue = "0") int page,
-                                                                   @RequestParam(defaultValue = "5") int size){
+                                                                   @RequestParam(defaultValue = "10") int size){
 
         Page<CommentInfoResponseDto> comments = commentService.getComments(wishId, page, size);
         return ResponseEntity.status(HttpStatus.OK).body(comments);
