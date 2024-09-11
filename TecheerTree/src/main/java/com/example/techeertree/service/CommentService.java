@@ -50,7 +50,7 @@ public class CommentService {
         return CommentCreateMapper.INSTANCE.toDto(comment);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Page<CommentInfoResponseDto> getComments(Long wishId, int page, int size){
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         Pageable pageable = PageRequest.of(page, size, sort);
