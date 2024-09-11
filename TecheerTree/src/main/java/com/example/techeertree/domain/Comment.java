@@ -23,21 +23,21 @@ public class Comment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wishId")
-    private Wish wish;
+    private WishEntity wishEntity;
 
     @ColumnDefault("false")
     private boolean isDeleted = false;
 
     @Builder
-    public Comment(Long id, String comment, Wish wish) {
+    public Comment(Long id, String comment, WishEntity wishEntity) {
         this.id = id;
         this.comment = comment;
-        this.wish = wish;
+        this.wishEntity = wishEntity;
         this.isDeleted = false;
     }
 
-    public void matchWish(Wish wish){
-        this.wish = wish;
+    public void matchWish(WishEntity wishEntity){
+        this.wishEntity = wishEntity;
     }
 
     public void setDeleted(){

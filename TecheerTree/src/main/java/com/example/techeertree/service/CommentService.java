@@ -2,7 +2,7 @@ package com.example.techeertree.service;
 
 import com.example.techeertree.domain.Comment;
 import com.example.techeertree.domain.Confirm;
-import com.example.techeertree.domain.Wish;
+import com.example.techeertree.domain.WishEntity;
 import com.example.techeertree.dto.comment.CommentMapper.*;
 import com.example.techeertree.dto.comment.CommentRequestDto.*;
 import com.example.techeertree.dto.comment.CommentResponseDto.*;
@@ -10,7 +10,7 @@ import com.example.techeertree.dto.comment.CommentResponseDto.*;
 import com.example.techeertree.exception.BaseException;
 import com.example.techeertree.exception.ErrorCode;
 import com.example.techeertree.repository.CommentRepository;
-import com.example.techeertree.repository.WishRepository;
+import com.example.techeertree.repository.WishEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,12 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
-    private final WishRepository wishRepository;
+    private final WishEntityRepository wishRepository;
 
 
     public CommentInfoResponseDto create(Long id, CommentCreateRequestDto commentCreateRequestDto) {
         // 소원 존재 유무 조회
-        Wish wish = wishRepository.findById(id)
+        WishEntity wish = wishRepository.findById(id)
                         .filter(w -> {
                             if (w.getIsConfirm() != Confirm.CONFIRM) {
                                 throw new BaseException(ErrorCode.NOT_CONFIRMED);
@@ -50,12 +50,12 @@ public class CommentService {
         return CommentCreateMapper.INSTANCE.toDto(comment);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<CommentInfoResponseDto> getComments(Long wishId, int page, int size){
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        Wish wish = wishRepository.findById(wishId)
+        WishEntity wish = wishRepository.findById(wishId)
                 .filter(w -> {
                     if(w.getIsConfirm() != Confirm.CONFIRM) {
                         throw new BaseException(ErrorCode.NOT_CONFIRMED);
@@ -70,7 +70,7 @@ public class CommentService {
                 })
                 .orElseThrow(()-> new BaseException(ErrorCode.NOT_EXIST_WISH));
 
-        Page<Comment> comments = commentRepository.findByWishAndIsDeletedFalse(wish, pageable);
+        Page<Comment> comments = commentRepository.findByWishEntityAndIsDeletedFalse(wish, pageable);
 
         return comments.map(CommentCreateMapper.INSTANCE::toDto);
     }

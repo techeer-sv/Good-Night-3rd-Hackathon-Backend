@@ -2,7 +2,7 @@ package com.example.techeertree.controller;
 
 import com.example.techeertree.domain.Category;
 import com.example.techeertree.domain.Confirm;
-import com.example.techeertree.domain.Wish;
+import com.example.techeertree.domain.WishEntity;
 import com.example.techeertree.dto.wish.WishRequestDto.*;
 import com.example.techeertree.dto.wish.WishResponseDto.*;
 import com.example.techeertree.service.WishService;
@@ -41,14 +41,14 @@ public class WishController {
     @Operation(summary = "'보류됨'상태의 소원 조회")
     @GetMapping("/pending")
     public ResponseEntity<List<WishInfoResponseDto>> getPendingWishes() {
-        List<Wish> pendingWishes = wishService.getPendingWishes();
+        List<WishEntity> pendingWishEntities = wishService.getPendingWishes();
         List<WishInfoResponseDto> responseDtos= new ArrayList<>();
-        for(Wish wish : pendingWishes){
+        for(WishEntity wishEntity : pendingWishEntities){
             WishInfoResponseDto responseDto = WishInfoResponseDto.builder()
-                    .id(wish.getId())
-                    .title(wish.getTitle())
-                    .content(wish.getContent())
-                    .category(wish.getCategory())
+                    .id(wishEntity.getId())
+                    .title(wishEntity.getTitle())
+                    .content(wishEntity.getContent())
+                    .category(wishEntity.getCategory())
                     .build();
             responseDtos.add(responseDto);
         }

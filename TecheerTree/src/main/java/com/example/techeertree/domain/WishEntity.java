@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,9 +13,9 @@ import java.util.List;
 
 
 @Getter
-@Entity
+@Entity(name = "Wish")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Wish extends BaseEntity{
+public class WishEntity extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +41,7 @@ public class Wish extends BaseEntity{
     private List<Comment> comments = new ArrayList<>();
 
     @Builder
-    protected Wish(String title, String content, Category category, Confirm isConfirm, List<Comment> comments) {
+    protected WishEntity(String title, String content, Category category, Confirm isConfirm, List<Comment> comments) {
         this.title = title;
         this.content = content;
         this.category = category;

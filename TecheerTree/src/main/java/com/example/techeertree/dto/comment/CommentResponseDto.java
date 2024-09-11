@@ -1,6 +1,5 @@
 package com.example.techeertree.dto.comment;
 
-import com.example.techeertree.domain.Wish;
 import lombok.Builder;
 import lombok.Getter;
 

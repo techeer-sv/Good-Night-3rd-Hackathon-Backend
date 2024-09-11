@@ -1,7 +1,7 @@
 package com.example.techeertree.dto.wish;
 
 import com.example.techeertree.domain.Confirm;
-import com.example.techeertree.domain.Wish;
+import com.example.techeertree.domain.WishEntity;
 import com.example.techeertree.dto.EntityMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -12,16 +12,16 @@ import static com.example.techeertree.dto.wish.WishResponseDto.*;
 public interface WishMapper {
 
     @Mapper
-    interface WishCreateMapper extends EntityMapper<WishCreateRequestDto, WishInfoResponseDto, Wish> {
+    interface WishCreateMapper extends EntityMapper<WishCreateRequestDto, WishInfoResponseDto, WishEntity> {
 
         WishCreateMapper INSTANCE = Mappers.getMapper(WishCreateMapper.class);
 
         @Override
-        default Wish toEntity(WishCreateRequestDto wishRequestDto) {
+        default WishEntity toEntity(WishCreateRequestDto wishRequestDto) {
             if (wishRequestDto == null) {
                 return null;
             }
-            return Wish.builder()
+            return WishEntity.builder()
                     .title(wishRequestDto.getTitle())
                     .content(wishRequestDto.getContent())
                     .category(wishRequestDto.getCategory())
@@ -32,7 +32,7 @@ public interface WishMapper {
     }
 
     @Mapper
-    interface WishUpdateMapper extends EntityMapper<Void, WishUpdateResponseDto, Wish> {
+    interface WishUpdateMapper extends EntityMapper<Void, WishUpdateResponseDto, WishEntity> {
         WishUpdateMapper INSTANCE = Mappers.getMapper(WishUpdateMapper.class);
 
     }
@@ -41,7 +41,7 @@ public interface WishMapper {
     interface WishReadMapper {
         WishReadMapper INSTANCE = Mappers.getMapper(WishReadMapper.class);
 
-        WishListResponseDto toDto(Wish wish);
+        WishListResponseDto toDto(WishEntity wishEntity);
     }
 
 }

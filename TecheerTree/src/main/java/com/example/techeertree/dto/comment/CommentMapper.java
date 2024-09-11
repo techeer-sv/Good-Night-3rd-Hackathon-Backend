@@ -32,7 +32,7 @@ public interface CommentMapper {
             return CommentInfoResponseDto.builder()
                     .id(comment.getId())
                     .comment(comment.getComment())
-                    .wishId(comment.getWish().getId())
+                    .wishId(comment.getWishEntity().getId())
                     .createdAt(comment.getCreatedAt())
                     .build();
         }
