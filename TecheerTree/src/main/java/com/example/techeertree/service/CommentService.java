@@ -52,20 +52,13 @@ public class CommentService {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        WishEntity wish = wishRepository.findById(wishId)
-                .filter(w -> {
-                    if(w.getIsConfirm() != Confirm.CONFIRM) {
-                        throw new BaseException(ErrorCode.NOT_CONFIRMED);
-                    }
-                    return true;
-                })
-                .filter(w -> {
-                    if(w.isDeleted()){
-                        throw new BaseException(ErrorCode.NOT_EXIST_WISH);
-                    }
-                    return true;
-                })
-                .orElseThrow(()-> new BaseException(ErrorCode.NOT_EXIST_WISH));
+        WishEntity wish = wishRepository.findById(wishId).orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_WISH));
+
+        if(wish.getIsConfirm() != Confirm.CONFIRM)
+            throw new BaseException(ErrorCode.NOT_CONFIRMED);
+
+        if(wish.isDeleted())
+            throw new BaseException(ErrorCode.NOT_EXIST_WISH);
 
         Page<Comment> comments = commentRepository.findByWishEntityAndIsDeletedFalse(wish, pageable);
 
