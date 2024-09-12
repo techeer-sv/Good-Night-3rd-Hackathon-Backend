@@ -5,7 +5,6 @@ import com.example.techeertree.domain.Confirm;
 import com.example.techeertree.domain.WishEntity;
 import com.example.techeertree.dto.wish.WishMapper.*;
 import com.example.techeertree.dto.wish.WishRequestDto.*;
-import com.example.techeertree.dto.wish.WishResponseDto.*;
 import com.example.techeertree.exception.BaseException;
 import com.example.techeertree.exception.ErrorCode;
 import com.example.techeertree.repository.WishEntityRepository;
@@ -21,11 +20,11 @@ import java.util.List;
 public class WishService {
     private final WishEntityRepository wishRepository;
 
-    public WishInfoResponseDto create(WishCreateRequestDto requestDto){
+    public WishEntity create(WishCreateRequestDto requestDto){
        WishEntity wish = WishCreateMapper.INSTANCE.toEntity(requestDto);
        wishRepository.save(wish);
 
-       return WishCreateMapper.INSTANCE.toDto(wish);
+       return wish;
     }
 
     @Transactional
@@ -40,12 +39,12 @@ public class WishService {
     }
 
     @Transactional
-    public WishUpdateResponseDto update(Long id, Confirm updateConfirm){
+    public WishEntity update(Long id, Confirm updateConfirm){
         WishEntity wish = wishRepository.findById(id).orElseThrow(()-> new BaseException(ErrorCode.NOT_EXIST_WISH));
         wish.updateIsConfirm(updateConfirm);
         wishRepository.save(wish);
 
-        return WishUpdateMapper.INSTANCE.toDto(wish);
+        return wish;
     }
 
     @Transactional(readOnly = true)
@@ -69,27 +68,15 @@ public class WishService {
     }
 
     @Transactional(readOnly = true)
-    public Page<WishListResponseDto> findAllWishes(Confirm confirm,int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<WishEntity> findAllWishes(Confirm confirm,Pageable pageable){
 
-        Page<WishEntity> wishes = wishRepository.findAllByOrderByCreatedAtDesc(pageable);
+     return wishRepository.findByIsConfirmAndIsDeletedFalse(confirm, pageable);
 
-        List<WishListResponseDto> filteredWishes = wishes.stream()
-                .filter(w -> w.getIsConfirm() == confirm )
-                .filter(w -> !w.isDeleted())
-                .map(WishReadMapper.INSTANCE::toDto)
-                .toList();
-
-        return new PageImpl<>(filteredWishes, pageable, wishes.getTotalElements());
     }
 
-    public List<WishInfoResponseDto> searchWishes(String keyword, Category category){
-        List<WishEntity> wishes = wishRepository.findAllWishesWithKeyWord(keyword, category);
+    public List<WishEntity> searchWishes(String keyword, Category category){
+        return  wishRepository.findAllWishesWithKeyWord(keyword, category);
 
-        List<WishInfoResponseDto> filteredWishes = wishes.stream()
-                .map(WishCreateMapper.INSTANCE::toDto).toList();
-
-        return filteredWishes;
     }
 }
 
