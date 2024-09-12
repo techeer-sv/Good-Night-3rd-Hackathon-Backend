@@ -47,9 +47,7 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public Page<CommentInfoResponseDto> getComments(Long wishId, int page, int size){
-        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
-        Pageable pageable = PageRequest.of(page, size, sort);
+    public Page<Comment> getComments(Long wishId, Pageable pageable){
 
         WishEntity wish = wishRepository.findById(wishId).orElseThrow(() -> new BaseException(ErrorCode.NOT_EXIST_WISH));
 
@@ -61,7 +59,7 @@ public class CommentService {
 
         Page<Comment> comments = commentRepository.findByWishEntityAndIsDeletedFalse(wish, pageable);
 
-        return comments.map(CommentCreateMapper.INSTANCE::toDto);
+        return comments;
     }
 
     public void softDelete(Long id){

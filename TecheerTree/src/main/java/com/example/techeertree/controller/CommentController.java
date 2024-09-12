@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +34,13 @@ public class CommentController {
     @Operation(summary = "댓글 조회")
     @GetMapping("/{id}")
     public ResponseEntity<Page<CommentInfoResponseDto>> getComments(@PathVariable Long id,
-                                                                   @RequestParam(defaultValue = "0") int page,
-                                                                   @RequestParam(defaultValue = "10") int size){
+                                                                    @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable){
 
-        Page<CommentInfoResponseDto> comments = commentService.getComments(id, page, size);
-        return ResponseEntity.status(HttpStatus.OK).body(comments);
+        Page<Comment> comments = commentService.getComments(id, pageable);
+
+        Page<CommentInfoResponseDto> responseDtoPage = comments.map(CommentCreateMapper.INSTANCE::toDto);
+       // Page<CommentInfoResponseDto> comments = commentService.getComments(id, page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(responseDtoPage);
     }
 
     @Operation(summary = "댓글 삭제")

@@ -18,7 +18,7 @@ public interface WishEntityRepository extends JpaRepository<WishEntity, Long> {
 
     List<WishEntity> findByIsConfirmAndIsDeletedFalse(Confirm isconfirm);
 
-    Page<WishEntity> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    Page<WishEntity> findByIsConfirmAndIsDeletedFalse(Confirm confirm, Pageable pageable);
 
     //사용자가 입력한 키워드를 기반으로, 소원의 제목이나 내용에서 일치하는 항목을 검색해 반환합니다.
     // 이 기능은 카테고리 필터와 함께 사용할 수 있습니다.
