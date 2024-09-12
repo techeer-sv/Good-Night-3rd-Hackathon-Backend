@@ -5,17 +5,13 @@ import com.example.techeertree.domain.Confirm;
 import com.example.techeertree.domain.WishEntity;
 import com.example.techeertree.dto.comment.CommentMapper.*;
 import com.example.techeertree.dto.comment.CommentRequestDto.*;
-import com.example.techeertree.dto.comment.CommentResponseDto.*;
-
 import com.example.techeertree.exception.BaseException;
 import com.example.techeertree.exception.ErrorCode;
 import com.example.techeertree.repository.CommentRepository;
 import com.example.techeertree.repository.WishEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
