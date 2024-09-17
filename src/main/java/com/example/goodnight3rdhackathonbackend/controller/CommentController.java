@@ -1,9 +1,11 @@
 package com.example.goodnight3rdhackathonbackend.controller;
 
+import com.example.goodnight3rdhackathonbackend.domain.Comment;
 import com.example.goodnight3rdhackathonbackend.dto.CommentDto;
 import com.example.goodnight3rdhackathonbackend.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -16,7 +18,11 @@ public class CommentController {
 
     @PostMapping("/comments")
     public void saveComment(@RequestBody CommentDto commentDto) {
-        commentService.saveComment(commentDto);
+        Comment comment = new Comment();
+        comment.setWishId(commentDto.getWishId());
+        comment.setContent(commentDto.getContent());
+        comment.setCreatedAt(LocalDate.now());
+        commentService.saveComment(comment);
     }
 
     @GetMapping("/comments")

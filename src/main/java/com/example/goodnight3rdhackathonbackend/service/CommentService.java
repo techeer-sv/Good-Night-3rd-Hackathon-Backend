@@ -19,11 +19,7 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public void saveComment(CommentDto commentDto) {
-        Comment comment = new Comment();
-        comment.setWishId(commentDto.getWishId());
-        comment.setContent(commentDto.getContent());
-        comment.setCreatedAt(LocalDate.now());
+    public void saveComment(Comment comment) {
         commentRepository.save(comment);
     }
 
