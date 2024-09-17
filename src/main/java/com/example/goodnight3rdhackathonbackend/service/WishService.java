@@ -33,6 +33,9 @@ public class WishService {
 
     public void deleteWishById(Long id) {
         Wish targetWish = wishRepository.findById(id);
+        if (targetWish == null) {
+            throw new NotFoundWishException(ErrorCode.NOT_EXIST_WISH);
+        }
         targetWish.setDeleted(true);
         wishRepository.updateById(id, targetWish);
     }
