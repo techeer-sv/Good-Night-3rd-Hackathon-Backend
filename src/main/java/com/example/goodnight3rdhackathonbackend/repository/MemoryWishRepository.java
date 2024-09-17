@@ -5,19 +5,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
 public class MemoryWishRepository implements WishRepository {
 
-    private static Map<Long, Wish> memory = new HashMap<>();
-    private static Long index = 0L;
+    private static Map<Long, Wish> memory = new ConcurrentHashMap<>();
+    private static AtomicLong index = new AtomicLong();
 
 
     @Override
     public void save(Wish wish) {
-        wish.setId(++index);
-        memory.put(index, wish);
+        wish.setId(index.incrementAndGet());
+        memory.put(index.get(), wish);
 
     }
 

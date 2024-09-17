@@ -9,17 +9,19 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Repository
 public class MemoryCommentRepository implements CommentRepository {
-    private static Map<Long, Comment> memory = new HashMap<>();
-    private Long index = 0L;
+    private static Map<Long, Comment> memory = new ConcurrentHashMap<>();
+    private AtomicLong index = new AtomicLong();
 
     @Override
     public void save(Comment comment) {
-        comment.setCommentId(++index);
-        memory.put(index, comment);
+        comment.setCommentId(index.incrementAndGet());
+        memory.put(index.get(), comment);
     }
 
     @Override
