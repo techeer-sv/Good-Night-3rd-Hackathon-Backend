@@ -56,11 +56,7 @@ public class WishService {
         }
 
 
-        WishFindResponseDto wishDto = new WishFindResponseDto();
-        wishDto.setTitle(targetWish.getTitle());
-        wishDto.setContent(targetWish.getContent());
-        wishDto.setCategory(targetWish.getCategory());
-
+        WishFindResponseDto wishDto = WishFindResponseDto.ofCreate(targetWish.getTitle(), targetWish.getContent(), targetWish.getCategory());
         return wishDto;
     }
 
@@ -81,10 +77,7 @@ public class WishService {
                     return true;
                 })
                 .map(wish -> {
-                    WishFindAllResponseDto wishDto = new WishFindAllResponseDto();
-                    wishDto.setTitle(wish.getTitle());
-                    wishDto.setCategory(wish.getCategory());
-                    wishDto.setCreatedAt(wish.getCreatedAt());
+                    WishFindAllResponseDto wishDto = WishFindAllResponseDto.ofCreate(wish.getTitle(), wish.getCategory(), wish.getCreatedAt());
                     return wishDto;
                 })
                 .toList();

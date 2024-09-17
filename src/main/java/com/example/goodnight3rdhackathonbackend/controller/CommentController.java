@@ -18,10 +18,7 @@ public class CommentController {
 
     @PostMapping("/comments")
     public void saveComment(@RequestBody CommentDto commentDto) {
-        Comment comment = new Comment();
-        comment.setWishId(commentDto.getWishId());
-        comment.setContent(commentDto.getContent());
-        comment.setCreatedAt(LocalDate.now());
+        Comment comment = Comment.ofCreate(commentDto.getWishId(), commentDto.getContent(), LocalDate.now());
         commentService.saveComment(comment);
     }
 

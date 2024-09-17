@@ -30,9 +30,7 @@ public class CommentService {
                 .stream()
                 .filter(comment -> wishId.equals(comment.getWishId()))
                 .map(comment -> {
-                    CommentDto commentDto = new CommentDto();
-                    commentDto.setContent(comment.getContent());
-                    commentDto.setCreatedAt(comment.getCreatedAt());
+                    CommentDto commentDto = CommentDto.ofCreate(comment.getContent(), comment.getCreatedAt());
                     return commentDto;
                 })
                 .toList();

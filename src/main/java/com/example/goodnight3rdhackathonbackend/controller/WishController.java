@@ -23,11 +23,7 @@ public class WishController {
 
     @PostMapping("/wishs")
     public void saveWish(@RequestBody WishSaveRequestDto wishDto) {
-        Wish wish = new Wish();
-        wish.setTitle(wishDto.getTitle());
-        wish.setContent(wishDto.getContent());
-        wish.setCategory(wishDto.getCategory());
-        wish.setCreatedAt(LocalDate.now());
+        Wish wish = Wish.ofCreate(wishDto.getTitle(), wishDto.getContent(), wishDto.getCategory(), LocalDate.now());
         wishService.saveWish(wish);
     }
 

@@ -14,4 +14,11 @@ public class Comment {
     private LocalDate createdAt;
     private boolean isDeleted = false;
 
+    public static Comment ofCreate(Long wishId, String content, LocalDate createdAt) {
+        Comment comment = new Comment();
+        comment.setWishId(wishId);
+        comment.setContent(content);
+        comment.setCreatedAt(createdAt);
+        return comment;
+    }
 }
