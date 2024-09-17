@@ -2,7 +2,10 @@ package com.example.goodnight3rdhackathonbackend.service;
 
 import com.example.goodnight3rdhackathonbackend.domain.Wish;
 import com.example.goodnight3rdhackathonbackend.domain.WishConfirmState;
-import com.example.goodnight3rdhackathonbackend.dto.WishDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishConfirmRequestDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishFindAllResponseDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishFindResponseDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishSaveRequestDto;
 import com.example.goodnight3rdhackathonbackend.error.ErrorCode;
 import com.example.goodnight3rdhackathonbackend.error.NotApprovedWishException;
 import com.example.goodnight3rdhackathonbackend.error.NotFoundWishException;
@@ -24,7 +27,7 @@ public class WishService {
         this.wishRepository = wishRepository;
     }
 
-    public void saveWish(WishDto.SaveDto wishDto) {
+    public void saveWish(WishSaveRequestDto wishDto) {
         Wish wish = new Wish();
         wish.setTitle(wishDto.getTitle());
         wish.setContent(wishDto.getContent());
@@ -39,13 +42,13 @@ public class WishService {
         wishRepository.updateById(id, targetWish);
     }
 
-    public void confirmWishById(Long id, WishDto.ConfirmDto wishDto) {
+    public void confirmWishById(Long id, WishConfirmRequestDto wishDto) {
         Wish targetWish = wishRepository.findById(id);
         targetWish.setIsConfirm(wishDto.getIsConfirm());
         wishRepository.updateById(id, targetWish);
     }
 
-    public WishDto.FindDto findWishById(Long id) {
+    public WishFindResponseDto findWishById(Long id) {
         Wish targetWish = wishRepository.findById(id);
         if (targetWish.isDeleted()) {
             throw new NotFoundWishException(ErrorCode.NOT_EXIST_WISH);
@@ -55,7 +58,7 @@ public class WishService {
         }
 
 
-        WishDto.FindDto wishDto = new WishDto.FindDto();
+        WishFindResponseDto wishDto = new WishFindResponseDto();
         wishDto.setTitle(targetWish.getTitle());
         wishDto.setContent(targetWish.getContent());
         wishDto.setCategory(targetWish.getCategory());
@@ -63,7 +66,7 @@ public class WishService {
         return wishDto;
     }
 
-    public List<WishDto.FindAllDto> findAllWish(String wishState, int page) {
+    public List<WishFindAllResponseDto> findAllWish(String wishState, int page) {
         Pageable pageable = PageRequest.of(page, 10);
         return wishRepository.findAll(pageable)
                 .stream()
@@ -80,7 +83,7 @@ public class WishService {
                     return true;
                 })
                 .map(wish -> {
-                    WishDto.FindAllDto wishDto = new WishDto.FindAllDto();
+                    WishFindAllResponseDto wishDto = new WishFindAllResponseDto();
                     wishDto.setTitle(wish.getTitle());
                     wishDto.setCategory(wish.getCategory());
                     wishDto.setCreatedAt(wish.getCreatedAt());

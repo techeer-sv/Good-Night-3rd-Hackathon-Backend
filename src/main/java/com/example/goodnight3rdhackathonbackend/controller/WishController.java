@@ -2,7 +2,10 @@
 package com.example.goodnight3rdhackathonbackend.controller;
 
 
-import com.example.goodnight3rdhackathonbackend.dto.WishDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishConfirmRequestDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishFindAllResponseDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishFindResponseDto;
+import com.example.goodnight3rdhackathonbackend.dto.WishSaveRequestDto;
 import com.example.goodnight3rdhackathonbackend.service.WishService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +20,7 @@ public class WishController {
     }
 
     @PostMapping("/wishs")
-    public void saveWish(@RequestBody WishDto.SaveDto wishDto) {
+    public void saveWish(@RequestBody WishSaveRequestDto wishDto) {
         wishService.saveWish(wishDto);
     }
 
@@ -27,18 +30,18 @@ public class WishController {
     }
 
     @PutMapping("/wishs/{id}")
-    public void confirmWishById(@PathVariable Long id, @RequestBody WishDto.ConfirmDto wishDto) {
+    public void confirmWishById(@PathVariable Long id, @RequestBody WishConfirmRequestDto wishDto) {
         wishService.confirmWishById(id, wishDto);
     }
 
     @GetMapping("wishs/{id}")
-    public WishDto.FindDto findWishById(@PathVariable Long id) {
+    public WishFindResponseDto findWishById(@PathVariable Long id) {
         return wishService.findWishById(id);
     }
 
     @GetMapping("/wishs")
-    public List<WishDto.FindAllDto> findAllWish(@RequestParam(value = "state", required = false) String wishState,
-                                                @RequestParam(value = "page", defaultValue = "0") int page) {
+    public List<WishFindAllResponseDto> findAllWish(@RequestParam(value = "state", required = false) String wishState,
+                                                    @RequestParam(value = "page", defaultValue = "0") int page) {
         return wishService.findAllWish(wishState, page);
     }
 
