@@ -27,12 +27,7 @@ public class WishService {
         this.wishRepository = wishRepository;
     }
 
-    public void saveWish(WishSaveRequestDto wishDto) {
-        Wish wish = new Wish();
-        wish.setTitle(wishDto.getTitle());
-        wish.setContent(wishDto.getContent());
-        wish.setCategory(wishDto.getCategory());
-        wish.setCreatedAt(LocalDate.now());
+    public void saveWish(Wish wish) {
         wishRepository.save(wish);
     }
 
@@ -42,9 +37,9 @@ public class WishService {
         wishRepository.updateById(id, targetWish);
     }
 
-    public void confirmWishById(Long id, WishConfirmRequestDto wishDto) {
+    public void confirmWishById(Long id, String isConfirm) {
         Wish targetWish = wishRepository.findById(id);
-        targetWish.setIsConfirm(wishDto.getIsConfirm());
+        targetWish.setIsConfirm(isConfirm);
         wishRepository.updateById(id, targetWish);
     }
 
